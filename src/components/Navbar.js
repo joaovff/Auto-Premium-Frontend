@@ -4,7 +4,6 @@ import { UserContext } from "../context/user.context";
 
 function Navbar() {
   const { loggedUser, logout } = useContext(UserContext);
-  console.log(loggedUser);
   return (
     <div>
       {loggedUser ? (

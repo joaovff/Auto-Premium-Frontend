@@ -21,8 +21,11 @@ export const signup = (user) => {
 };
 
 export const verify = (token) => {
-  console.log(token);
   return axios.get(`${BASE_URL}/verify`, {
     headers: { Authorization: `Bearer ${token}` },
   });
+};
+
+export const uploadImage = (uploadData) => {
+  return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
