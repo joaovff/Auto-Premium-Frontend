@@ -6,20 +6,26 @@ import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
-import WithSubnavigation from "./components/Navbar";
-
+import IsPrivate from "./components/IsPrivate";
 
 function App() {
   return (
     <div className="App">
-      {/* <Navbar /> */}
       <ChakraProvider>
-        <WithSubnavigation />
+        <Navbar />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/announcements/create" element={<NewAnnouncement />} />
+
+          <Route
+            path="/announcements/create"
+            element={
+              <IsPrivate>
+                <NewAnnouncement />{" "}
+              </IsPrivate>
+            }
+          />
         </Routes>
       </ChakraProvider>
     </div>
