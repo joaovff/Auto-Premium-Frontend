@@ -1,17 +1,20 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Main from "./pages/Main";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import Navbar from "./components/Navbar";
 import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
+import WithSubnavigation from "./components/Navbar";
+
 
 function App() {
   return (
     <div className="App">
+      {/* <Navbar /> */}
       <ChakraProvider>
-      <Navbar />
+        <WithSubnavigation />
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="/signup" element={<Signup />} />
