@@ -29,3 +29,4 @@ export const verify = (token) => {
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
+

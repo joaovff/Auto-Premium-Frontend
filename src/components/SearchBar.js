@@ -1,16 +1,15 @@
-import { Divider, Input, Button } from 'antd';
+import { Divider, Input, } from 'antd';
 import { useState } from 'react';
-import { getAnnouncement } from '../api';
 
 
-function SearchBar() {
+function SearchBar(props) {
 
 const [keyword, setKeyword] = useState("");
 
 
 function handleKeywordInput(event) {
     setKeyword(event.target.value);
-    getAnnouncement(event.target.value);
+    props.handleSearch(event.target.value);
 
 }
 
@@ -20,7 +19,6 @@ function handleKeywordInput(event) {
 
       <label>Search</label>
       <Input value={keyword} type="text" onChange={handleKeywordInput} />
-      <Button type='submit'>Search</Button>
     </>
   );
 }

@@ -22,7 +22,7 @@ function App() {
             path="/announcements/create"
             element={
               <IsPrivate>
-                <NewAnnouncement />{" "}
+                <NewAnnouncement />
               </IsPrivate>
             }
           />
