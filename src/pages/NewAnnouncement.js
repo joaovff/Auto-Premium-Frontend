@@ -41,7 +41,7 @@ function NewAnnouncement() {
     event.preventDefault();
     //1. Upload the image through the backend
     const uploadData = new FormData();
-    uploadData.append("filename", image);
+    uploadData.append("fileName", image);
     const response = await uploadImage(uploadData);
     console.log("response from BE with image Url", response.data);
 
