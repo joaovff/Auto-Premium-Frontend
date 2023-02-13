@@ -7,14 +7,34 @@ import Login from "./pages/Login";
 import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
+import { useEffect, useState } from "react";
+import { getAllAnnouncements } from "./api";
+import AnnouncementDetail from "./pages/AnnouncementDetail";
 
 function App() {
+  const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
+
+  useEffect(() => {
+    async function handleGetAllAnnouncements() {
+      const response = await getAllAnnouncements();
+      setFilteredAnnouncements(response.data);
+    }
+    handleGetAllAnnouncements();
+  }, []);
   return (
     <div className="App">
       <ChakraProvider>
         <Navbar />
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route
+            path="/"
+            element={
+              <Main
+                setFilteredAnnouncements={setFilteredAnnouncements}
+                filteredAnnouncements={filteredAnnouncements}
+              />
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
@@ -26,6 +46,7 @@ function App() {
               </IsPrivate>
             }
           />
+          <Route path="/announcements/:announcementId" element={<AnnouncementDetail />} />
         </Routes>
       </ChakraProvider>
     </div>

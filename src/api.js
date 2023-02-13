@@ -12,6 +12,10 @@ export const createAnnouncement = (announcement) => {
   return axios.post(`${BASE_URL}/announcements/create`, announcement);
 };
 
+export const deleteAnnouncement = (id) => {
+  return axios.delete(`${BASE_URL}/announcements/${id}`);
+};
+
 export const login = (user) => {
   return axios.post(`${BASE_URL}/login`, user);
 };
@@ -29,4 +33,3 @@ export const verify = (token) => {
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
-
