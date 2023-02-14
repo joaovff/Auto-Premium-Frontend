@@ -1,14 +1,23 @@
 import { Link } from "react-router-dom";
-import { getAnnouncement } from "../api";
+import { getAllAnnouncements, getAnnouncement } from "../api";
 import SearchBar from "../components/SearchBar";
+import { useEffect, useState } from "react";
 
-function Main({ setFilteredAnnouncements, filteredAnnouncements }) {
+function Main() {
   function handleSearch(keyword) {
     const filtered = filteredAnnouncements.filter((announcement) => {
       return announcement.title.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredAnnouncements(filtered);
   }
+  const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
+  useEffect(() => {
+    async function handleGetAllAnnouncements() {
+      const response = await getAllAnnouncements();
+      setFilteredAnnouncements(response.data);
+    }
+    handleGetAllAnnouncements();
+  }, []);
 
   return (
     <div>

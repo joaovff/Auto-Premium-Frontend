@@ -9,7 +9,11 @@ export const getAnnouncement = (id) => {
 };
 
 export const createAnnouncement = (announcement) => {
-  return axios.post(`${BASE_URL}/announcements/create`, announcement);
+  return axios.post(`${BASE_URL}/announcements/create`, announcement, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+    },
+  });
 };
 
 export const deleteAnnouncement = (id) => {

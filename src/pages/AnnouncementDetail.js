@@ -37,7 +37,7 @@ function AnnouncementDetail() {
       <p>{announcement.model}</p>
       <p>{announcement.year}</p>
       <p>{announcement.kms}</p>
-      
+
       <button onClick={handleDeleteAnnouncement}>Delete</button>
     </div>
   ) : (

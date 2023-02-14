@@ -10,6 +10,7 @@ function NewAnnouncement() {
   const [model, setModel] = useState("");
   const [year, setYear] = useState("");
   const [kms, setKms] = useState(0);
+  const [price, setPrice] = useState(0);
 
   const navigate = useNavigate();
 
@@ -33,17 +34,19 @@ function NewAnnouncement() {
   function handleModelChange(event) {
     setModel(event.target.value);
   }
+
   function handleImageSelect(event) {
     setImage(event.target.files[0]);
   }
-
+  function handlePriceChange(event) {
+    setPrice(event.target.value);
+  }
   async function handleSubmitForm(event) {
     event.preventDefault();
     //1. Upload the image through the backend
     const uploadData = new FormData();
     uploadData.append("fileName", image);
     const response = await uploadImage(uploadData);
-    console.log("response from BE with image Url", response.data);
 
     //2. Once we get the imageUrl -> create a project
     //with title, description and imageUrl
@@ -55,6 +58,7 @@ function NewAnnouncement() {
       model,
       year,
       kms,
+      price,
     });
 
     console.log("Created!");
@@ -85,7 +89,7 @@ function NewAnnouncement() {
         onChange={handleDescriptionChange}
       />
       <label htmlFor="image">Image</label>
-      <input id="image" type="file" onChange={handleImageSelect} />
+      <input id="image" type="file" multiple onChange={handleImageSelect} />
 
       <label htmlFor="make">Make</label>
       <input id="make" type="text" value={make} onChange={handleMakeChange} />
@@ -102,7 +106,15 @@ function NewAnnouncement() {
       <input id="year" type="number" value={year} onChange={handleYearChange} />
 
       <label htmlFor="kms">Kms</label>
-      <input id="kms" type="text" value={kms} onChange={handleKmsChange} />
+      <input id="kms" type="number" value={kms} onChange={handleKmsChange} />
+
+      <label htmlFor="price">Price</label>
+      <input
+        id="price"
+        type="number"
+        value={price}
+        onChange={handlePriceChange}
+      />
 
       <button type="submit">Create Project</button>
     </form>
