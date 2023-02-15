@@ -7,32 +7,31 @@ import Login from "./pages/Login";
 import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
-import { getAllAnnouncements } from "./api";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
-
 function App() {
   return (
     <div className="App">
       <ChakraProvider>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+        <Navbar/>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
 
-          <Route
-            path="/announcements/create"
-            element={
-              <IsPrivate>
-                <NewAnnouncement />
-              </IsPrivate>
-            }
-          />
-          <Route
-            path="/announcements/:announcementId"
-            element={<AnnouncementDetail />}
-          />
-        </Routes>
+            <Route
+              path="/announcements/create"
+              element={
+                <IsPrivate>
+                  <NewAnnouncement />
+                </IsPrivate>
+              }
+            />
+            <Route
+              path="/announcements/:announcementId"
+              element={<AnnouncementDetail />}
+            />
+          </Routes>
+
       </ChakraProvider>
     </div>
   );

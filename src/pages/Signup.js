@@ -1,13 +1,28 @@
-import { Button, Input } from "@chakra-ui/react";
+import {
+  Button,
+  Flex,
+  Heading,
+  Input,
+  Stack,
+  useColorModeValue,
+  Text,
+  Box,
+  HStack,
+  FormControl,
+  FormLabel,
+  InputGroup,
+  InputRightElement,
+} from "@chakra-ui/react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../api";
-import { useToast } from "@chakra-ui/react";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   function handleEmailChange(event) {
@@ -38,45 +53,98 @@ function Signup() {
   }
 
   return (
-    <>
-      <br />
-      <br />
-      <br />
-      <br />
-      <h3>Signup</h3>
-      <label htmlFor="name">Name </label>
-      <Input
-        id="name"
-        type="text"
-        value={name}
-        onChange={handleNameChange}
-        style={{ width: "300px" }}
-      />
-      <br />
-      <form onSubmit={handleSubmitForm}>
-        <label htmlFor="email">Email </label>
-        <Input
-          id="email"
-          type="text"
-          value={email}
-          onChange={handleEmailChange}
-          style={{ width: "300px" }}
-        />
-        <br />
-        <label htmlFor="password">Password </label>
-        <Input
-          id="password"
-          value={password}
-          type="password"
-          onChange={handlePaswordChange}
-          style={{ width: "100px" }}
-        />
-        <br />
-        <Button type="submit">Signup</Button>
-      </form>
-      <p>Already have an account?</p>
-      <Link to="/login">Login</Link>
-    </>
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+      style={{ flexDirection: "column", marginTop: "-150px" }}
+    >
+      <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"} textAlign={"center"}>
+            Sign up
+          </Heading>
+          <Text fontSize={"lg"} color={"gray.600"}>
+            To enjoy all of our cool cars!
+          </Text>
+        </Stack>
+      </Stack>
+
+      <Box
+        rounded={"lg"}
+        bg={useColorModeValue("white", "gray.700")}
+        boxShadow={"lg"}
+        p={8}
+      >
+        <Stack spacing={4}>
+          <HStack>
+            <Box>
+              <Box>
+                <FormControl id="name" isRequired>
+                  <FormLabel htmlFor="name">Name </FormLabel>
+                  <Input
+                    id="name"
+                    type="text"
+                    value={name}
+                    onChange={handleNameChange}
+                    style={{ width: "300px" }}
+                  />
+                </FormControl>
+                <br/>
+              </Box>
+              <Box>
+                <FormControl id="email" isRequired>
+                  <FormLabel htmlFor="email">Email address </FormLabel>
+                  <Input
+                    id="email"
+                    type="text"
+                    value={email}
+                    onChange={handleEmailChange}
+                    style={{ width: "300px" }}
+                  />
+                </FormControl>
+                <br/>
+
+              </Box>
+
+              <Box>
+                <FormControl id="password" isRequired>
+                  <FormLabel>Password</FormLabel>
+                  <InputGroup>
+                    <Input
+                      onChange={handlePaswordChange}
+                      type={showPassword ? "text" : "password"}
+                    />
+                    <InputRightElement h={"full"}>
+                      <Button
+                        variant={"ghost"}
+                        onClick={() =>
+                          setShowPassword((showPassword) => !showPassword)
+                        }
+                        onChange={handlePaswordChange}
+                      >
+                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                      </Button>
+                    </InputRightElement>
+                  </InputGroup>
+
+                </FormControl>
+                    
+              </Box>
+              <form onSubmit={handleSubmitForm}>
+                <br />
+                <Button type="submit">Signup</Button>
+              </form>
+            </Box>
+          </HStack>
+          <br/>
+
+          <p>Already have an account?</p>
+          <Link to="/login" style={{color: "#0000EE"}}>Login</Link>
+        </Stack>
+      </Box>
+    </Flex>
   );
 }
 
