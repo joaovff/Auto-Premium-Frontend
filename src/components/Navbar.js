@@ -60,7 +60,7 @@ export default function WithSubnavigation() {
             color={useColorModeValue("gray.800", "white")}
           >
             <NavLink to="/">
-              <img src="aologo.png" width={"35px"} />
+              <img src="aplogo.png" width={"35px"} />
             </NavLink>
           </Text>
 

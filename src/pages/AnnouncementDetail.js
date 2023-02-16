@@ -1,52 +1,3 @@
-/* import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router";
-import { deleteAnnouncement, getAnnouncement } from "../api";
-
-function AnnouncementDetail() {
-  const [announcement, setAnnouncement] = useState();
-  const { announcementId } = useParams();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    async function handleGetAnnouncementDetail() {
-      const response = await getAnnouncement(announcementId);
-      setAnnouncement(response.data);
-    }
-
-    handleGetAnnouncementDetail();
-  }, [announcementId]);
-
-  async function handleDeleteAnnouncement() {
-    await deleteAnnouncement(announcementId);
-    navigate("/");
-  }
-  return announcement ? (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-      }}
-      key={announcement._id}
-    >
-      <h3>{announcement.title}</h3>
-      <img src={announcement.image} />
-      <p>{announcement.description}</p>
-      <p>{announcement.make}</p>
-      <p>{announcement.model}</p>
-      <p>{announcement.year}</p>
-      <p>{announcement.kms}</p>
-
-      <button onClick={handleDeleteAnnouncement}>Delete</button>
-    </div>
-  ) : (
-    <p>Loading</p>
-  );
-}
-
-export default AnnouncementDetail;
- */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { deleteAnnouncement, getAnnouncement } from "../api";
@@ -97,12 +48,12 @@ export default function Simple() {
         <Flex>
           <Image
             rounded={"md"}
-            alt={"product image"}
+            alt={announcement.title}
             src={announcement.image[0]}
             fit={"cover"}
             align={"center"}
             w={"100%"}
-            h={{ base: "100%", sm: "400px", lg: "500px" }}
+            h={{ base: "100%", sm: "400px", lg: "350px" }}
           />
         </Flex>
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -114,10 +65,7 @@ export default function Simple() {
             >
               {announcement.title}
             </Heading>
-            <Text
-              fontWeight={300}
-              fontSize={"2xl"}
-            >
+            <Text fontWeight={300} fontSize={"2xl"}>
               {announcement.price} €
             </Text>
           </Box>
@@ -125,16 +73,10 @@ export default function Simple() {
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={"column"}
-            divider={
-              <StackDivider
-              />
-            }
+            divider={<StackDivider />}
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
-
-              <Text fontSize={"lg"}>
-              {announcement.description}
-              </Text>
+              <Text fontSize={"lg"}>{announcement.description}</Text>
             </VStack>
             <Box>
               <Text

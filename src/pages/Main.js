@@ -5,16 +5,21 @@ import { useEffect, useState } from "react";
 
 function Main() {
   function handleSearch(keyword) {
-    const filtered = filteredAnnouncements.filter((announcement) => {
+    const filtered = announcements.filter((announcement) => {
       return announcement.title.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredAnnouncements(filtered);
   }
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
+
+  const [announcements, setAnnoucements] = useState([]);
+
   useEffect(() => {
     async function handleGetAllAnnouncements() {
       const response = await getAllAnnouncements();
       setFilteredAnnouncements(response.data);
+      setAnnoucements(response.data);
+
     }
     handleGetAllAnnouncements();
   }, []);
