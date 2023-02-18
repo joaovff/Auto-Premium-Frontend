@@ -153,13 +153,13 @@ export default function Simple() {
                   <Text as={"span"} fontWeight={"bold"}>
                     Color:
                   </Text>{" "}
-                  Black
+                  {announcement.color}
                 </ListItem>
                 <ListItem>
                   <Text as={"span"} fontWeight={"bold"}>
                     HP:
                   </Text>{" "}
-                  300
+                  {announcement.hp}
                 </ListItem>
               </List>
             </Box>

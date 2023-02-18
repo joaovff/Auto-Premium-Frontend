@@ -25,32 +25,33 @@ function App() {
   return (
     <div className="App">
       <ChakraProvider>
-        <Navbar />
-        <Routes>
-          <Route path="*" element={<NotFound />} />
-          <Route path="/" element={<Main />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
+        <Navbar>
+          <Routes>
+            <Route path="*" element={<NotFound />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
 
-          <Route
-            path="/announcements/create"
-            element={
-              <IsPrivate>
-                <NewAnnouncement />
-              </IsPrivate>
-            }
-          />
-          <Route
-            path="/announcements/:announcementId"
-            element={<AnnouncementDetail />}
-          />
+            <Route
+              path="/announcements/create"
+              element={
+                <IsPrivate>
+                  <NewAnnouncement />
+                </IsPrivate>
+              }
+            />
+            <Route
+              path="/announcements/:announcementId"
+              element={<AnnouncementDetail />}
+            />
 
-          <Route
-            path="/announcements/edit/:announcementId"
-            element={<EditAnnouncement />}
-          />
-          <Route path="/profile/:userId" element={<UserDetail />} />
-        </Routes>
+            <Route
+              path="/announcements/edit/:announcementId"
+              element={<EditAnnouncement />}
+            />
+            <Route path="/profile/:userId" element={<UserDetail />} />
+          </Routes>
+        </Navbar>
       </ChakraProvider>
     </div>
   );
