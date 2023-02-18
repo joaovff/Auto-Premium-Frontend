@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createAnnouncement, uploadImage } from "../api";
+import { createAnnouncement, getMakes, uploadImage } from "../api";
 
 function NewAnnouncement() {
   const [title, setTitle] = useState("");
@@ -11,6 +11,8 @@ function NewAnnouncement() {
   const [year, setYear] = useState("");
   const [kms, setKms] = useState(0);
   const [price, setPrice] = useState(0);
+
+  const [carMakes, setCarMakes] = useState([]);
 
   const navigate = useNavigate();
 
@@ -65,6 +67,23 @@ function NewAnnouncement() {
     navigate("/");
   }
 
+  useEffect(() => {
+    async function getAllMakes() {
+      const response = await getMakes();
+      setCarMakes(
+        response.data.Results.sort((a, b) => {
+          if (a.MakeName < b.MakeName) {
+            return -1;
+          } else if (a.MakeName > b.MakeName) {
+            return 1;
+          }
+          return 0;
+        })
+      );
+    }
+    getAllMakes();
+  }, []);
+
   return (
     <form
       onSubmit={handleSubmitForm}
@@ -92,7 +111,16 @@ function NewAnnouncement() {
       <input id="image" type="file" multiple onChange={handleImageSelect} />
 
       <label htmlFor="make">Make</label>
-      <input id="make" type="text" value={make} onChange={handleMakeChange} />
+      <select id="make" onChange={handleMakeChange}>
+        {carMakes &&
+          carMakes.map((make) => {
+            return (
+              <option key={make.MakeId} value={make.MakeName}>
+                {make.MakeName}
+              </option>
+            );
+          })}
+      </select>
 
       <label htmlFor="model">Model</label>
       <input

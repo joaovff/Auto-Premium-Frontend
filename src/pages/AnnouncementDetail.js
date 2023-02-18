@@ -17,8 +17,11 @@ import {
   StackDivider,
   List,
   ListItem,
+  CircularProgress,
+  AvatarGroup,
 } from "@chakra-ui/react";
 import { MdLocalShipping } from "react-icons/md";
+import { Avatar, AvatarBadge, Skeleton } from "@chakra-ui/react";
 
 export default function Simple() {
   const [announcement, setAnnouncement] = useState();
@@ -40,6 +43,7 @@ export default function Simple() {
   }
   return announcement ? (
     <Container maxW={"7xl"}>
+      <Avatar bg="teal.500" style={{ marginTop: "25px" }} />
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
@@ -66,7 +70,10 @@ export default function Simple() {
               {announcement.title}
             </Heading>
             <Text fontWeight={300} fontSize={"2xl"}>
-              {announcement.price} €
+              {announcement.price.toLocaleString("pt-pt", {
+                minimumFractionDigits: 2,
+              })}{" "}
+              €
             </Text>
           </Box>
 
@@ -101,6 +108,7 @@ export default function Simple() {
                 </List>
               </SimpleGrid>
             </Box>
+
             <Box>
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
@@ -108,7 +116,7 @@ export default function Simple() {
                 textTransform={"uppercase"}
                 mb={"4"}
               >
-                Specs
+                Specifications
               </Text>
 
               <List spacing={2}>
@@ -151,30 +159,136 @@ export default function Simple() {
               </List>
             </Box>
           </Stack>
-
-          <Button
-            rounded={"none"}
-            w={"full"}
-            mt={8}
-            size={"lg"}
-            py={"7"}
-            textTransform={"uppercase"}
-            _hover={{
-              transform: "translateY(2px)",
-              boxShadow: "lg",
-            }}
-          >
-            Add to cart
-          </Button>
-
-          <Stack direction="row" alignItems="center" justifyContent={"center"}>
-            <MdLocalShipping />
-            <Text>2-3 business days delivery</Text>
-          </Stack>
         </Stack>
       </SimpleGrid>
     </Container>
   ) : (
-    <p>Loading</p>
+    <Container maxW={"7xl"}>
+      <SimpleGrid
+        columns={{ base: 1, lg: 2 }}
+        spacing={{ base: 8, md: 10 }}
+        py={{ base: 18, md: 24 }}
+      >
+        <Flex>
+          <Skeleton
+            rounded={"md"}
+            fit={"cover"}
+            align={"center"}
+            w={"350px"}
+            h={{ base: "100%", sm: "400px", lg: "350px" }}
+          />
+        </Flex>
+        <Stack spacing={{ base: 6, md: 10 }}>
+          <Box as={"header"}>
+            <Heading
+              lineHeight={1.1}
+              fontWeight={600}
+              fontSize={{ base: "2xl", sm: "4xl", lg: "5xl" }}
+            >
+              <Skeleton height="20px" />
+            </Heading>
+            <Text fontWeight={300} fontSize={"2xl"}>
+              <Skeleton height="20px" />
+            </Text>
+          </Box>
+
+          <Stack
+            spacing={{ base: 4, sm: 6 }}
+            direction={"column"}
+            divider={<StackDivider />}
+          >
+            <VStack spacing={{ base: 4, sm: 6 }}>
+              <Skeleton height="20px" />
+            </VStack>
+            <Box>
+              <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                <Skeleton height="20px" />
+              </Text>
+
+              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
+                <List spacing={2}>
+                  <ListItem>
+                    <Skeleton height="20px" />
+                  </ListItem>
+                  <ListItem>
+                    <Skeleton height="20px" />
+                  </ListItem>
+                  <ListItem>
+                    <Skeleton height="20px" />
+                  </ListItem>
+                </List>
+                <List spacing={2}>
+                  <ListItem>
+                    <Skeleton height="20px" />
+                  </ListItem>
+                  <ListItem>
+                    <Skeleton height="20px" />
+                  </ListItem>
+                  <ListItem>
+                    <Skeleton height="20px" />
+                  </ListItem>
+                </List>
+              </SimpleGrid>
+            </Box>
+            <Box>
+              <Text
+                fontSize={{ base: "16px", lg: "18px" }}
+                fontWeight={"500"}
+                textTransform={"uppercase"}
+                mb={"4"}
+              >
+                Specs
+              </Text>
+
+              <List spacing={2}>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Kms:
+                  </Text>
+                  <Stack>
+                    <Skeleton height="20px" />
+                  </Stack>
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Year:
+                  </Text>
+                  <Skeleton height="20px" />
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Make:
+                  </Text>
+                  <Skeleton height="20px" />
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Model:
+                  </Text>
+                  <Skeleton height="20px" />
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    Color:
+                  </Text>
+                  <Skeleton height="20px" />
+                </ListItem>
+                <ListItem>
+                  <Text as={"span"} fontWeight={"bold"}>
+                    HP:
+                  </Text>
+                  <Skeleton height="20px" />
+                </ListItem>
+              </List>
+            </Box>
+          </Stack>
+        </Stack>
+      </SimpleGrid>
+    </Container>
   );
 }

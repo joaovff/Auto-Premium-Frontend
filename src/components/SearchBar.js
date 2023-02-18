@@ -11,17 +11,15 @@ function SearchBar(props) {
   }
 
   return (
-    <>
-      <Divider>
-        <label htmlFor="search">Search</label>
-        <Input
-          value={keyword}
-          type="text"
-          onChange={handleKeywordInput}
-          id="search"
-        />
-      </Divider>
-    </>
+    <Divider>
+      <label htmlFor="search">Search</label>
+      <Input
+        value={keyword}
+        type="text"
+        onChange={handleKeywordInput}
+        id="search"
+      />
+    </Divider>
   );
 }
 

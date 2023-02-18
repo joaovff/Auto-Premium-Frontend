@@ -37,3 +37,9 @@ export const verify = (token) => {
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
+
+export const getMakes = () => {
+  return axios.get(
+    "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json"
+  );
+};

@@ -52,11 +52,11 @@ function Login() {
 
   return (
     <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-      style={{ flexDirection: "column", marginTop: "-150px" }}
+    minH={"100vh"}
+    align={"center"}
+    justify={"center"}
+    bg={useColorModeValue("gray.50", "gray.800")}
+    style={{ flexDirection: "column", marginTop: "-150px" }}
     >
       <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>

@@ -91,6 +91,19 @@ export default function WithSubnavigation() {
           >
             <NavLink to="login">Login</NavLink>
           </Button>
+          <Button
+            as={"a"}
+            display={{ base: "none", md: "inline-flex" }}
+            fontSize={"sm"}
+            fontWeight={600}
+            color={"white"}
+            bg={"pink.400"}
+            _hover={{
+              bg: "pink.300",
+            }}
+          >
+            <NavLink to="announcements/create">Sell a car</NavLink>
+          </Button>
         </Stack>
       </Flex>
 
