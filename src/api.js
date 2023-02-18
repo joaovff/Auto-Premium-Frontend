@@ -34,10 +34,18 @@ export const verify = (token) => {
   });
 };
 
+<<<<<<< HEAD
 export const updateAnnouncement = (announcementId) => {
   return axios.put(
     `${BASE_URL}/announcements/${announcementId}`,
     announcementId
+=======
+export const updateAnnouncement = (announcementId, announcement
+  ) => {
+  return axios.put(
+    `${BASE_URL}/announcements/edit/${announcementId}`,
+    announcement
+>>>>>>> 0ff2de0c081224a8503090be06fea760eebfb8cb
   );
 };
 
