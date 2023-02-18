@@ -434,7 +434,7 @@ const NavItem = ({ icon, children, ...rest }) => {
         _hover={{
           bg: "black",
           color: "white",
-          transition: "0.5s"
+          transition: "0.5s",
         }}
         {...rest}
       >
@@ -457,14 +457,13 @@ const NavItem = ({ icon, children, ...rest }) => {
 const MobileNav = ({ onOpen, ...rest }) => {
   const { loggedUser, logout } = useContext(UserContext);
   const [user, setUser] = useState("");
-
   useEffect(() => {
     async function handleUser() {
       const response = await getUser(loggedUser._id);
       setUser(response.data);
     }
     handleUser();
-  }, []);
+  }, [loggedUser]);
 
   return (
     <Flex
@@ -536,7 +535,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               {loggedUser ? (
                 <>
                   <MenuDivider />
-                  <MenuItem onClick={logout}>Sign out</MenuItem>
+                  <MenuItem onClick={logout}>Logout</MenuItem>
                 </>
               ) : (
                 <NavLink to="/login">
