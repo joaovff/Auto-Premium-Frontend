@@ -31,23 +31,24 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
-            <Route
-              path="/announcements/create"
-              element={
-                <IsPrivate>
-                  <NewAnnouncement />
-                </IsPrivate>
-              }
-            />
-            <Route
-              path="/announcements/:announcementId"
-              element={<AnnouncementDetail />}
-            />
+          <Route
+            path="/announcements/create"
+            element={
+              <IsPrivate>
+                <NewAnnouncement />
+              </IsPrivate>
+            }
+          />
+          <Route
+            path="/announcements/:announcementId"
+            element={<AnnouncementDetail />}
+          />
 
-            <Route path="/edit/:announcementId" element={<EditAnnouncement />} />
-          </Routes>
-
-          
+          <Route
+            path="/announcements/edit/:announcementId"
+            element={<EditAnnouncement />}
+          />
+        </Routes>
       </ChakraProvider>
     </div>
   );

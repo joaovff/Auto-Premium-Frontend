@@ -161,7 +161,10 @@ export default function Simple() {
             </Box>
           </Stack>
         </Stack>
-        <Link to="/edit" style={{ color: "#0000EE" }}>
+        <Link
+          to={`/announcements/edit/${announcement._id}`}
+          style={{ color: "#0000EE" }}
+        >
           Edit
         </Link>
       </SimpleGrid>
