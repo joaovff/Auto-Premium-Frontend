@@ -8,6 +8,8 @@ import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
+import EditAnnouncement from "./pages/EditAnnouncement";
+
 import NotFound from "./pages/NotFound";
 import {
   Box,
@@ -29,19 +31,23 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
 
-          <Route
-            path="/announcements/create"
-            element={
-              <IsPrivate>
-                <NewAnnouncement />
-              </IsPrivate>
-            }
-          />
-          <Route
-            path="/announcements/:announcementId"
-            element={<AnnouncementDetail />}
-          />
-        </Routes>
+            <Route
+              path="/announcements/create"
+              element={
+                <IsPrivate>
+                  <NewAnnouncement />
+                </IsPrivate>
+              }
+            />
+            <Route
+              path="/announcements/:announcementId"
+              element={<AnnouncementDetail />}
+            />
+
+            <Route path="/edit/:announcementId" element={<EditAnnouncement />} />
+          </Routes>
+
+          
       </ChakraProvider>
     </div>
   );

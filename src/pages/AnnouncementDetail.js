@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { deleteAnnouncement, getAnnouncement } from "../api";
+import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -160,6 +161,9 @@ export default function Simple() {
             </Box>
           </Stack>
         </Stack>
+        <Link to="/edit" style={{ color: "#0000EE" }}>
+          Edit
+        </Link>
       </SimpleGrid>
     </Container>
   ) : (
