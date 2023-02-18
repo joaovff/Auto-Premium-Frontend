@@ -17,6 +17,24 @@ function NewAnnouncement() {
   const [engineDisplacement, setEngineDisplacement] = useState(0);
   const [fuel, setFuel] = useState("");
 
+  const [carMakes, setCarMakes] = useState([]);
+
+  useEffect(() => {
+    async function getAllMakes() {
+      const response = await getMakes();
+      setCarMakes(
+        response.data.Results.sort((a, b) => {
+          if (a.MakeName < b.MakeName) {
+            return -1;
+          } else if (a.MakeName > b.MakeName) {
+            return 1;
+          }
+          return 0;
+        })
+      );
+    }
+    getAllMakes();
+  }, []);
   const navigate = useNavigate();
 
   function handleTitleChange(event) {
@@ -124,7 +142,18 @@ function NewAnnouncement() {
       />
 
       <label htmlFor="make">Make</label>
-      <input id="make" type="text" value={make} onChange={handleMakeChange} />
+      <select id="make" onChange={handleMakeChange}>
+        <option selected disabled hidden></option>
+
+        {carMakes &&
+          carMakes.map((make) => {
+            return (
+              <option key={make.MakeId} value={make.MakeName}>
+                {make.MakeName}
+              </option>
+            );
+          })}
+      </select>
 
       <label htmlFor="model">Model</label>
       <input
@@ -170,18 +199,16 @@ function NewAnnouncement() {
       <label htmlFor="hp">Horse Power</label>
       <input id="hp" type="number" value={hp} onChange={handleHpChange} />
 
-      <label htmlFor="engineDisplacement">Engine Displacement</label>
-      <input
-        id="engineDisplacement"
-        value={engineDisplacement}
-        type="number"
-        onChange={handleEngineDisplacementChange}
-      />
-
       <label htmlFor="fuel">Fuel</label>
-      <input id="fuel" value={fuel} type="text" onChange={handleFuelChange} />
+      <select id="fuel" onChange={handleFuelChange}>
+        <option selected disabled hidden></option>
+        <option value="diesel">Diesel</option>
+        <option value="gasoline">Gasoline</option>
+        <option value="eletric">Eletric</option>
+        <option value="hybrid">Hybrid</option>
+      </select>
 
-      <button type="submit">Edit announcement</button>
+      <button type="submit">Create</button>
     </form>
   );
 }
