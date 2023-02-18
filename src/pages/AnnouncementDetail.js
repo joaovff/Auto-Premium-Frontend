@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { deleteAnnouncement, getAnnouncement } from "../api";
+import { deleteAnnouncement, getAnnouncement, getUser } from "../api";
 import { Link } from "react-router-dom";
 
 import {
@@ -33,8 +33,8 @@ export default function Simple() {
     async function handleGetAnnouncementDetail() {
       const response = await getAnnouncement(announcementId);
       setAnnouncement(response.data);
+      console.log(announcement);
     }
-
     handleGetAnnouncementDetail();
   }, [announcementId]);
 
@@ -42,9 +42,13 @@ export default function Simple() {
     await deleteAnnouncement(announcementId);
     navigate("/");
   }
+
   return announcement ? (
     <Container maxW={"7xl"}>
-      <Avatar bg="teal.500" style={{ marginTop: "25px" }} />
+      <Link to={`/profile/${announcement.user._id}`}>
+        <Avatar bg="teal.500" style={{ marginTop: "25px" }} />
+      </Link>
+      <p>{announcement.user.name}</p>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}

@@ -35,8 +35,11 @@ export const verify = (token) => {
 };
 
 export const updateAnnouncement = (announcementId) => {
-  return axios.put(`${BASE_URL}/announcements/${announcementId}`, announcementId)
-}
+  return axios.put(
+    `${BASE_URL}/announcements/${announcementId}`,
+    announcementId
+  );
+};
 
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
@@ -46,4 +49,8 @@ export const getMakes = () => {
   return axios.get(
     "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json"
   );
+};
+
+export const getUser = (userId) => {
+  return axios.get(`${BASE_URL}/profile/${userId}`);
 };

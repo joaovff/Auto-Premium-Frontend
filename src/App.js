@@ -20,6 +20,7 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import UserDetail from "./pages/UserDetail";
 function App() {
   return (
     <div className="App">
@@ -48,6 +49,7 @@ function App() {
             path="/announcements/edit/:announcementId"
             element={<EditAnnouncement />}
           />
+          <Route path="/profile/:userId" element={<UserDetail />} />
         </Routes>
       </ChakraProvider>
     </div>
