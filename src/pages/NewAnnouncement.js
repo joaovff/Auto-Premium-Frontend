@@ -5,14 +5,17 @@ import { createAnnouncement, getMakes, uploadImage } from "../api";
 function NewAnnouncement() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState(null);
   const [make, setMake] = useState("");
   const [model, setModel] = useState("");
+  const [color, setColor] = useState("");
   const [year, setYear] = useState("");
   const [kms, setKms] = useState(0);
+  const [image, setImage] = useState(null);
   const [price, setPrice] = useState(0);
-
-  const [carMakes, setCarMakes] = useState([]);
+  const [localization, setLocalization] = useState("");
+  const [hp, setHp] = useState(0);
+  const [engineDisplacement, setEngineDisplacement] = useState(0);
+  const [fuel, setFuel] = useState("");
 
   const navigate = useNavigate();
 
@@ -24,65 +27,76 @@ function NewAnnouncement() {
     setDescription(event.target.value);
   }
 
-  function handleKmsChange(event) {
-    setKms(event.target.value);
-  }
-  function handleYearChange(event) {
-    setYear(event.target.value);
-  }
   function handleMakeChange(event) {
     setMake(event.target.value);
   }
+
   function handleModelChange(event) {
     setModel(event.target.value);
+  }
+
+  function handleColorChange(event) {
+    setColor(event.target.value);
+  }
+
+  function handleYearChange(event) {
+    setYear(event.target.value);
+  }
+
+  function handleKmsChange(event) {
+    setKms(event.target.value);
   }
 
   function handleImageSelect(event) {
     setImage(event.target.files[0]);
   }
+
   function handlePriceChange(event) {
     setPrice(event.target.value);
   }
+
+  function handleLocalizationChange(event) {
+    setLocalization(event.target.value);
+  }
+
+  function handleHpChange(event) {
+    setHp(event.target.value);
+  }
+
+  function handleEngineDisplacementChange(event) {
+    setEngineDisplacement(event.target.value);
+  }
+
+  function handleFuelChange(event) {
+    setFuel(event.target.value);
+  }
+
   async function handleSubmitForm(event) {
     event.preventDefault();
-    //1. Upload the image through the backend
+/*     //1. Upload the image through the backend
     const uploadData = new FormData();
     uploadData.append("fileName", image);
-    const response = await uploadImage(uploadData);
+    const response = await uploadImage(uploadData); */
 
     //2. Once we get the imageUrl -> create a project
     //with title, description and imageUrl
     await createAnnouncement({
       title,
       description,
-      image: response.data.fileUrl,
       make,
       model,
+      color,
       year,
       kms,
       price,
+      localization,
+      hp,
+      engineDisplacement,
+      fuel,
     });
 
-    console.log("Created!");
     navigate("/");
   }
-
-  useEffect(() => {
-    async function getAllMakes() {
-      const response = await getMakes();
-      setCarMakes(
-        response.data.Results.sort((a, b) => {
-          if (a.MakeName < b.MakeName) {
-            return -1;
-          } else if (a.MakeName > b.MakeName) {
-            return 1;
-          }
-          return 0;
-        })
-      );
-    }
-    getAllMakes();
-  }, []);
 
   return (
     <form
@@ -107,20 +121,9 @@ function NewAnnouncement() {
         value={description}
         onChange={handleDescriptionChange}
       />
-      <label htmlFor="image">Image</label>
-      <input id="image" type="file" multiple onChange={handleImageSelect} />
 
       <label htmlFor="make">Make</label>
-      <select id="make" onChange={handleMakeChange}>
-        {carMakes &&
-          carMakes.map((make) => {
-            return (
-              <option key={make.MakeId} value={make.MakeName}>
-                {make.MakeName}
-              </option>
-            );
-          })}
-      </select>
+      <input id="make" type="text" value={make} onChange={handleMakeChange} />
 
       <label htmlFor="model">Model</label>
       <input
@@ -130,11 +133,22 @@ function NewAnnouncement() {
         onChange={handleModelChange}
       />
 
+      <label htmlFor="color">Color</label>
+      <input
+        id="color"
+        type="text"
+        value={color}
+        onChange={handleColorChange}
+      />
+
       <label htmlFor="year">Year</label>
       <input id="year" type="number" value={year} onChange={handleYearChange} />
 
       <label htmlFor="kms">Kms</label>
       <input id="kms" type="number" value={kms} onChange={handleKmsChange} />
+
+      <label htmlFor="image">Image</label>
+      <input id="image" type="file" multiple onChange={handleImageSelect} />
 
       <label htmlFor="price">Price</label>
       <input
@@ -144,7 +158,29 @@ function NewAnnouncement() {
         onChange={handlePriceChange}
       />
 
-      <button type="submit">Create announcement</button>
+      <label htmlFor="localization">Localization</label>
+      <input
+        id="localization"
+        type="text"
+        value={localization}
+        onChange={handleLocalizationChange}
+      />
+
+      <label htmlFor="hp">Horse Power</label>
+      <input id="hp" type="number" value={hp} onChange={handleHpChange} />
+
+      <label htmlFor="engineDisplacement">Engine Displacement</label>
+      <input
+        id="engineDisplacement"
+        value={engineDisplacement}
+        type="number"
+        onChange={handleEngineDisplacementChange}
+      />
+
+      <label htmlFor="fuel">Fuel</label>
+      <input id="fuel" value={fuel} type="text" onChange={handleFuelChange} />
+
+      <button type="submit">Edit announcement</button>
     </form>
   );
 }

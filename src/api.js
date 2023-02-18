@@ -34,9 +34,13 @@ export const verify = (token) => {
   });
 };
 
-export const updateAnnouncement = (announcementId) => {
-  return axios.put(`${BASE_URL}/announcements/${announcementId}`, announcementId)
-}
+export const updateAnnouncement = (announcementId, announcement
+  ) => {
+  return axios.put(
+    `${BASE_URL}/announcements/edit/${announcementId}`,
+    announcement
+  );
+};
 
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
