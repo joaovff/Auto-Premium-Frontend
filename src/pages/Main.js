@@ -40,7 +40,7 @@ function Main() {
       <SearchBar handleSearch={handleSearch} />
       {filteredAnnouncements.map((item) => {
         return (
-          <Center py={6}>
+          <Center key={item._id} py={6}>
             <Box
               w="xs"
               rounded={"sm"}

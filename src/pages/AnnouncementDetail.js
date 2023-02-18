@@ -20,9 +20,11 @@ import {
   ListItem,
   CircularProgress,
   AvatarGroup,
+  Spinner,
 } from "@chakra-ui/react";
 import { MdLocalShipping } from "react-icons/md";
 import { Avatar, AvatarBadge, Skeleton } from "@chakra-ui/react";
+import { Divider } from "antd";
 
 export default function Simple() {
   const [announcement, setAnnouncement] = useState();
@@ -45,10 +47,6 @@ export default function Simple() {
 
   return announcement ? (
     <Container maxW={"7xl"}>
-      <Link to={`/profile/${announcement.user._id}`}>
-        <Avatar bg="teal.500" style={{ marginTop: "25px" }} />
-      </Link>
-      <p>{announcement.user.name}</p>
       <SimpleGrid
         columns={{ base: 1, lg: 2 }}
         spacing={{ base: 8, md: 10 }}
@@ -65,6 +63,7 @@ export default function Simple() {
             h={{ base: "100%", sm: "400px", lg: "350px" }}
           />
         </Flex>
+
         <Stack spacing={{ base: 6, md: 10 }}>
           <Box as={"header"}>
             <Heading
@@ -164,13 +163,36 @@ export default function Simple() {
               </List>
             </Box>
           </Stack>
+          <Divider />
+          <Text
+            fontSize={{ base: "16px", lg: "18px" }}
+            fontWeight={"500"}
+            textTransform={"uppercase"}
+            mb={"4"}
+            style={{ marginBottom: "-8%" }}
+          >
+            Contacts
+          </Text>
+          {announcement.user ? (
+            <>
+              <Link to={`/profile/${announcement.user._id}`}>
+                <Avatar bg="teal.500" style={{ marginTop: "25px" }} />
+                <Text marginTop="10px">{announcement.user.name}</Text>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Spinner color="red.500" />
+              <Text>Loading seller info</Text>
+            </>
+          )}
+          <Link
+            to={`/announcements/edit/${announcement._id}`}
+            style={{ color: "#0000EE" }}
+          >
+            <Text>Edit</Text>
+          </Link>
         </Stack>
-        <Link
-          to={`/announcements/edit/${announcement._id}`}
-          style={{ color: "#0000EE" }}
-        >
-          Edit
-        </Link>
       </SimpleGrid>
     </Container>
   ) : (
