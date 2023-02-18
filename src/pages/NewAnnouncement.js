@@ -199,6 +199,14 @@ function NewAnnouncement() {
       <label htmlFor="hp">Horse Power</label>
       <input id="hp" type="number" value={hp} onChange={handleHpChange} />
 
+      <label htmlFor="engineDisplacement">Engine Displacement</label>
+      <input
+        id="engineDisplacement"
+        type="number"
+        value={engineDisplacement}
+        onChange={handleEngineDisplacementChange}
+      />
+
       <label htmlFor="fuel">Fuel</label>
       <select id="fuel" onChange={handleFuelChange}>
         <option selected disabled hidden></option>
