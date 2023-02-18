@@ -73,10 +73,10 @@ function NewAnnouncement() {
 
   async function handleSubmitForm(event) {
     event.preventDefault();
-/*     //1. Upload the image through the backend
+    //1. Upload the image through the backend
     const uploadData = new FormData();
     uploadData.append("fileName", image);
-    const response = await uploadImage(uploadData); */
+    const response = await uploadImage(uploadData);
 
     //2. Once we get the imageUrl -> create a project
     //with title, description and imageUrl
@@ -93,6 +93,7 @@ function NewAnnouncement() {
       hp,
       engineDisplacement,
       fuel,
+      image: response.data.fileUrl,
     });
 
     navigate("/");
