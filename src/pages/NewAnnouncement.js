@@ -116,7 +116,7 @@ function NewAnnouncement() {
         onChange={handlePriceChange}
       />
 
-      <button type="submit">Create Project</button>
+      <button type="submit">Create announcement</button>
     </form>
   );
 }

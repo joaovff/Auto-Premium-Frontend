@@ -8,6 +8,8 @@ import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
+import EditAnnouncement from "./pages/EditAnnouncement";
+
 function App() {
   return (
     <div className="App">
@@ -30,8 +32,11 @@ function App() {
               path="/announcements/:announcementId"
               element={<AnnouncementDetail />}
             />
+
+            <Route path="/edit/:announcementId" element={<EditAnnouncement />} />
           </Routes>
 
+          
       </ChakraProvider>
     </div>
   );

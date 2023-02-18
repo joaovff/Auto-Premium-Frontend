@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { deleteAnnouncement, getAnnouncement } from "../api";
+import { Link } from "react-router-dom";
 
 import {
   Box,
@@ -172,6 +173,9 @@ export default function Simple() {
             <Text>2-3 business days delivery</Text>
           </Stack>
         </Stack>
+        <Link to="/edit" style={{ color: "#0000EE" }}>
+          Edit
+        </Link>
       </SimpleGrid>
     </Container>
   ) : (
