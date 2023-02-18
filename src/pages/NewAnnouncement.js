@@ -116,6 +116,7 @@ function NewAnnouncement() {
 
     navigate("/");
   }
+  
 
   return (
     <form

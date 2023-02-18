@@ -403,9 +403,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+        <NavLink to="/">
+          <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
+            <img src="aplogo.png" width={"50px"} />
+          </Text>
+        </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -430,8 +432,9 @@ const NavItem = ({ icon, children, ...rest }) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "black",
           color: "white",
+          transition: "0.5s"
         }}
         {...rest}
       >
@@ -489,7 +492,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        Logo
+        <img src="aplogo.png" width={"35px"} />
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
@@ -507,7 +510,7 @@ const MobileNav = ({ onOpen, ...rest }) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Avatar src="https://bit.ly/broken-link" size='sm' />
+                <Avatar src="https://bit.ly/broken-link" size="sm" />
 
                 <VStack
                   display={{ base: "none", md: "flex" }}
