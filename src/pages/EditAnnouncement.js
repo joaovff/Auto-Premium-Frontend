@@ -48,11 +48,11 @@ function EditAnnouncement() {
   function handleKmsChange(event) {
     setKms(event.target.value);
   }
-  /* 
-  function handleImageSelect(event) {
-    setImage(event.target.files[0]);
-  } */
 
+  /*   function handleImageSelect(event) {
+    setImage(event.target.files[0]);
+  }
+ */
   function handlePriceChange(event) {
     setPrice(event.target.value);
   }
@@ -78,8 +78,8 @@ function EditAnnouncement() {
     //1. Upload the image through the backend
     /*     const uploadData = new FormData();
     uploadData.append("fileName", image);
-    const response = await uploadImage(uploadData); */
-
+    const response = await uploadImage(uploadData);
+ */
     //2. Once we get the imageUrl -> create a project
     //with title, description and imageUrl
     await updateAnnouncement(announcementId, {
@@ -95,6 +95,8 @@ function EditAnnouncement() {
       hp,
       engineDisplacement,
       fuel,
+      /*       image: response.data.fileUrl,
+       */
     });
 
     navigate("/");
