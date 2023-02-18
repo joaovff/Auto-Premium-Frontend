@@ -58,7 +58,7 @@ export default function Simple() {
           <Image
             rounded={"md"}
             alt={announcement.title}
-            src={announcement.image[0]}
+            src={announcement.image}
             fit={"cover"}
             align={"center"}
             w={"100%"}

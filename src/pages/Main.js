@@ -52,7 +52,7 @@ function Main() {
             >
               <Box h={"200px"}>
                 <Img
-                  src={item.image[0]}
+                  src={item.image}
                   roundedTop={"sm"}
                   objectFit="cover"
                   h="full"
