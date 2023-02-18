@@ -155,7 +155,6 @@ const MobileNav = ({ onOpen, ...rest }) => {
     }
     handleUser();
   }, [loggedUser]);
-  }, [loggedUser]);
 
   return (
     <Flex
