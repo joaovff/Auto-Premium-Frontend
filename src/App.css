@@ -28,3 +28,10 @@
   color: #61dafb;
 }
 
+.sidebar {
+  background-image: url("/public/bg.jpg");
+  background-position: 24%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-color: black;
+}

@@ -51,12 +51,21 @@ const LinkItems = [
 ];
 export default function SidebarWithHeader({ children }) {
   const { loggedUser, logout } = useContext(UserContext);
-  // será usado para renderização condicional, if (LoggedUser)... =>
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const [user, setUser] = useState("");
+
+  useEffect(() => {
+    async function handleUser() {
+      const response = await getUser(loggedUser._id);
+      setUser(response.data);
+    }
+    handleUser();
+  }, [loggedUser]);
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       {" "}
-      {/* bg altera a cor background das childs da navbar(area principal)  */}
+      {/* bg: altera a cor background das childs da navbar(area principal)  */}
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
@@ -74,7 +83,12 @@ export default function SidebarWithHeader({ children }) {
           <SidebarContent onClose={onClose} />
         </DrawerContent>
       </Drawer>
-      <MobileNav onOpen={onOpen} />
+      <MobileNav
+        onOpen={onOpen}
+        loggedUser={loggedUser}
+        logout={logout}
+        user={user}
+      />
       <Box ml={{ base: 0, md: 60 }} p="4">
         {children}
       </Box>
@@ -86,12 +100,12 @@ const SidebarContent = ({ onClose, ...rest }) => {
   return (
     <Box
       transition="3s ease"
-      bg="black"
       borderRight="1px"
       borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
+      className="sidebar"
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
@@ -145,17 +159,7 @@ const NavItem = ({ icon, children, ...rest }) => {
   );
 };
 
-const MobileNav = ({ onOpen, ...rest }) => {
-  const { loggedUser, logout } = useContext(UserContext);
-  const [user, setUser] = useState("");
-  useEffect(() => {
-    async function handleUser() {
-      const response = await getUser(loggedUser._id);
-      setUser(response.data);
-    }
-    handleUser();
-  }, [loggedUser]);
-
+const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
   return (
     <Flex
       ml={{ base: 0, md: 60 }}

@@ -81,8 +81,7 @@ function Main() {
                     .toLocaleString("pt-pt", {
                       minimumFractionDigits: 2,
                     })
-                    .slice(0, -3)}{" "}
-                  Km
+                    .slice(0, -3)} Km • {item.hp} HP • {item.fuel.charAt(0).toUpperCase() + item.fuel.slice(1)}
                 </Text>
               </Box>
               <HStack borderTop={"1px"} color="black">

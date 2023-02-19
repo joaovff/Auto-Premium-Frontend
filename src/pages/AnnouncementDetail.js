@@ -35,9 +35,9 @@ export default function Simple() {
     async function handleGetAnnouncementDetail() {
       const response = await getAnnouncement(announcementId);
       setAnnouncement(response.data);
-      console.log(announcement);
     }
     handleGetAnnouncementDetail();
+    console.log(announcement);
   }, [announcementId]);
 
   async function handleDeleteAnnouncement() {
@@ -87,7 +87,10 @@ export default function Simple() {
             divider={<StackDivider />}
           >
             <VStack spacing={{ base: 4, sm: 6 }}>
-              <Text fontSize={"lg"}>{announcement.description}</Text>
+              <Text fontSize={"lg"}>
+                {announcement.description.charAt(0).toUpperCase() +
+                  announcement.description.slice(1)}
+              </Text>
             </VStack>
             <Box>
               <Text
@@ -152,7 +155,8 @@ export default function Simple() {
                   <Text as={"span"} fontWeight={"bold"}>
                     Color:
                   </Text>{" "}
-                  {announcement.color}
+                  {announcement.color.charAt(0).toUpperCase() +
+                    announcement.color.slice(1)}
                 </ListItem>
                 <ListItem>
                   <Text as={"span"} fontWeight={"bold"}>
