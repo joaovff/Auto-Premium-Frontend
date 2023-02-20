@@ -21,6 +21,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import UserDetail from "./pages/UserDetail";
+import UserSettings from "./pages/UserSettings";
 function App() {
   return (
     <div className="App">
@@ -50,6 +51,8 @@ function App() {
               element={<EditAnnouncement />}
             />
             <Route path="/profile/:userId" element={<UserDetail />} />
+
+            <Route path="/profile/settings/:userId" element={<UserSettings/>} />
           </Routes>
         </Navbar>
       </ChakraProvider>

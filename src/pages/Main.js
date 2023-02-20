@@ -25,6 +25,7 @@ function Main() {
   const [announcements, setAnnoucements] = useState([]);
 
   const [liked, setLiked] = useState(false);
+  const [favorites, setFavorites] = useState([]);
 
   useEffect(() => {
     async function handleGetAllAnnouncements() {
@@ -34,6 +35,11 @@ function Main() {
     }
     handleGetAllAnnouncements();
   }, []);
+
+  
+  function addToFavorites(itemId) {
+    setFavorites([...favorites, itemId]);
+  }
 
   return (
     <div>
@@ -111,7 +117,9 @@ function Main() {
                 >
                   {liked ? (
                     <BsHeartFill fill="red" fontSize={"24px"} />
-                  ) : (
+                  ) : 
+                  liked ? addToFavorites(item) :                  
+                  (
                     <BsHeart fontSize={"24px"} />
                   )}
                 </Flex>

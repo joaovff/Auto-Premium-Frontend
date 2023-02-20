@@ -55,3 +55,8 @@ export const getMakes = () => {
 export const getUser = (userId) => {
   return axios.get(`${BASE_URL}/profile/${userId}`);
 };
+
+
+export const userSettings = (userId) => {
+  return axios.get(`${BASE_URL}/profile/settings/${userId}`)
+}

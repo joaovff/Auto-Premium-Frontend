@@ -43,11 +43,12 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/user.context";
 import { getUser } from "../api";
 
+
 const LinkItems = [
   { name: "Home", icon: FiHome, to: "/" },
   { name: "Sell a Car", icon: FiPlusSquare, to: "/announcements/create" },
   { name: "Favourites", icon: FiHeart, to: "/" },
-  { name: "Settings", icon: FiSettings, to: "/" },
+  { name: "Settings", icon: FiSettings, to: `/`},
 ];
 export default function SidebarWithHeader({ children }) {
   const { loggedUser, logout } = useContext(UserContext);
