@@ -35,3 +35,9 @@
   background-repeat: no-repeat;
   background-color: black;
 }
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
