@@ -42,6 +42,7 @@ function Login() {
     try {
       const response = await login({ email, password });
       localStorage.setItem("authToken", response.data);
+      console.log(response.data)
       authenticateUser();
       navigate("/");
     } catch (e) {

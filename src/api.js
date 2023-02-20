@@ -60,3 +60,14 @@ export const getUser = (userId) => {
 export const userSettings = (userId) => {
   return axios.get(`${BASE_URL}/profile/settings/${userId}`)
 }
+
+export const updateFavorites = (userId, favoritesId) => {
+  return axios.put(
+    `${BASE_URL}/profile/favorites/${userId}`,
+    favoritesId
+  );
+}
+
+export const getFavorites = (userId) => {
+  return axios.get(`${BASE_URL}/profile/favorites/${userId}`);
+}

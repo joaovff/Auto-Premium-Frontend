@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { getAllAnnouncements, getMakes } from "../api";
 import SearchBar from "../components/SearchBar";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   Box,
   Heading,
@@ -37,6 +37,10 @@ import {
 import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
 
 import { ArrowUpDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { UserContext } from "../context/user.context";
+import { updateFavorites, getFavorites } from "../api";
+
+
 function Main() {
   function handleSearch(keyword) {
     const filtered = announcements.filter((announcement) => {
@@ -47,7 +51,8 @@ function Main() {
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
   const [announcements, setAnnoucements] = useState([]);
 
-  const [liked, setLiked] = useState(false);
+  const { loggedUser } = useContext(UserContext);
+
   const [favorites, setFavorites] = useState([]);
 
   function sortByPrice() {
@@ -75,9 +80,22 @@ function Main() {
     handleGetAllAnnouncements();
   }, []);
 
+
+
+
   function addToFavorites(itemId) {
     setFavorites([...favorites, itemId]);
+    updateFavorites(loggedUser._id, {itemId: itemId});
   }
+
+  useEffect(()=> {
+    async function handleFavorites() {
+      const response = await getFavorites(loggedUser._id)
+      console.log(response.data)
+  
+    }
+    handleFavorites()
+  }, [loggedUser])
 
   return (
     <div>
@@ -247,13 +265,11 @@ function Main() {
                     justifyContent={"space-between"}
                     roundedBottom={"sm"}
                     cursor="pointer"
-                    onClick={() => setLiked(!liked)}
+                    onClick={() => addToFavorites(item._id)}
                   >
-                    {liked ? (
+                    {favorites.includes(item._id) ? (
                       <BsHeartFill fill="red" fontSize={"24px"} />
-                    ) : liked ? (
-                      addToFavorites(item)
-                    ) : (
+                    )  : (
                       <BsHeart fontSize={"24px"} />
                     )}
                   </Flex>

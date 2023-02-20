@@ -13,6 +13,7 @@ function UserProviderWrapper({ children }) {
       try {
         const response = await verify(storedToken);
         setLoggedUser(response.data);
+        console.log(response.data)
       } catch (e) {
         setLoggedUser(null);
       }
