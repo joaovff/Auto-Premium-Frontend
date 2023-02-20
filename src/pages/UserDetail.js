@@ -74,7 +74,9 @@ function UserDetail() {
               }}
             >
               {user && user.announcements.length < 1 ? (
-                <Text color="grey">This user has not posted announcements yet.</Text>
+                <Text color="grey">
+                  This user has not posted announcements yet
+                </Text>
               ) : (
                 <>
                   {user &&

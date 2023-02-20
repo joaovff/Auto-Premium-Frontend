@@ -1,3 +1,15 @@
+import {
+  FormControl,
+  FormHelperText,
+  FormLabel,
+  Heading,
+  Stack,
+  Text,
+  Textarea,
+  Input,
+  Select,
+  Button,
+} from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createAnnouncement, getMakes, uploadImage } from "../api";
@@ -11,10 +23,10 @@ function NewAnnouncement() {
   const [year, setYear] = useState("");
   const [kms, setKms] = useState(0);
   const [image, setImage] = useState(null);
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(null);
   const [localization, setLocalization] = useState("");
-  const [hp, setHp] = useState(0);
-  const [engineDisplacement, setEngineDisplacement] = useState(0);
+  const [hp, setHp] = useState(null);
+  const [engineDisplacement, setEngineDisplacement] = useState(null);
   const [fuel, setFuel] = useState("");
 
   const [carMakes, setCarMakes] = useState([]);
@@ -116,10 +128,9 @@ function NewAnnouncement() {
 
     navigate("/");
   }
-  
 
   return (
-    <form
+    <form className="create"
       onSubmit={handleSubmitForm}
       style={{
         display: "flex",
@@ -127,97 +138,187 @@ function NewAnnouncement() {
         flexDirection: "column",
       }}
     >
-      <label htmlFor="title">Title</label>
-      <input
-        id="title"
-        type="text"
-        value={title}
-        onChange={handleTitleChange}
-      />
-      <label htmlFor="description">Description</label>
-      <input
-        id="description"
-        type="text"
-        value={description}
-        onChange={handleDescriptionChange}
-      />
+      <Heading>Sell your car:</Heading>
 
-      <label htmlFor="make">Make</label>
-      <select id="make" onChange={handleMakeChange}>
-        <option selected disabled hidden></option>
+      <FormControl isRequired>
+        <FormLabel htmlFor="title">Title</FormLabel>
+        <Input
+          id="title"
+          type="text"
+          value={title}
+          onChange={handleTitleChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
 
-        {carMakes &&
-          carMakes.map((make) => {
-            return (
-              <option key={make.MakeId} value={make.MakeName}>
-                {make.MakeName}
-              </option>
-            );
-          })}
-      </select>
+      <FormControl isRequired>
+        <FormLabel htmlFor="description" mb="8px">
+          Description:
+        </FormLabel>
+        <Textarea
+          id="description"
+          type="text"
+          value={description}
+          onChange={handleDescriptionChange}
+          placeholder="Talk about the extras and a short description of the them or about the car."
+          size="sm"
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
 
-      <label htmlFor="model">Model</label>
-      <input
-        id="model"
-        type="text"
-        value={model}
-        onChange={handleModelChange}
-      />
+      <FormControl isRequired>
+        <FormLabel htmlFor="make" mb="8px">
+          Make:
+        </FormLabel>
 
-      <label htmlFor="color">Color</label>
-      <input
-        id="color"
-        type="text"
-        value={color}
-        onChange={handleColorChange}
-      />
+        <Select
+          variant="outline"
+          id="make"
+          onChange={handleMakeChange}
+          size="md"
+          style={{ backgroundColor: "white" }}
+        >
+          <option selected disabled hidden>
+            {" "}
+          </option>
 
-      <label htmlFor="year">Year</label>
-      <input id="year" type="number" value={year} onChange={handleYearChange} />
+          {carMakes &&
+            carMakes.map((make) => {
+              return (
+                <option key={make.MakeId} value={make.MakeName}>
+                  {make.MakeName}
+                </option>
+              );
+            })}
+        </Select>
+      </FormControl>
 
-      <label htmlFor="kms">Kms</label>
-      <input id="kms" type="number" value={kms} onChange={handleKmsChange} />
+      <FormControl isRequired>
+        <FormLabel htmlFor="model">Model</FormLabel>
+        <Input
+          id="model"
+          type="text"
+          value={model}
+          onChange={handleModelChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
 
-      <label htmlFor="image">Image</label>
-      <input id="image" type="file" multiple onChange={handleImageSelect} />
+      <FormControl isRequired>
+        <FormLabel htmlFor="color">Color</FormLabel>
+        <Input
+          id="color"
+          type="text"
+          value={color}
+          onChange={handleColorChange}
+          style={{ backgroundColor: "white" }}
+          placeholder="Black"
+        />
+      </FormControl>
 
-      <label htmlFor="price">Price</label>
-      <input
-        id="price"
-        type="number"
-        value={price}
-        onChange={handlePriceChange}
-      />
+      <FormControl isRequired>
+        <FormLabel htmlFor="year">Year</FormLabel>
+        <Input
+          id="year"
+          type="number"
+          value={year}
+          onChange={handleYearChange}
+          style={{ backgroundColor: "white" }}
+          placeholder="2020"
+        />
+      </FormControl>
 
-      <label htmlFor="localization">Localization</label>
-      <input
-        id="localization"
-        type="text"
-        value={localization}
-        onChange={handleLocalizationChange}
-      />
+      <FormControl isRequired>
+        <FormLabel htmlFor="kms">Kms</FormLabel>
+        <Input
+          id="kms"
+          type="number"
+          value={kms}
+          onChange={handleKmsChange}
+          style={{ backgroundColor: "white" }}
+          placeholder="15000"
+        />
+      </FormControl>
 
-      <label htmlFor="hp">Horse Power</label>
-      <input id="hp" type="number" value={hp} onChange={handleHpChange} />
+      <FormControl isRequired>
+        <FormLabel htmlFor="image">Image</FormLabel>
+        <Input
+          id="image"
+          type="file"
+          multiple
+          onChange={handleImageSelect}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
 
-      <label htmlFor="engineDisplacement">Engine Displacement</label>
-      <input
-        id="engineDisplacement"
-        type="number"
-        value={engineDisplacement}
-        onChange={handleEngineDisplacementChange}
-      />
+      <FormControl isRequired>
+        <FormLabel htmlFor="price">Price</FormLabel>
+        <Input
+          id="price"
+          type="number"
+          /* multiple */
+          onChange={handlePriceChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
 
-      <label htmlFor="fuel">Fuel</label>
-      <select id="fuel" onChange={handleFuelChange}>
-        <option selected disabled hidden></option>
-        <option value="diesel">Diesel</option>
-        <option value="gasoline">Gasoline</option>
-        <option value="eletric">Eletric</option>
-        <option value="hybrid">Hybrid</option>
-      </select>
+      <FormControl isRequired>
+        <FormLabel htmlFor="localization">Localization</FormLabel>
+        <Input
+          id="localization"
+          type="text"
+          value={localization}
+          onChange={handleLocalizationChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
 
-      <button type="submit">Create</button>
+      <FormControl isRequired>
+        <FormLabel htmlFor="hp">Horse Power</FormLabel>
+        <Input
+          id="hp"
+          type="number"
+          value={hp}
+          onChange={handleHpChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel htmlFor="engineDisplacement">Engine Displacement</FormLabel>
+        <Input
+          id="engineDisplacement"
+          type="number"
+          value={engineDisplacement}
+          onChange={handleEngineDisplacementChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel htmlFor="fuel" mb="8px">
+          Fuel:
+        </FormLabel>
+
+        <Select
+          variant="outline"
+          id="fuel"
+          onChange={handleFuelChange}
+          size="md"
+          style={{ backgroundColor: "white" }}
+        >
+          <option selected disabled hidden>
+            {" "}
+          </option>
+          <option selected disabled hidden></option>
+          <option value="diesel">Diesel</option>
+          <option value="gasoline">Gasoline</option>
+          <option value="eletric">Eletric</option>
+          <option value="hybrid">Hybrid</option>
+        </Select>
+      </FormControl>
+
+      <Button type="submit">Create</Button>
     </form>
   );
 }

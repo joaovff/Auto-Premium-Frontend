@@ -1,3 +1,5 @@
+import { Search2Icon } from "@chakra-ui/icons";
+import { Flex, FormLabel, InputGroup, InputLeftAddon } from "@chakra-ui/react";
 import { Divider, Input } from "antd";
 import { useState } from "react";
 
@@ -11,15 +13,20 @@ function SearchBar(props) {
   }
 
   return (
-    <Divider>
-      <label htmlFor="search">Search</label>
-      <Input
-        value={keyword}
-        type="text"
-        onChange={handleKeywordInput}
-        id="search"
-      />
-    </Divider>
+    <Flex>
+      <InputGroup>
+        <InputLeftAddon style={{ backgroundColor: "white", border: "0" }}
+          children={<Search2Icon style={{ backgroundColor: "white" }} />}
+        />
+        <Input
+          value={keyword}
+          type="text"
+          onChange={handleKeywordInput}
+          id="search"
+          style={{width: "250px"}}
+        />
+      </InputGroup>
+    </Flex>
   );
 }
 

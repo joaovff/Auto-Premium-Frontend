@@ -31,6 +31,7 @@ export default function Simple() {
   const { announcementId } = useParams();
   const navigate = useNavigate();
 
+
   useEffect(() => {
     async function handleGetAnnouncementDetail() {
       const response = await getAnnouncement(announcementId);
@@ -130,7 +131,8 @@ export default function Simple() {
                 <ListItem>
                   <Text as={"span"} fontWeight={"bold"}>
                     Kms:
-                  </Text>{" "}
+                  </Text>
+                  {"  "}
                   {announcement.kms
                     .toLocaleString("pt-pt", {
                       minimumFractionDigits: 2,

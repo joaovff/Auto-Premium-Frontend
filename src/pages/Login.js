@@ -4,7 +4,6 @@ import { login } from "../api";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/user.context";
 import { Input, InputLeftElement } from "@chakra-ui/react";
-import { useToast } from "@chakra-ui/react";
 import {
   Button,
   Flex,
@@ -20,7 +19,6 @@ import {
   InputRightElement,
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { signup } from "../api";
 import { MdOutlineEmail } from "react-icons/md";
 
 function Login() {

@@ -22,8 +22,8 @@ import {
 } from "@chakra-ui/react";
 import UserDetail from "./pages/UserDetail";
 import UserSettings from "./pages/UserSettings";
+import { Footer } from "antd/es/layout/layout";
 function App() {
-
   return (
     <div className="App">
       <ChakraProvider>
@@ -51,10 +51,7 @@ function App() {
               path="/announcements/edit/:announcementId"
               element={<EditAnnouncement />}
             />
-            <Route
-              path="/profile/:userId"
-              element={<UserDetail />}
-            />
+            <Route path="/profile/:userId" element={<UserDetail />} />
 
             <Route
               path="/profile/settings/:userId"
