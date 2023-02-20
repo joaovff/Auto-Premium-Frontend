@@ -73,86 +73,92 @@ function UserDetail() {
                 justifyContent: "center",
               }}
             >
-              {user &&
-                user.announcements.map((item) => {
-                  return (
-                    <Center key={item._id} py={6}>
-                      <Box
-                        w="xs"
-                        rounded={"sm"}
-                        my={5}
-                        mx={[0, 5]}
-                        overflow={"hidden"}
-                        bg="white"
-                        boxShadow={"2xl"}
-                      >
-                        <Box h={"200px"}>
-                          <Img
-                            src={item.image}
-                            roundedTop={"sm"}
-                            objectFit="cover"
-                            h="full"
-                            w="full"
-                            alt={"Blog Image"}
-                          />
-                        </Box>
-                        <Box p={4}>
+              {user && user.announcements.length < 1 ? (
+                <Text color="grey">This user has not posted announcements yet.</Text>
+              ) : (
+                <>
+                  {user &&
+                    user.announcements.map((item) => {
+                      return (
+                        <Center key={item._id} py={6}>
                           <Box
-                            bg="black"
-                            display={"inline-block"}
-                            px={2}
-                            py={1}
-                            color="white"
-                            mb={2}
+                            w="xs"
+                            rounded={"sm"}
+                            my={5}
+                            mx={[0, 5]}
+                            overflow={"hidden"}
+                            bg="white"
+                            boxShadow={"2xl"}
                           >
-                            <Text fontSize={"xs"} fontWeight="medium">
-                              {item.price.toLocaleString("pt-pt", {
-                                minimumFractionDigits: 2,
-                              })}{" "}
-                              €
-                            </Text>
-                          </Box>
-                          <Heading
-                            color={"black"}
-                            fontSize={"2xl"}
-                            noOfLines={1}
-                          >
-                            {item.title}
-                          </Heading>
-                          <Text color={"gray.500"} noOfLines={2}>
-                            {item.kms
-                              .toLocaleString("pt-pt", {
-                                minimumFractionDigits: 2,
-                              })
-                              .slice(0, -3)}{" "}
-                            Km • {item.hp} HP •{" "}
-                            {item.fuel.charAt(0).toUpperCase() +
-                              item.fuel.slice(1)}{" "}
-                            • {item.year}
-                          </Text>
-                        </Box>
-                        <HStack borderTop={"1px"} color="black">
-                          <Flex
-                            p={4}
-                            alignItems="center"
-                            justifyContent={"space-between"}
-                            roundedBottom={"sm"}
-                            w="full"
-                          >
-                            <Link to={`/announcements/${item._id}`}>
-                              <Text fontSize={"md"} fontWeight={"semibold"}>
-                                View more
+                            <Box h={"200px"}>
+                              <Img
+                                src={item.image}
+                                roundedTop={"sm"}
+                                objectFit="cover"
+                                h="full"
+                                w="full"
+                                alt={"Blog Image"}
+                              />
+                            </Box>
+                            <Box p={4}>
+                              <Box
+                                bg="black"
+                                display={"inline-block"}
+                                px={2}
+                                py={1}
+                                color="white"
+                                mb={2}
+                              >
+                                <Text fontSize={"xs"} fontWeight="medium">
+                                  {item.price.toLocaleString("pt-pt", {
+                                    minimumFractionDigits: 2,
+                                  })}{" "}
+                                  €
+                                </Text>
+                              </Box>
+                              <Heading
+                                color={"black"}
+                                fontSize={"2xl"}
+                                noOfLines={1}
+                              >
+                                {item.title}
+                              </Heading>
+                              <Text color={"gray.500"} noOfLines={2}>
+                                {item.kms
+                                  .toLocaleString("pt-pt", {
+                                    minimumFractionDigits: 2,
+                                  })
+                                  .slice(0, -3)}{" "}
+                                Km • {item.hp} HP •{" "}
+                                {item.fuel.charAt(0).toUpperCase() +
+                                  item.fuel.slice(1)}{" "}
+                                • {item.year}
                               </Text>
-                            </Link>
-                            <Link to={`/announcements/${item._id}`}>
-                              <BsArrowUpRight />{" "}
-                            </Link>
-                          </Flex>
-                        </HStack>
-                      </Box>
-                    </Center>
-                  );
-                })}
+                            </Box>
+                            <HStack borderTop={"1px"} color="black">
+                              <Flex
+                                p={4}
+                                alignItems="center"
+                                justifyContent={"space-between"}
+                                roundedBottom={"sm"}
+                                w="full"
+                              >
+                                <Link to={`/announcements/${item._id}`}>
+                                  <Text fontSize={"md"} fontWeight={"semibold"}>
+                                    View more
+                                  </Text>
+                                </Link>
+                                <Link to={`/announcements/${item._id}`}>
+                                  <BsArrowUpRight />{" "}
+                                </Link>
+                              </Flex>
+                            </HStack>
+                          </Box>
+                        </Center>
+                      );
+                    })}
+                </>
+              )}
             </div>
           </CardFooter>
         </Stack>

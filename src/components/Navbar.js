@@ -110,9 +110,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <NavLink to="/">
-          <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-            <img src="aplogo.png" width={"50px"} />
-          </Text>
+          <img src="aplogo.png" width={"50px"} />
         </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
