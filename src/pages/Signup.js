@@ -17,10 +17,13 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../api";
+import { uploadImage } from "../api";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
+  /* const [picture, setPicture] = useState(null) */
+  const [phone, setPhone] = useState(0)
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -33,6 +36,16 @@ function Signup() {
     setName(event.target.value);
   }
 
+  /* function handlePictureSelect(event) {
+    setPicture(event.target.files[0]);
+  } */
+
+  function handlePhoneChange(event) {
+    setPhone(event.target.value);
+  }
+
+
+
   function handlePaswordChange(event) {
     setPassword(event.target.value);
   }
@@ -40,10 +53,17 @@ function Signup() {
   async function handleSubmitForm(event) {
     event.preventDefault();
     try {
-      const response = await signup({ email, name, password });
+      /* const uploadData = new FormData();
+      uploadData.append("fileName", picture);
+      const responseImage = await uploadImage(uploadData); */
+      const response = await signup({ email, name, password, /* picture, */ phone });
       if (response.data.message) {
         setPassword("");
         setEmail("");
+        setPhone(0)
+
+     /*  } else if (responseImage.data) {
+        setPicture(""); */
       } else {
         navigate("/");
       }
@@ -88,6 +108,32 @@ function Signup() {
                     type="text"
                     value={name}
                     onChange={handleNameChange}
+                    style={{ width: "300px" }}
+                  />
+                </FormControl>
+                <br/>
+              </Box>
+              {/* <Box>
+                <FormControl id="picture" isRequired>
+                  <FormLabel htmlFor="picture">Picture </FormLabel>
+                  <Input
+                    id="picture"
+                    type="file"
+                    value={picture}
+                    onChange={handlePictureSelect}
+                    style={{ width: "300px" }}
+                  />
+                </FormControl>
+                <br/>
+              </Box> */}
+              <Box>
+                <FormControl id="phone" isRequired>
+                  <FormLabel htmlFor="phone">Phone Number </FormLabel>
+                  <Input
+                    id="phone"
+                    type="number"
+                    value={phone}
+                    onChange={handlePhoneChange}
                     style={{ width: "300px" }}
                   />
                 </FormControl>
