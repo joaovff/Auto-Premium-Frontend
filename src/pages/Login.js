@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { login } from "../api";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/user.context";
-import { Input } from "@chakra-ui/react";
+import { Input, InputLeftElement } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import {
   Button,
@@ -21,6 +21,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { signup } from "../api";
+import { MdOutlineEmail } from "react-icons/md";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -52,11 +53,11 @@ function Login() {
 
   return (
     <Flex
-    minH={"100vh"}
-    align={"center"}
-    justify={"center"}
-    bg={useColorModeValue("gray.50", "gray.800")}
-    style={{ flexDirection: "column", marginTop: "-150px" }}
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+      style={{ flexDirection: "column", marginTop: "-150px" }}
     >
       <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -80,14 +81,19 @@ function Login() {
             <Box>
               <Box>
                 <FormControl id="email" isRequired>
-                  <FormLabel htmlFor="email">Email address </FormLabel>
-                  <Input
-                    id="email"
-                    type="text"
-                    value={email}
-                    onChange={handleEmailChange}
-                    style={{ width: "300px" }}
-                  />
+                  <FormLabel htmlFor="email">Email</FormLabel>
+
+                  <InputGroup>
+                    <InputLeftElement children={<MdOutlineEmail />} />
+                    <Input
+                      id="email"
+                      type="text"
+                      value={email}
+                      onChange={handleEmailChange}
+                      style={{ width: "350px" }}
+
+                    />
+                  </InputGroup>
                 </FormControl>
                 <br />
               </Box>

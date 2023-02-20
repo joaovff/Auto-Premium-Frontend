@@ -12,18 +12,22 @@ import {
   FormLabel,
   InputGroup,
   InputRightElement,
+  InputLeftElement,
+  InputLeftAddon,
 } from "@chakra-ui/react";
+import { MdEmail, MdOutlineEmail, MdPhone } from "react-icons/md";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../api";
 import { uploadImage } from "../api";
+import { BsPerson } from "react-icons/bs";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   /* const [picture, setPicture] = useState(null) */
-  const [phone, setPhone] = useState(0)
+  const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -44,8 +48,6 @@ function Signup() {
     setPhone(event.target.value);
   }
 
-
-
   function handlePaswordChange(event) {
     setPassword(event.target.value);
   }
@@ -56,13 +58,19 @@ function Signup() {
       /* const uploadData = new FormData();
       uploadData.append("fileName", picture);
       const responseImage = await uploadImage(uploadData); */
-      const response = await signup({ email, name, password, /* picture, */ phone });
+      const response = await signup({
+        email,
+        name,
+        password,
+        /* picture, */ phone,
+      });
+      console.log(response);
       if (response.data.message) {
         setPassword("");
         setEmail("");
-        setPhone(0)
+        setPhone(null);
 
-     /*  } else if (responseImage.data) {
+        /*  } else if (responseImage.data) {
         setPicture(""); */
       } else {
         navigate("/");
@@ -102,16 +110,20 @@ function Signup() {
             <Box>
               <Box>
                 <FormControl id="name" isRequired>
-                  <FormLabel htmlFor="name">Name </FormLabel>
-                  <Input
-                    id="name"
-                    type="text"
-                    value={name}
-                    onChange={handleNameChange}
-                    style={{ width: "300px" }}
-                  />
+                  <FormLabel htmlFor="name">Name</FormLabel>
+
+                  <InputGroup>
+                    <InputLeftElement children={<BsPerson />} />
+                    <Input
+                      type="text"
+                      name="name"
+                      value={name}
+                      placeholder="Name Lastname"
+                      onChange={handleNameChange}
+                    />
+                  </InputGroup>
                 </FormControl>
-                <br/>
+                <br />
               </Box>
               {/* <Box>
                 <FormControl id="picture" isRequired>
@@ -127,31 +139,39 @@ function Signup() {
                 <br/>
               </Box> */}
               <Box>
-                <FormControl id="phone" isRequired>
+                <FormControl id="phone">
                   <FormLabel htmlFor="phone">Phone Number </FormLabel>
-                  <Input
-                    id="phone"
-                    type="number"
-                    value={phone}
-                    onChange={handlePhoneChange}
-                    style={{ width: "300px" }}
-                  />
+                  <InputGroup>
+                    <InputLeftAddon children="+351" />
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      style={{ width: "300px" }}
+                      placeholder="Phone number"
+                    />
+                  </InputGroup>
                 </FormControl>
-                <br/>
+
+                <br />
               </Box>
               <Box>
                 <FormControl id="email" isRequired>
-                  <FormLabel htmlFor="email">Email address </FormLabel>
-                  <Input
-                    id="email"
-                    type="text"
-                    value={email}
-                    onChange={handleEmailChange}
-                    style={{ width: "300px" }}
-                  />
-                </FormControl>
-                <br/>
+                  <FormLabel htmlFor="email">Email</FormLabel>
 
+                  <InputGroup>
+                    <InputLeftElement children={<MdOutlineEmail />} />
+                    <Input
+                      id="email"
+                      type="text"
+                      value={email}
+                      onChange={handleEmailChange}
+                    />
+                  </InputGroup>
+                </FormControl>
+
+                <br />
               </Box>
 
               <Box>
@@ -174,9 +194,7 @@ function Signup() {
                       </Button>
                     </InputRightElement>
                   </InputGroup>
-
                 </FormControl>
-                    
               </Box>
               <form onSubmit={handleSubmitForm}>
                 <br />
@@ -184,10 +202,12 @@ function Signup() {
               </form>
             </Box>
           </HStack>
-          <br/>
+          <br />
 
           <p>Already have an account?</p>
-          <Link to="/login" style={{color: "#0000EE"}}>Login</Link>
+          <Link to="/login" style={{ color: "#0000EE" }}>
+            Login
+          </Link>
         </Stack>
       </Box>
     </Flex>
