@@ -23,6 +23,7 @@ import {
 import UserDetail from "./pages/UserDetail";
 import UserSettings from "./pages/UserSettings";
 function App() {
+
   return (
     <div className="App">
       <ChakraProvider>
@@ -50,9 +51,15 @@ function App() {
               path="/announcements/edit/:announcementId"
               element={<EditAnnouncement />}
             />
-            <Route path="/profile/:userId" element={<UserDetail />} />
+            <Route
+              path="/profile/:userId"
+              element={<UserDetail />}
+            />
 
-            <Route path="/profile/settings/:userId" element={<UserSettings/>} />
+            <Route
+              path="/profile/settings/:userId"
+              element={<UserSettings />}
+            />
           </Routes>
         </Navbar>
       </ChakraProvider>

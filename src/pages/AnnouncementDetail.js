@@ -131,7 +131,11 @@ export default function Simple() {
                   <Text as={"span"} fontWeight={"bold"}>
                     Kms:
                   </Text>{" "}
-                  {announcement.kms}
+                  {announcement.kms
+                    .toLocaleString("pt-pt", {
+                      minimumFractionDigits: 2,
+                    })
+                    .slice(0, -3)}
                 </ListItem>
                 <ListItem>
                   <Text as={"span"} fontWeight={"bold"}>
@@ -180,7 +184,19 @@ export default function Simple() {
           {announcement.user ? (
             <>
               <Link to={`/profile/${announcement.user._id}`}>
-                <Avatar bg="teal.500" style={{ marginTop: "25px" }} />
+                {!announcement.user.picture ? (
+                  <Avatar
+                    src="https://bit.ly/broken-link"
+                    size="lg"
+                    style={{ marginTop: "25px" }}
+                  />
+                ) : (
+                  <Avatar
+                    src={`${announcement.user.picture}`}
+                    size="lg"
+                    style={{ marginTop: "25px" }}
+                  />
+                )}
                 <Text marginTop="10px">{announcement.user.name}</Text>
               </Link>
             </>

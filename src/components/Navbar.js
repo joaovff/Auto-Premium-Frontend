@@ -43,12 +43,11 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/user.context";
 import { getUser } from "../api";
 
-
 const LinkItems = [
   { name: "Home", icon: FiHome, to: "/" },
   { name: "Sell a Car", icon: FiPlusSquare, to: "/announcements/create" },
   { name: "Favourites", icon: FiHeart, to: "/" },
-  { name: "Settings", icon: FiSettings, to: `/`},
+  { name: "Settings", icon: FiSettings, to: `/` },
 ];
 export default function SidebarWithHeader({ children }) {
   const { loggedUser, logout } = useContext(UserContext);
@@ -117,6 +116,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
+
       {LinkItems.map((link) => (
         <NavLink key={link.name} to={link.to}>
           <NavItem icon={link.icon}>{link.name}</NavItem>
@@ -233,14 +233,21 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
                   <NavLink to={`/profile/${user._id}`}>
                     <MenuItem>Profile</MenuItem>
                   </NavLink>
-                  <MenuItem>Settings</MenuItem>
+                  <NavLink to={`/profile/settings/${user._id}`}>
+                    <MenuItem>Settings</MenuItem>
+                  </NavLink>
                   <MenuDivider />
                   <MenuItem onClick={logout}>Logout</MenuItem>
                 </>
               ) : (
-                <NavLink to="/login">
-                  <MenuItem>Login</MenuItem>
-                </NavLink>
+                <>
+                  <NavLink to="/login">
+                    <MenuItem>Login</MenuItem>
+                  </NavLink>
+                  <NavLink to="/signup">
+                    <MenuItem>Signup</MenuItem>
+                  </NavLink>
+                </>
               )}
             </MenuList>
           </Menu>
