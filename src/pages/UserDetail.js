@@ -27,7 +27,6 @@ function UserDetail() {
     async function handleUser() {
       const response = await getUser(userId);
       setUser(response.data);
-      console.log(response.data)
     }
     handleUser();
   }, []);

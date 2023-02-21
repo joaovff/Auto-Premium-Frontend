@@ -34,8 +34,7 @@ export const verify = (token) => {
   });
 };
 
-export const updateAnnouncement = (announcementId, announcement
-  ) => {
+export const updateAnnouncement = (announcementId, announcement) => {
   return axios.put(
     `${BASE_URL}/announcements/edit/${announcementId}`,
     announcement
@@ -56,18 +55,20 @@ export const getUser = (userId) => {
   return axios.get(`${BASE_URL}/profile/${userId}`);
 };
 
-
 export const userSettings = (userId) => {
-  return axios.get(`${BASE_URL}/profile/settings/${userId}`)
-}
+  return axios.get(`${BASE_URL}/profile/settings/${userId}`);
+};
 
 export const updateFavorites = (userId, favoritesId) => {
-  return axios.put(
-    `${BASE_URL}/profile/favorites/${userId}`,
-    favoritesId
-  );
-}
+  return axios.put(`${BASE_URL}/profile/favorites/${userId}`, favoritesId);
+};
 
 export const getFavorites = (userId) => {
   return axios.get(`${BASE_URL}/profile/favorites/${userId}`);
-}
+};
+
+export const deleteFavorites = (userId, itemId) => {
+  return axios.patch(`${BASE_URL}/profile/favorites/${userId}`, {
+    itemId: itemId
+  });
+};
