@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { getAllAnnouncements, getMakes } from "../api";
 import SearchBar from "../components/SearchBar";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useRef } from "react";
 import {
   Box,
   Heading,
@@ -36,7 +36,7 @@ import {
 } from "@chakra-ui/react";
 import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
 
-import { ArrowUpDownIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowUpDownIcon, DragHandleIcon, SearchIcon } from "@chakra-ui/icons";
 import { UserContext } from "../context/user.context";
 import { updateFavorites, getFavorites } from "../api";
 
@@ -55,20 +55,24 @@ function Main() {
 
   const [favorites, setFavorites] = useState([]);
 
+  const [className, setClassName] = useState("");
+
+  const ref = useRef(null);
+
   function sortByPrice() {
     const sorted = announcements.sort((a, b) => (a.price > b.price ? 1 : -1));
     console.log(sorted);
-    return setFilteredAnnouncements(sorted);
+    setFilteredAnnouncements(sorted);
   }
   function sortByHp() {
     const sorted = announcements.sort((a, b) => (a.hp > b.hp ? 1 : -1));
     console.log(sorted);
-    return setFilteredAnnouncements(sorted);
+    setFilteredAnnouncements(sorted);
   }
   function sortByKms() {
     const sorted = announcements.sort((a, b) => (a.kms > b.kms ? 1 : -1));
     console.log(sorted);
-    return setFilteredAnnouncements(sorted);
+    setFilteredAnnouncements(sorted);
   }
 
   useEffect(() => {
@@ -96,6 +100,13 @@ function Main() {
     }
     handleFavorites()
   }, [loggedUser])
+  function switchDisplay() {
+    if (className === "") {
+      setClassName("flex");
+    } else {
+      setClassName("");
+    }
+  }
 
   return (
     <div>
@@ -140,6 +151,11 @@ function Main() {
         </Stack>
       </Card>
       <Flex justifyContent="end" mt={4}>
+        <IconButton
+          aria-label="Search database"
+          onClick={switchDisplay}
+          icon={<DragHandleIcon />}
+        />
         <Popover placement="bottom" isLazy>
           <PopoverTrigger>
             <IconButton
@@ -188,7 +204,11 @@ function Main() {
           </PopoverContent>
         </Popover>
       </Flex>
-      <div /* style={{display: "flex", flexWrap: "wrap", justifyContent:"center"}} */
+      <div
+        ref={ref}
+        className={className}
+
+        /* style={{display: "flex", flexWrap: "wrap", justifyContent:"center"}}  */
       >
         {filteredAnnouncements.map((item) => {
           return (
