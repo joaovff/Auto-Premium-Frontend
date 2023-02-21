@@ -1,11 +1,12 @@
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { verify } from "../api";
 
 const UserContext = createContext();
 
 function UserProviderWrapper({ children }) {
   const [loggedUser, setLoggedUser] = useState(null);
-
+  const navigate = useNavigate();
   async function authenticateUser() {
     const storedToken = localStorage.getItem("authToken");
 
@@ -13,7 +14,6 @@ function UserProviderWrapper({ children }) {
       try {
         const response = await verify(storedToken);
         setLoggedUser(response.data);
-        console.log(response.data)
       } catch (e) {
         setLoggedUser(null);
       }
@@ -23,7 +23,8 @@ function UserProviderWrapper({ children }) {
   }
 
   function logout() {
-    localStorage.removeItem("authToken");
+    localStorage.clear();
+    window.location.reload()
     authenticateUser();
   }
 

@@ -57,8 +57,10 @@ export default function SidebarWithHeader({ children }) {
 
   useEffect(() => {
     async function handleUser() {
-      const response = await getUser(loggedUser._id);
-      setUser(response.data);
+      if (loggedUser) {
+        const response = await getUser(loggedUser._id);
+        setUser(response.data);
+      }
     }
     handleUser();
   }, [loggedUser]);
@@ -111,17 +113,20 @@ const SidebarContent = ({ onClose, user, ...rest }) => {
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
         <NavLink to="/">
-          <img src="aplogo.png" width={"50px"} />
+          <img
+            src="https://res.cloudinary.com/dpk07trsw/image/upload/v1677008021/auto-premium/aologo_okqooj.png"
+            width={"50px"}
+          />
         </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {/* 
+
       {LinkItems.map((link) => (
         <NavLink key={link.name} to={link.to}>
           <NavItem icon={link.icon}>{link.name}</NavItem>
         </NavLink>
-      ))} */}
-      <NavLink to="/">
+      ))}
+      {/*       <NavLink to="/">
         <NavItem icon={FiHome}>Home</NavItem>
       </NavLink>
 
@@ -135,7 +140,7 @@ const SidebarContent = ({ onClose, user, ...rest }) => {
 
       <NavLink to={`/profile/settings/${user._id}`}>
         <NavItem icon={FiSettings}>Settings</NavItem>
-      </NavLink>
+      </NavLink> */}
     </Box>
   );
 };
@@ -201,7 +206,10 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        <img src="aplogo.png" width={"35px"} />
+        <img
+          src="https://res.cloudinary.com/dpk07trsw/image/upload/v1677008021/auto-premium/aologo_okqooj.png"
+          width={"35px"}
+        />
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
@@ -219,13 +227,15 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                {user.picture ? (
+                {user && user.picture /*  */ ? (
                   <>
                     <Avatar src={user.picture} size="sm" />
                     <Text>{user.name}</Text>
                   </>
                 ) : (
-                  <Avatar src="https://bit.ly/broken-link" size="sm" />
+                  <>
+                    <Avatar src="public/avataricon.png" size="sm" />
+                  </>
                 )}
                 <VStack
                   display={{ base: "none", md: "flex" }}
