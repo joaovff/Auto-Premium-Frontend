@@ -23,6 +23,8 @@ import {
 import UserDetail from "./pages/UserDetail";
 import UserSettings from "./pages/UserSettings";
 import { Footer } from "antd/es/layout/layout";
+import Favorites from "./pages/Favorites";
+
 function App() {
   return (
     <div className="App">
@@ -57,6 +59,8 @@ function App() {
               path="/profile/settings/:userId"
               element={<UserSettings />}
             />
+
+            <Route path="/profile/favorites/:userId" element={<Favorites />} />
           </Routes>
         </Navbar>
       </ChakraProvider>

@@ -38,7 +38,6 @@ export default function Simple() {
       setAnnouncement(response.data);
     }
     handleGetAnnouncementDetail();
-    console.log(announcement);
   }, [announcementId]);
 
   async function handleDeleteAnnouncement() {

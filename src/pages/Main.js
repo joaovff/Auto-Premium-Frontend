@@ -42,6 +42,7 @@ import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
 import { ArrowUpDownIcon, DragHandleIcon, SearchIcon } from "@chakra-ui/icons";
 import { UserContext } from "../context/user.context";
 import { updateFavorites, getFavorites } from "../api";
+import { deleteFavorites } from "../api";
 
 function Main() {
   function handleSearch(keyword) {
@@ -77,27 +78,39 @@ function Main() {
     setFilteredAnnouncements(sorted);
   }
 
+  async function handleGetAllAnnouncements() {
+    const response = await getAllAnnouncements();
+    setFilteredAnnouncements(response.data);
+    setAnnoucements(response.data);
+  }
   useEffect(() => {
-    async function handleGetAllAnnouncements() {
-      const response = await getAllAnnouncements();
-      setFilteredAnnouncements(response.data);
-      setAnnoucements(response.data);
-    }
     handleGetAllAnnouncements();
   }, [loggedUser]);
 
   function addToFavorites(itemId) {
     setFavorites([...favorites, itemId]);
     updateFavorites(loggedUser._id, { itemId: itemId });
+    updateFavorites(loggedUser._id, { itemId: itemId });
+  }
+
+  async function deleteFavoritess(itemId, userId) {
+    await deleteFavorites(userId, itemId);
+    await handleGetAllAnnouncements();
+    console.log(itemId);
   }
 
   useEffect(() => {
+    /*   useEffect(() => {
     async function handleFavorites() {
       return await getFavorites(loggedUser._id);
+      const response = await getFavorites(loggedUser._id);
     }
     //   handleFavorites();
   }, [loggedUser]);
 
+    handleFavorites();
+  }, [loggedUser]); */
+  });
   function switchDisplay() {
     if (className === "") {
       setClassName("flex");
@@ -623,11 +636,16 @@ function Main() {
                   >
                     {favorites.includes(item._id) ? (
                       <BsHeartFill fill="red" fontSize={"24px"} />
-                    )  : (
+                    ) : (
                       <BsHeart fontSize={"24px"} />
                     )}
                   </Flex>
                 </HStack>
+                <Button
+                  onClick={() => deleteFavoritess(item._id, loggedUser._id)}
+                >
+                  Remove favorite
+                </Button>
               </Box>
             </Center>
           );
