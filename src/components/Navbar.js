@@ -69,6 +69,7 @@ export default function SidebarWithHeader({ children }) {
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
+        user={user}
       />
       <Drawer
         autoFocus={false}
@@ -96,7 +97,7 @@ export default function SidebarWithHeader({ children }) {
   );
 }
 
-const SidebarContent = ({ onClose, ...rest }) => {
+const SidebarContent = ({ onClose, user, ...rest }) => {
   return (
     <Box
       transition="3s ease"
@@ -114,12 +115,27 @@ const SidebarContent = ({ onClose, ...rest }) => {
         </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-
+      {/* 
       {LinkItems.map((link) => (
         <NavLink key={link.name} to={link.to}>
           <NavItem icon={link.icon}>{link.name}</NavItem>
         </NavLink>
-      ))}
+      ))} */}
+      <NavLink to="/">
+        <NavItem icon={FiHome}>Home</NavItem>
+      </NavLink>
+
+      <NavLink to="/announcements/create">
+        <NavItem icon={FiPlusSquare}>Sell a Car</NavItem>
+      </NavLink>
+
+      <NavLink to={`/profile/favorites/${user._id}`}>
+        <NavItem icon={FiHeart}>Favorites</NavItem>
+      </NavLink>
+
+      <NavLink to={`/profile/settings/${user._id}`}>
+        <NavItem icon={FiSettings}>Settings</NavItem>
+      </NavLink>
     </Box>
   );
 };
@@ -203,9 +219,9 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                {user ? (
+                {user.picture ? (
                   <>
-                    <Avatar src="https://bit.ly/broken-link" size="sm" />
+                    <Avatar src={user.picture} size="sm" />
                     <Text>{user.name}</Text>
                   </>
                 ) : (
