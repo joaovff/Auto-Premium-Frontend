@@ -69,6 +69,6 @@ export const getFavorites = (userId) => {
 
 export const deleteFavorites = (userId, itemId) => {
   return axios.patch(`${BASE_URL}/profile/favorites/${userId}`, {
-    itemId: itemId
+    itemId: itemId,
   });
 };

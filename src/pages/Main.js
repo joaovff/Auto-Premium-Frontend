@@ -90,7 +90,6 @@ function Main() {
   function addToFavorites(itemId) {
     setFavorites([...favorites, itemId]);
     updateFavorites(loggedUser._id, { itemId: itemId });
-    updateFavorites(loggedUser._id, { itemId: itemId });
   }
 
   async function deleteFavoritess(itemId, userId) {
@@ -99,8 +98,8 @@ function Main() {
     console.log(itemId);
   }
 
-  useEffect(() => {
-    /*   useEffect(() => {
+  /*   useEffect(() => {
+      useEffect(() => {
     async function handleFavorites() {
       return await getFavorites(loggedUser._id);
       const response = await getFavorites(loggedUser._id);
@@ -109,8 +108,8 @@ function Main() {
   }, [loggedUser]);
 
     handleFavorites();
-  }, [loggedUser]); */
-  });
+  }, [loggedUser]); 
+  }); */
   function switchDisplay() {
     if (className === "") {
       setClassName("flex");
@@ -301,6 +300,11 @@ function Main() {
                       )}
                     </Flex>
                   </HStack>
+                  <Button
+                    onClick={() => deleteFavoritess(item._id, loggedUser._id)}
+                  >
+                    Remove favorite
+                  </Button>
                 </Box>
               </Center>
             );
