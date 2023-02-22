@@ -103,25 +103,15 @@ function Main() {
   function addToFavorites(itemId) {
     setFavorites([...favorites, itemId]);
     updateFavorites(loggedUser._id, { itemId: itemId });
+    setLiked(true);
   }
 
   async function deleteFavoritess(itemId, userId) {
     await deleteFavorites(userId, itemId);
     await handleGetAllAnnouncements();
+    setLiked(false);
   }
 
-  /*   useEffect(() => {
-      useEffect(() => {
-    async function handleFavorites() {
-      return await getFavorites(loggedUser._id);
-      const response = await getFavorites(loggedUser._id);
-    }
-    //   handleFavorites();
-  }, [loggedUser]);
-
-    handleFavorites();
-  }, [loggedUser]); 
-  }); */
   function switchDisplay() {
     if (className === "flex") {
       setClassName("");
@@ -323,29 +313,23 @@ function Main() {
                       justifyContent={"space-between"}
                       roundedBottom={"sm"}
                       cursor="pointer"
-                      onClick={() => addToFavorites(item._id)}
                     >
                       {user && user.favorites.includes(item._id) ? (
                         <BsHeartFill
-                          onClick={() => addToFavorites(item._id)}
+                          onClick={() =>
+                            deleteFavoritess(item._id, loggedUser._id)
+                          }
                           fill="red"
                           fontSize={"24px"}
                         />
                       ) : (
                         <BsHeart
-                          onClick={() =>
-                            deleteFavoritess(item._id, loggedUser._id)
-                          }
+                          onClick={() => addToFavorites(item._id)}
                           fontSize={"24px"}
                         />
                       )}
                     </Flex>
                   </HStack>
-                  <Button
-                    onClick={() => deleteFavoritess(item._id, loggedUser._id)}
-                  >
-                    Remove favorite
-                  </Button>
                 </Box>
               </Center>
             );
@@ -499,33 +483,25 @@ function Main() {
                     justifyContent={"space-between"}
                     roundedBottom={"sm"}
                     cursor="pointer"
-                    onClick={() => addToFavorites(item._id)}
                   >
                     {user && user.favorites.includes(item._id) ? (
                       <BsHeartFill
-                        onClick={() => addToFavorites(item._id)}
+                        onClick={() =>
+                          deleteFavoritess(item._id, loggedUser._id)
+                        }
                         fill="red"
                         fontSize={"24px"}
                       />
                     ) : (
                       <BsHeart
-                        onClick={() =>
-                          deleteFavoritess(item._id, loggedUser._id)
-                        }
+                        onClick={() => addToFavorites(item._id)}
                         fontSize={"24px"}
                       />
                     )}
                   </Flex>
-                  <Button
-                    onClick={() => deleteFavoritess(item._id, loggedUser._id)}
-                  >
-                    Remove favorite
-                  </Button>{" "}
                 </CardFooter>
               </Stack>
-              <Box p={4}>
-
-              </Box>
+              <Box p={4}></Box>
             </Card>
           );
         })}
