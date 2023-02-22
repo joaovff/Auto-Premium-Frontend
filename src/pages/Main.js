@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { getAllAnnouncements, getMakes } from "../api";
+import { getAllAnnouncements, getMakes, getUser } from "../api";
 import SearchBar from "../components/SearchBar";
 import { useContext, useEffect, useState, useRef } from "react";
 import {
@@ -38,7 +38,8 @@ import {
   StackDivider,
 } from "@chakra-ui/react";
 import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
-
+import AOS from "aos";
+import "aos/dist/aos.css";
 import { ArrowUpDownIcon, DragHandleIcon, SearchIcon } from "@chakra-ui/icons";
 import { UserContext } from "../context/user.context";
 import { updateFavorites, getFavorites } from "../api";
@@ -59,7 +60,9 @@ function Main() {
   const [favorites, setFavorites] = useState([]);
 
   const [className, setClassName] = useState("");
+  const [liked, setLiked] = useState(false);
 
+  const [user, setUser] = useState(null);
   const ref = useRef(null);
 
   function sortByPrice() {
@@ -78,6 +81,16 @@ function Main() {
     setFilteredAnnouncements(sorted);
   }
 
+  useEffect(() => {
+    async function handleUser() {
+      if (loggedUser) {
+        const response = await getUser(loggedUser._id);
+        setUser(response.data);
+      }
+    }
+    handleUser();
+  }, [loggedUser]);
+
   async function handleGetAllAnnouncements() {
     const response = await getAllAnnouncements();
     setFilteredAnnouncements(response.data);
@@ -95,7 +108,6 @@ function Main() {
   async function deleteFavoritess(itemId, userId) {
     await deleteFavorites(userId, itemId);
     await handleGetAllAnnouncements();
-    console.log(itemId);
   }
 
   /*   useEffect(() => {
@@ -111,14 +123,19 @@ function Main() {
   }, [loggedUser]); 
   }); */
   function switchDisplay() {
-    if (className === "") {
-      setClassName("flex");
-    } else {
+    if (className === "flex") {
       setClassName("");
+    } else {
+      setClassName("flex");
     }
   }
 
-  if (className === "flex") {
+  function AosAnimation() {
+    useEffect(() => {
+      AOS.init({ duration: 2000 });
+    }, []);
+  }
+  if (className === "") {
     return (
       <div>
         <Card
@@ -166,6 +183,7 @@ function Main() {
             aria-label="Search database"
             onClick={switchDisplay}
             icon={<DragHandleIcon />}
+            className="switchBtn"
           />
           <Popover placement="bottom" isLazy>
             <PopoverTrigger>
@@ -215,10 +233,24 @@ function Main() {
             </PopoverContent>
           </Popover>
         </Flex>
-        <div ref={ref} className={className}>
+        <div
+          ref={ref}
+          className={className}
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+          }}
+        >
           {filteredAnnouncements.map((item) => {
             return (
-              <Center key={item._id} py={6}>
+              <Center
+                data-aos="fade-up"
+                data-aos-anchor-placement="center-bottom"
+                data-aos-duration="1000"
+                key={item._id}
+                py={6}
+              >
                 <Box
                   w="xs"
                   rounded={"sm"}
@@ -293,10 +325,19 @@ function Main() {
                       cursor="pointer"
                       onClick={() => addToFavorites(item._id)}
                     >
-                      {favorites.includes(item._id) ? (
-                        <BsHeartFill fill="red" fontSize={"24px"} />
+                      {user && user.favorites.includes(item._id) ? (
+                        <BsHeartFill
+                          onClick={() => addToFavorites(item._id)}
+                          fill="red"
+                          fontSize={"24px"}
+                        />
                       ) : (
-                        <BsHeart fontSize={"24px"} />
+                        <BsHeart
+                          onClick={() =>
+                            deleteFavoritess(item._id, loggedUser._id)
+                          }
+                          fontSize={"24px"}
+                        />
                       )}
                     </Flex>
                   </HStack>
@@ -360,6 +401,7 @@ function Main() {
             aria-label="Search database"
             onClick={switchDisplay}
             icon={<DragHandleIcon />}
+            className="switchBtn"
           />
           <Popover placement="bottom" isLazy>
             <PopoverTrigger>
@@ -419,6 +461,9 @@ function Main() {
               marginBottom="10px"
               bg="white"
               boxShadow={"2xl"}
+              data-aos="fade-up"
+              data-aos-anchor-placement="top-bottom"
+              data-aos-duration="1000"
             >
               <Image
                 objectFit="cover"
@@ -448,188 +493,6 @@ function Main() {
                 </CardBody>
 
                 <CardFooter>
-                  <Button variant="solid" colorScheme="blue">
-                    Buy Latte
-                  </Button>
-                </CardFooter>
-              </Stack>
-            </Card>
-          );
-        })}
-      </div>
-    );
-  }
-  /* return (
-    <div>
-    <Card
-    
-    direction={{ base: "column", sm: "row" }}
-    overflow="hidden"
-    variant="outline"
-        style={{ justifyContent: "center", alignItems: "center" }}
-        >
-        <Stack>
-          <CardBody>
-            <SearchBar handleSearch={handleSearch} />
-            <br />
-            <br />
-            <Stack direction={{ base: "column", sm: "row" }}>
-              Price:
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField placeholder="€ Min" />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField placeholder="€ Max" />
-                <NumberInputStepper>
-                  <NumberIncrementStepper />
-                  <NumberDecrementStepper />
-                </NumberInputStepper>
-              </NumberInput>
-            </Stack>
-          </CardBody>
-
-          <CardFooter>
-            <CheckboxGroup
-              colorScheme="black"
-              defaultValue={["naruto", "kakashi"]}
-            >
-              <Stack spacing={[1, 5]} direction={["column", "row"]}></Stack>
-            </CheckboxGroup>
-          </CardFooter>
-        </Stack>
-      </Card>
-      <Flex justifyContent="end" mt={4}>
-        <IconButton
-          aria-label="Search database"
-          onClick={switchDisplay}
-          icon={<DragHandleIcon />}
-        />
-        <Popover placement="bottom" isLazy>
-          <PopoverTrigger>
-            <IconButton
-              aria-label="More server options"
-              icon={<ArrowUpDownIcon />}
-              variant="solid"
-              w="fit-content"
-            />
-          </PopoverTrigger>
-          <PopoverContent w="fit-content" _focus={{ boxShadow: "none" }}>
-            <PopoverArrow />
-            <PopoverBody>
-              <Stack>
-                <Button
-                  w="194px"
-                  variant="ghost"
-                  justifyContent="space-between"
-                  fontWeight="normal"
-                  fontSize="sm"
-                  onClick={sortByPrice}
-                >
-                  Price
-                </Button>
-                <Button
-                  w="194px"
-                  variant="ghost"
-                  justifyContent="space-between"
-                  fontWeight="normal"
-                  fontSize="sm"
-                  onClick={sortByHp}
-                >
-                  HP
-                </Button>
-                <Button
-                  w="194px"
-                  variant="ghost"
-                  justifyContent="space-between"
-                  fontWeight="normal"
-                  fontSize="sm"
-                  onClick={sortByKms}
-                >
-                  KM
-                </Button>
-              </Stack>
-            </PopoverBody>
-          </PopoverContent>
-        </Popover>
-      </Flex>
-      <div
-        ref={ref}
-        className={className}
-
-      >
-        {filteredAnnouncements.map((item) => {
-          return (
-            <Center key={item._id} py={6}>
-              <Box
-                w="xs"
-                rounded={"sm"}
-                my={5}
-                mx={[0, 5]}
-                overflow={"hidden"}
-                bg="white"
-                boxShadow={"2xl"}
-              >
-                <Box h={"200px"}>
-                  <Img
-                    src={item.image}
-                    roundedTop={"sm"}
-                    objectFit="cover"
-                    h="full"
-                    w="full"
-                    alt={"Blog Image"}
-                  />
-                </Box>
-                <Box p={4}>
-                  <Box
-                    bg="black"
-                    display={"inline-block"}
-                    px={2}
-                    py={1}
-                    color="white"
-                    mb={2}
-                  >
-                    <Text fontSize={"xs"} fontWeight="medium">
-                      {item.price.toLocaleString("pt-pt", {
-                        minimumFractionDigits: 2,
-                      })}{" "}
-                      €
-                    </Text>
-                  </Box>
-                  <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
-                    {item.title}
-                  </Heading>
-                  <Text color={"gray.500"} noOfLines={2}>
-                    {item.kms
-                      .toLocaleString("pt-pt", {
-                        minimumFractionDigits: 2,
-                      })
-                      .slice(0, -3)}{" "}
-                    Km • {item.hp} HP •{" "}
-                    {item.fuel.charAt(0).toUpperCase() + item.fuel.slice(1)} •{" "}
-                    {item.year}
-                  </Text>
-                </Box>
-                <HStack borderTop={"1px"} color="black">
-                  <Flex
-                    p={4}
-                    alignItems="center"
-                    justifyContent={"space-between"}
-                    roundedBottom={"sm"}
-                    w="full"
-                  >
-                    <Link to={`/announcements/${item._id}`}>
-                      <Text fontSize={"md"} fontWeight={"semibold"}>
-                        View more
-                      </Text>
-                    </Link>
-                    <Link to={`/announcements/${item._id}`}>
-                      <BsArrowUpRight />{" "}
-                    </Link>
-                  </Flex>
                   <Flex
                     p={4}
                     alignItems="center"
@@ -638,25 +501,37 @@ function Main() {
                     cursor="pointer"
                     onClick={() => addToFavorites(item._id)}
                   >
-                    {favorites.includes(item._id) ? (
-                      <BsHeartFill fill="red" fontSize={"24px"} />
+                    {user && user.favorites.includes(item._id) ? (
+                      <BsHeartFill
+                        onClick={() => addToFavorites(item._id)}
+                        fill="red"
+                        fontSize={"24px"}
+                      />
                     ) : (
-                      <BsHeart fontSize={"24px"} />
+                      <BsHeart
+                        onClick={() =>
+                          deleteFavoritess(item._id, loggedUser._id)
+                        }
+                        fontSize={"24px"}
+                      />
                     )}
                   </Flex>
-                </HStack>
-                <Button
-                  onClick={() => deleteFavoritess(item._id, loggedUser._id)}
-                >
-                  Remove favorite
-                </Button>
+                  <Button
+                    onClick={() => deleteFavoritess(item._id, loggedUser._id)}
+                  >
+                    Remove favorite
+                  </Button>{" "}
+                </CardFooter>
+              </Stack>
+              <Box p={4}>
+
               </Box>
-            </Center>
+            </Card>
           );
         })}
       </div>
-    </div>
-  ); */
+    );
+  }
 }
 
 export default Main;
