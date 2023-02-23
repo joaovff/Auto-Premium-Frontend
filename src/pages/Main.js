@@ -57,13 +57,9 @@ function Main() {
 
   const { loggedUser } = useContext(UserContext);
 
-  const [favorites, setFavorites] = useState([]);
-
   const [className, setClassName] = useState("");
-  const [liked, setLiked] = useState(false);
-  const [toggle, setToggle] = useState(true)
+  const [toggle, setToggle] = useState(true);
 
-  const [favoritecrl, setFavoritecrl] = useState(false);
   const [user, setUser] = useState(null);
 
   function sortByPrice() {
@@ -96,22 +92,20 @@ function Main() {
     setFilteredAnnouncements(response.data);
     setAnnoucements(response.data);
   }
+
   useEffect(() => {
     handleGetAllAnnouncements();
-  }, [loggedUser, addToFavorites, deleteFavorites]);
+  }, [loggedUser]);
 
   function addToFavorites(itemId) {
-   
     updateFavorites(loggedUser._id, { itemId: itemId });
-    setToggle(!toggle)
-
-    console.log(user);
+    setToggle(!toggle);
   }
 
   async function deleteFavoritess(itemId, userId) {
     await deleteFavorites(userId, itemId);
     await handleGetAllAnnouncements();
-    setToggle(!toggle)
+    setToggle(!toggle);
   }
 
   function switchDisplay() {
@@ -119,14 +113,6 @@ function Main() {
       setClassName("");
     } else {
       setClassName("flex");
-    }
-  }
-
-  function isFavorite() {
-    for (let key in user.favorites._id) {
-      if (key === announcements._id) {
-        setFavoritecrl(true);
-      }
     }
   }
 
@@ -490,7 +476,7 @@ function Main() {
                     roundedBottom={"sm"}
                     cursor="pointer"
                   >
-                    {user && user.favorites._id === announcement._id ? (
+                    {user && user.favorites.includes(announcement._id) ? (
                       <BsHeartFill
                         onClick={() =>
                           deleteFavoritess(announcement._id, loggedUser._id)
