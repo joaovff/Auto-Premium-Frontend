@@ -49,7 +49,7 @@ function UserDetail() {
           <CardBody>
             <br />
             {!user.picture ? (
-              <Avatar src="https://bit.ly/broken-link" size="lg" />
+              <Avatar src="public/avataricon.png" size="lg" />
             ) : (
               <Avatar src={`${user.picture}`} size="lg" />
             )}

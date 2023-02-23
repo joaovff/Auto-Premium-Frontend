@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   IconButton,
   Avatar,
@@ -14,31 +14,21 @@ import {
   DrawerContent,
   Text,
   useDisclosure,
-  BoxProps,
-  FlexProps,
   Menu,
   MenuButton,
   MenuDivider,
   MenuItem,
   MenuList,
-  Spinner,
 } from "@chakra-ui/react";
 import {
   FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
   FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
   FiHeart,
-  FiPlus,
-  FiPlusCircle,
   FiPlusSquare,
 } from "react-icons/fi";
-import { IconType } from "react-icons";
-import { ReactText } from "react";
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/user.context";
 import { getUser } from "../api";
@@ -71,7 +61,7 @@ export default function SidebarWithHeader({ children }) {
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
-        user={user}
+        loggedUser={loggedUser}
       />
       <Drawer
         autoFocus={false}
@@ -81,9 +71,10 @@ export default function SidebarWithHeader({ children }) {
         returnFocusOnClose={false}
         onOverlayClick={onClose}
         size="full"
+        loggedUser={loggedUser}
       >
         <DrawerContent>
-          <SidebarContent onClose={onClose} />
+          <SidebarContent loggedUser={loggedUser} onClose={onClose} />
         </DrawerContent>
       </Drawer>
       <MobileNav
@@ -99,7 +90,7 @@ export default function SidebarWithHeader({ children }) {
   );
 }
 
-const SidebarContent = ({ onClose, user, ...rest }) => {
+const SidebarContent = ({ onClose, loggedUser, ...rest }) => {
   return (
     <Box
       transition="3s ease"
@@ -120,27 +111,50 @@ const SidebarContent = ({ onClose, user, ...rest }) => {
         </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-
+      {/* 
       {LinkItems.map((link) => (
         <NavLink key={link.name} to={link.to}>
           <NavItem icon={link.icon}>{link.name}</NavItem>
         </NavLink>
-      ))}
-      {/*       <NavLink to="/">
-        <NavItem icon={FiHome}>Home</NavItem>
-      </NavLink>
+      ))} */}
 
-      <NavLink to="/announcements/create">
-        <NavItem icon={FiPlusSquare}>Sell a Car</NavItem>
-      </NavLink>
+      {loggedUser ? (
+        <>
+          <NavLink to="/">
+            <NavItem icon={FiHome}>Home</NavItem>
+          </NavLink>
 
-      <NavLink to={`/profile/favorites/${user._id}`}>
-        <NavItem icon={FiHeart}>Favorites</NavItem>
-      </NavLink>
+          <NavLink to="/announcements/create">
+            <NavItem icon={FiPlusSquare}>Sell a Car</NavItem>
+          </NavLink>
 
-      <NavLink to={`/profile/settings/${user._id}`}>
-        <NavItem icon={FiSettings}>Settings</NavItem>
-      </NavLink> */}
+          <NavLink to={`/profile/favorites/${loggedUser._id}`}>
+            <NavItem icon={FiHeart}>Favorites</NavItem>
+          </NavLink>
+
+          <NavLink to={`/profile/settings/${loggedUser._id}`}>
+            <NavItem icon={FiSettings}>Settings</NavItem>
+          </NavLink>
+        </>
+      ) : (
+        <>
+          <NavLink to="/">
+            <NavItem icon={FiHome}>Home</NavItem>
+          </NavLink>
+
+          <NavLink to="/login">
+            <NavItem icon={FiPlusSquare}>Sell a Car</NavItem>
+          </NavLink>
+
+          <NavLink to="/login">
+            <NavItem icon={FiHeart}>Favorites</NavItem>
+          </NavLink>
+
+          <NavLink to="/login">
+            <NavItem icon={FiSettings}>Settings</NavItem>
+          </NavLink>
+        </>
+      )}
     </Box>
   );
 };
@@ -227,7 +241,7 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                {user && user.picture /*  */ ? (
+                {user && user.picture ? (
                   <>
                     <Avatar src={user.picture} size="sm" />
                     <Text>{user.name}</Text>

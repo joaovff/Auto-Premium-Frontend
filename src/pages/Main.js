@@ -61,15 +61,15 @@ function Main() {
 
   const [className, setClassName] = useState("");
   const [liked, setLiked] = useState(false);
+  const [toggle, setToggle] = useState(true)
 
+  const [favoritecrl, setFavoritecrl] = useState(false);
   const [user, setUser] = useState(null);
-  const ref = useRef(null);
 
   function sortByPrice() {
     const sorted = [...announcements].sort((a, b) =>
       a.price > b.price ? 1 : -1
     );
-    console.log(sorted);
     setFilteredAnnouncements(sorted);
   }
   function sortByHp() {
@@ -89,7 +89,7 @@ function Main() {
       }
     }
     handleUser();
-  }, [loggedUser]);
+  }, [loggedUser, toggle]);
 
   async function handleGetAllAnnouncements() {
     const response = await getAllAnnouncements();
@@ -98,18 +98,20 @@ function Main() {
   }
   useEffect(() => {
     handleGetAllAnnouncements();
-  }, [loggedUser]);
+  }, [loggedUser, addToFavorites, deleteFavorites]);
 
   function addToFavorites(itemId) {
-    setFavorites([...favorites, itemId]);
+   
     updateFavorites(loggedUser._id, { itemId: itemId });
-    setLiked(true);
+    setToggle(!toggle)
+
+    console.log(user);
   }
 
   async function deleteFavoritess(itemId, userId) {
     await deleteFavorites(userId, itemId);
     await handleGetAllAnnouncements();
-    setLiked(false);
+    setToggle(!toggle)
   }
 
   function switchDisplay() {
@@ -120,11 +122,14 @@ function Main() {
     }
   }
 
-  function AosAnimation() {
-    useEffect(() => {
-      AOS.init({ duration: 2000 });
-    }, []);
+  function isFavorite() {
+    for (let key in user.favorites._id) {
+      if (key === announcements._id) {
+        setFavoritecrl(true);
+      }
+    }
   }
+
   if (className === "") {
     return (
       <div>
@@ -224,7 +229,6 @@ function Main() {
           </Popover>
         </Flex>
         <div
-          ref={ref}
           className={className}
           style={{
             display: "flex",
@@ -232,13 +236,13 @@ function Main() {
             justifyContent: "center",
           }}
         >
-          {filteredAnnouncements.map((item) => {
+          {filteredAnnouncements.map((announcement) => {
             return (
               <Center
                 data-aos="fade-up"
                 data-aos-anchor-placement="center-bottom"
                 data-aos-duration="1000"
-                key={item._id}
+                key={announcement._id}
                 py={6}
               >
                 <Box
@@ -252,7 +256,7 @@ function Main() {
                 >
                   <Box h={"200px"}>
                     <Img
-                      src={item.image}
+                      src={announcement.image}
                       roundedTop={"sm"}
                       objectFit="cover"
                       h="full"
@@ -270,24 +274,25 @@ function Main() {
                       mb={2}
                     >
                       <Text fontSize={"xs"} fontWeight="medium">
-                        {item.price.toLocaleString("pt-pt", {
+                        {announcement.price.toLocaleString("pt-pt", {
                           minimumFractionDigits: 2,
                         })}{" "}
                         €
                       </Text>
                     </Box>
                     <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
-                      {item.title}
+                      {announcement.title}
                     </Heading>
                     <Text color={"gray.500"} noOfLines={2}>
-                      {item.kms
+                      {announcement.kms
                         .toLocaleString("pt-pt", {
                           minimumFractionDigits: 2,
                         })
                         .slice(0, -3)}{" "}
-                      Km • {item.hp} HP •{" "}
-                      {item.fuel.charAt(0).toUpperCase() + item.fuel.slice(1)} •{" "}
-                      {item.year}
+                      Km • {announcement.hp} HP •{" "}
+                      {announcement.fuel.charAt(0).toUpperCase() +
+                        announcement.fuel.slice(1)}{" "}
+                      • {announcement.year}
                     </Text>
                   </Box>
                   <HStack borderTop={"1px"} color="black">
@@ -298,12 +303,12 @@ function Main() {
                       roundedBottom={"sm"}
                       w="full"
                     >
-                      <Link to={`/announcements/${item._id}`}>
+                      <Link to={`/announcements/${announcement._id}`}>
                         <Text fontSize={"md"} fontWeight={"semibold"}>
                           View more
                         </Text>
                       </Link>
-                      <Link to={`/announcements/${item._id}`}>
+                      <Link to={`/announcements/${announcement._id}`}>
                         <BsArrowUpRight />{" "}
                       </Link>
                     </Flex>
@@ -314,17 +319,17 @@ function Main() {
                       roundedBottom={"sm"}
                       cursor="pointer"
                     >
-                      {user && user.favorites.includes(item._id) ? (
+                      {user && user.favorites.includes(announcement._id) ? (
                         <BsHeartFill
                           onClick={() =>
-                            deleteFavoritess(item._id, loggedUser._id)
+                            deleteFavoritess(announcement._id, loggedUser._id)
                           }
                           fill="red"
                           fontSize={"24px"}
                         />
                       ) : (
                         <BsHeart
-                          onClick={() => addToFavorites(item._id)}
+                          onClick={() => addToFavorites(announcement._id)}
                           fontSize={"24px"}
                         />
                       )}
@@ -436,7 +441,7 @@ function Main() {
           </Popover>
         </Flex>
 
-        {filteredAnnouncements.map((item) => {
+        {filteredAnnouncements.map((announcement) => {
           return (
             <Card
               direction={{ base: "column", sm: "row" }}
@@ -452,49 +457,50 @@ function Main() {
               <Image
                 objectFit="cover"
                 maxW={{ base: "100%", sm: "300px" }}
-                src={item.image}
-                alt={item.title}
+                src={announcement.image}
+                alt={announcement.title}
               />
 
               <Stack>
                 <CardBody>
                   <div style={{ display: "flex" }}>
                     <Heading textAlign="start" size="md">
-                      {item.title}
+                      {announcement.title}
                     </Heading>
                   </div>
 
                   <Text textAlign="start" color="grey" py="2" text>
-                    {item.kms
+                    {announcement.kms
                       .toLocaleString("pt-pt", {
                         minimumFractionDigits: 2,
                       })
                       .slice(0, -3)}{" "}
-                    Km • {item.hp} HP •{" "}
-                    {item.fuel.charAt(0).toUpperCase() + item.fuel.slice(1)} •{" "}
-                    {item.year}
+                    Km • {announcement.hp} HP •{" "}
+                    {announcement.fuel.charAt(0).toUpperCase() +
+                      announcement.fuel.slice(1)}{" "}
+                    • {announcement.year}
                   </Text>
                 </CardBody>
 
                 <CardFooter>
                   <Flex
                     p={4}
-                    alignItems="center"
+                    alignItem="center"
                     justifyContent={"space-between"}
                     roundedBottom={"sm"}
                     cursor="pointer"
                   >
-                    {user && user.favorites.includes(item._id) ? (
+                    {user && user.favorites._id === announcement._id ? (
                       <BsHeartFill
                         onClick={() =>
-                          deleteFavoritess(item._id, loggedUser._id)
+                          deleteFavoritess(announcement._id, loggedUser._id)
                         }
                         fill="red"
                         fontSize={"24px"}
                       />
                     ) : (
                       <BsHeart
-                        onClick={() => addToFavorites(item._id)}
+                        onClick={() => addToFavorites(announcement._id)}
                         fontSize={"24px"}
                       />
                     )}
