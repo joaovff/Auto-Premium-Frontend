@@ -33,12 +33,6 @@ import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/user.context";
 import { getUser } from "../api";
 
-const LinkItems = [
-  { name: "Home", icon: FiHome, to: "/" },
-  { name: "Sell a Car", icon: FiPlusSquare, to: "/announcements/create" },
-  { name: "Favourites", icon: FiHeart, to: "/" },
-  { name: "Settings", icon: FiSettings, to: `/` },
-];
 export default function SidebarWithHeader({ children }) {
   const { loggedUser, logout } = useContext(UserContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -111,12 +105,6 @@ const SidebarContent = ({ onClose, loggedUser, ...rest }) => {
         </NavLink>
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {/* 
-      {LinkItems.map((link) => (
-        <NavLink key={link.name} to={link.to}>
-          <NavItem icon={link.icon}>{link.name}</NavItem>
-        </NavLink>
-      ))} */}
 
       {loggedUser ? (
         <>
