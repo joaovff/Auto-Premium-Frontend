@@ -356,46 +356,16 @@ function Main() {
   } else {
     return (
       <div>
-        <Card
-          direction={{ base: "column", sm: "row" }}
-          overflow="hidden"
-          variant="outline"
-          style={{ justifyContent: "center", alignItems: "center" }}
-        >
-          <Stack>
-            <CardBody>
-              <SearchBar handleSearch={handleSearch} />
-              <br />
-              <br />
-              <Stack direction={{ base: "column", sm: "row" }}>
-                Price:
-                <NumberInput size="md" maxW={24} min={1}>
-                  <NumberInputField placeholder="€ Min" />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-                <NumberInput size="md" maxW={24} min={1}>
-                  <NumberInputField placeholder="€ Max" />
-                  <NumberInputStepper>
-                    <NumberIncrementStepper />
-                    <NumberDecrementStepper />
-                  </NumberInputStepper>
-                </NumberInput>
-              </Stack>
-            </CardBody>
-
-            <CardFooter>
-              <CheckboxGroup
-                colorScheme="black"
-                defaultValue={["naruto", "kakashi"]}
-              >
-                <Stack spacing={[1, 5]} direction={["column", "row"]}></Stack>
-              </CheckboxGroup>
-            </CardFooter>
-          </Stack>
-        </Card>
+        <SearchBar
+          handleSearch={handleSearch}
+          handleMinKmsSearch={handleMinKmsSearch}
+          handleMaxKmsSearch={handleMaxKmsSearch}
+          handleMinYearsSearch={handleMinYearsSearch}
+          handleMaxYearsSearch={handleMaxYearsSearch}
+          handleMinPriceSearch={handleMinPriceSearch}
+          handleMaxPriceSearch={handleMaxPriceSearch}
+          handleFuelSearch={handleFuelSearch}
+        />
         <Flex justifyContent="end" mt={4}>
           <IconButton
             aria-label="Search database"
@@ -524,7 +494,6 @@ function Main() {
             </Card>
           );
         })}
-        
       </div>
     );
   }
