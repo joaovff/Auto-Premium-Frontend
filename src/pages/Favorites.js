@@ -14,15 +14,15 @@ function Favorites() {
   useEffect(() => {
     async function handleUser() {
       const response = await getUser(userId);
-      setUser(response.data);
-      console.log(response.data);
+      setUser(response.data)
+      console.log(user)
     }
-    handleUser();
-  }, [userId]);
+    handleUser()
+  }, [userId])
 
   return (
     <div>
-      <Text>{user.name} favorites:</Text>
+      <Text>favorites:</Text>
       {/* {user.favorites.map((item) => {
         return (
           <Center

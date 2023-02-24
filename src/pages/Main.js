@@ -524,6 +524,7 @@ function Main() {
             </Card>
           );
         })}
+        
       </div>
     );
   }
