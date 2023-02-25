@@ -22,7 +22,7 @@ function NewAnnouncement() {
   const [color, setColor] = useState("");
   const [year, setYear] = useState("");
   const [kms, setKms] = useState(0);
-  const [image, setImage] = useState(null);
+  const [images, setImages] = useState(null);
   const [price, setPrice] = useState(null);
   const [localization, setLocalization] = useState("");
   const [hp, setHp] = useState(null);
@@ -77,8 +77,8 @@ function NewAnnouncement() {
     setKms(event.target.value);
   }
 
-  function handleImageSelect(event) {
-    setImage(event.target.files[0]);
+  function handleImagesSelect(event) {
+    setImages(event.target.files);
   }
 
   function handlePriceChange(event) {
@@ -104,11 +104,17 @@ function NewAnnouncement() {
   async function handleSubmitForm(event) {
     event.preventDefault();
     //1. Upload the image through the backend
-    const uploadData = new FormData();
-    uploadData.append("fileName", image);
-    const response = await uploadImage(uploadData);
+    const uploadImagePromises = [];
+    Object.keys(images).forEach((img)=> {
+      const uploadData = new FormData();
+      uploadData.append("fileName", images[img]);
+      uploadImagePromises.push(uploadImage(uploadData))
+    });
 
-    //2. Once we get the imageUrl -> create a project
+    const responses = await Promise.all(uploadImagePromises)
+    const imagesURLs = responses.map((response) => response.data.fileUrl);
+    
+    //2. Once we get he imageUrl -> create a project
     //with title, description and imageUrl
     await createAnnouncement({
       title,
@@ -123,7 +129,7 @@ function NewAnnouncement() {
       hp,
       engineDisplacement,
       fuel,
-      image: response.data.fileUrl,
+      images: imagesURLs
     });
 
     navigate("/");
@@ -242,12 +248,12 @@ function NewAnnouncement() {
       </FormControl>
 
       <FormControl isRequired>
-        <FormLabel htmlFor="image">Image</FormLabel>
+        <FormLabel htmlFor="images">Images</FormLabel>
         <Input
-          id="image"
+          id="images"
           type="file"
           multiple
-          onChange={handleImageSelect}
+          onChange={handleImagesSelect}
           style={{ backgroundColor: "white" }}
         />
       </FormControl>
