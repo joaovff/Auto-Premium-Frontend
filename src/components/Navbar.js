@@ -103,7 +103,7 @@ const SidebarContent = ({ onClose, loggedUser, ...rest }) => {
             width={"50px"}
           />
         </NavLink>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
+        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} color="white" />
       </Flex>
 
       {loggedUser ? (

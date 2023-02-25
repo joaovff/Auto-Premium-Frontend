@@ -120,15 +120,15 @@ function NewAnnouncement() {
     event.preventDefault();
     //1. Upload the image through the backend
     const uploadImagePromises = [];
-    Object.keys(images).forEach((img)=> {
+    Object.keys(images).forEach((img) => {
       const uploadData = new FormData();
       uploadData.append("fileName", images[img]);
-      uploadImagePromises.push(uploadImage(uploadData))
+      uploadImagePromises.push(uploadImage(uploadData));
     });
 
-    const responses = await Promise.all(uploadImagePromises)
+    const responses = await Promise.all(uploadImagePromises);
     const imagesURLs = responses.map((response) => response.data.fileUrl);
-    
+
     //2. Once we get he imageUrl -> create a project
     //with title, description and imageUrl
     await createAnnouncement({
@@ -144,7 +144,7 @@ function NewAnnouncement() {
       hp,
       engineDisplacement,
       fuel,
-      images: imagesURLs
+      images: imagesURLs,
       doors,
       traction,
       gearBox,

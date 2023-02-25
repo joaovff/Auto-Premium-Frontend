@@ -46,4 +46,25 @@
       visibility: hidden;
     }
 
+    .carousel {
+      width: 100vw;
+    } 
 } 
+@media (min-width: 480px) and (max-width: 768px) {
+
+    .carousel {
+      width: 100vw;
+    } 
+} 
+@media (min-width: 768px) and (max-width: 990px) {
+
+    .carousel {
+      width: 60vw;
+      margin-left: 50%;
+    } 
+} 
+
+.carousel {
+  margin-left: -5%;
+
+}

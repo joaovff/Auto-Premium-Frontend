@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { deleteAnnouncement, getAnnouncement, getUser } from "../api";
 import { Link } from "react-router-dom";
-
+import Carousel from "../components/Corousel";
 import {
   Box,
   chakra,
@@ -31,7 +31,6 @@ export default function Simple() {
   const { announcementId } = useParams();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     async function handleGetAnnouncementDetail() {
       const response = await getAnnouncement(announcementId);
@@ -53,15 +52,7 @@ export default function Simple() {
         py={{ base: 18, md: 24 }}
       >
         <Flex>
-          <Image
-            rounded={"md"}
-            alt={announcement.title}
-            src={announcement.image}
-            fit={"cover"}
-            align={"center"}
-            w={"100%"}
-            h={{ base: "100%", sm: "400px", lg: "350px" }}
-          />
+          <Carousel carImages={announcement.images} />
         </Flex>
 
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -99,77 +90,108 @@ export default function Simple() {
                 textTransform={"uppercase"}
                 mb={"4"}
               >
-                Features
-              </Text>
-
-              <SimpleGrid columns={{ base: 1, md: 2 }} spacing={10}>
-                <List spacing={2}>
-                  <ListItem>Chronograph</ListItem>
-                  <ListItem>Master Chronometer Certified</ListItem>{" "}
-                  <ListItem>Tachymeter</ListItem>
-                </List>
-                <List spacing={2}>
-                  <ListItem>Anti‑magnetic</ListItem>
-                  <ListItem>Chronometer</ListItem>
-                  <ListItem>Small seconds</ListItem>
-                </List>
-              </SimpleGrid>
-            </Box>
-
-            <Box>
-              <Text
-                fontSize={{ base: "16px", lg: "18px" }}
-                fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"4"}
-              >
                 Specifications
               </Text>
 
-              <List spacing={2}>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Kms:
-                  </Text>
-                  {"  "}
-                  {announcement.kms
-                    .toLocaleString("pt-pt", {
-                      minimumFractionDigits: 2,
-                    })
-                    .slice(0, -3)}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Year:
-                  </Text>{" "}
-                  {announcement.year}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Make:
-                  </Text>{" "}
-                  {announcement.make}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Model:
-                  </Text>{" "}
-                  {announcement.model}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Color:
-                  </Text>{" "}
-                  {announcement.color.charAt(0).toUpperCase() +
-                    announcement.color.slice(1)}
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    HP:
-                  </Text>{" "}
-                  {announcement.hp}
-                </ListItem>
-              </List>
+              <Box
+                style={{
+                  display: "flex",
+                  justifyContent: "space-around",
+                  alignItems: "baseline",
+                }}
+              >
+                <List
+                  textAlign="left"
+                  spacing={2}
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      KM:
+                    </Text>
+                    {"  "}
+                    {announcement.kms
+                      .toLocaleString("pt-pt", {
+                        minimumFractionDigits: 2,
+                      })
+                      .slice(0, -3)}
+                  </ListItem>
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Year:
+                    </Text>{" "}
+                    {announcement.year}
+                  </ListItem>
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Make:
+                    </Text>{" "}
+                    {announcement.make}
+                  </ListItem>
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Model:
+                    </Text>{" "}
+                    {announcement.model}
+                  </ListItem>
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Color:
+                    </Text>{" "}
+                    {announcement.color.charAt(0).toUpperCase() +
+                      announcement.color.slice(1)}
+                  </ListItem>
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      HP:
+                    </Text>{" "}
+                    {announcement.hp}
+                  </ListItem>
+                </List>
+
+                <List
+                  textAlign="left"
+                  spacing={2}
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Engine Displacement:
+                    </Text>{" "}
+                    {announcement.engineDisplacement} cm³
+                  </ListItem>
+
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Fuel:{" "}
+                    </Text>{" "}
+                    {announcement.fuel.charAt(0).toUpperCase() +
+                      announcement.fuel.slice(1)}{" "}
+                  </ListItem>
+
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Doors:{" "}
+                    </Text>{" "}
+                    {announcement.doors}
+                  </ListItem>
+
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Traction:{" "}
+                    </Text>{" "}
+                    {announcement.traction.toUpperCase()}
+                  </ListItem>
+
+                  <ListItem>
+                    <Text as={"span"} fontWeight={"bold"}>
+                      Gear Box:{" "}
+                    </Text>{" "}
+                    {announcement.gearBox.charAt(0).toUpperCase() +
+                      announcement.gearBox.slice(1)}
+                  </ListItem>
+                </List>
+              </Box>
             </Box>
           </Stack>
           <Divider />
@@ -203,7 +225,7 @@ export default function Simple() {
             </>
           ) : (
             <>
-              <Spinner color="red.500" />
+              <Spinner color="black" />
               <Text>Loading seller info</Text>
             </>
           )}
@@ -298,47 +320,130 @@ export default function Simple() {
               >
                 Specs
               </Text>
+              <Box>
+                <Text
+                  fontSize={{ base: "16px", lg: "18px" }}
+                  fontWeight={"500"}
+                  textTransform={"uppercase"}
+                  mb={"4"}
+                >
+                  Specifications
+                </Text>
 
-              <List spacing={2}>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Kms:
-                  </Text>
-                  <Stack>
-                    <Skeleton height="20px" />
-                  </Stack>
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Year:
-                  </Text>
-                  <Skeleton height="20px" />
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Make:
-                  </Text>
-                  <Skeleton height="20px" />
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Model:
-                  </Text>
-                  <Skeleton height="20px" />
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    Color:
-                  </Text>
-                  <Skeleton height="20px" />
-                </ListItem>
-                <ListItem>
-                  <Text as={"span"} fontWeight={"bold"}>
-                    HP:
-                  </Text>
-                  <Skeleton height="20px" />
-                </ListItem>
-              </List>
+                <Box
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-around",
+                    alignItems: "baseline",
+                  }}
+                >
+                  <List
+                    textAlign="left"
+                    spacing={2}
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        KM:
+                      </Text>
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Year:
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Make:
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Model:
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Color:
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        HP:
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                  </List>
+
+                  <List
+                    textAlign="left"
+                    spacing={2}
+                    style={{ display: "flex", flexDirection: "column" }}
+                  >
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Engine Displacement:
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Fuel:{" "}
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Doors:{" "}
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Traction:{" "}
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+
+                    <ListItem>
+                      <Text as={"span"} fontWeight={"bold"}>
+                        Gear Box:{" "}
+                      </Text>{" "}
+                      <Stack>
+                        <Skeleton height="20px" />
+                      </Stack>
+                    </ListItem>
+                  </List>
+                </Box>
+              </Box>
             </Box>
           </Stack>
         </Stack>

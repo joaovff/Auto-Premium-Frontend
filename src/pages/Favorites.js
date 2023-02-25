@@ -27,7 +27,6 @@ function Favorites() {
     async function handleUser() {
       const response = await getFavorites(userId);
       setUser(response.data);
-      console.log(user);
     }
     handleUser();
   }, [userId]);
@@ -93,12 +92,11 @@ function Favorites() {
                           >
                             <Box h={"200px"}>
                               <Img
-                                src={item.image}
+                                src={item.images[0]}
                                 roundedTop={"sm"}
                                 objectFit="cover"
                                 h="full"
                                 w="full"
-                                alt={"Blog Image"}
                               />
                             </Box>
                             <Box p={4}>

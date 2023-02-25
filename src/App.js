@@ -65,6 +65,7 @@ function App() {
 
             <Route path="profile/edit/:userId" element = {<EditUser/>}/>
           </Routes>
+          
         </Navbar>
       </ChakraProvider>
     </div>

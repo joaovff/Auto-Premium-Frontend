@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getAllAnnouncements, getMakes, getUser } from "../api";
 import SearchBar from "../components/SearchBar";
 import { useContext, useEffect, useState, useRef } from "react";
@@ -29,6 +29,7 @@ import { ArrowUpDownIcon, DragHandleIcon } from "@chakra-ui/icons";
 import { UserContext } from "../context/user.context";
 import { updateFavorites, getFavorites } from "../api";
 import { deleteFavorites } from "../api";
+import MainCarousel from "../components/MainCarousel";
 
 function Main() {
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
@@ -40,6 +41,8 @@ function Main() {
   const [toggle, setToggle] = useState(true);
 
   const [user, setUser] = useState(null);
+
+  const navigate = useNavigate();
 
   function handleSearch(keyword) {
     const filtered = announcements.filter((announcement) => {
@@ -96,7 +99,6 @@ function Main() {
     });
     setFilteredAnnouncements(filtered);
   }
-  
 
   function sortByPrice() {
     const sorted = [...announcements].sort((a, b) =>
@@ -134,8 +136,12 @@ function Main() {
   }, [loggedUser]);
 
   function addToFavorites(itemId) {
-    updateFavorites(loggedUser._id, { itemId: itemId });
-    setToggle(!toggle);
+    if (!loggedUser) {
+      navigate("/login");
+    } else {
+      updateFavorites(loggedUser._id, { itemId: itemId });
+      setToggle(!toggle);
+    }
   }
 
   async function deleteFavoritess(itemId, userId) {
@@ -249,7 +255,7 @@ function Main() {
                 >
                   <Box h={"200px"}>
                     <Img
-                      src={announcement.image}
+                      src={announcement.images[0]}
                       roundedTop={"sm"}
                       objectFit="cover"
                       h="full"
@@ -296,11 +302,10 @@ function Main() {
                       roundedBottom={"sm"}
                       w="full"
                     >
-                      <Link to={`/announcements/${announcement._id}`}>
-                        <Text fontSize={"md"} fontWeight={"semibold"}>
-                          View more
-                        </Text>
-                      </Link>
+                      <Text fontSize={"md"} fontWeight={"semibold"}>
+                        {announcement.localization.charAt(0).toUpperCase() +
+                          announcement.localization.slice(1)}{" "}
+                      </Text>
                       <Link to={`/announcements/${announcement._id}`}>
                         <BsArrowUpRight />{" "}
                       </Link>
@@ -405,7 +410,7 @@ function Main() {
             </PopoverContent>
           </Popover>
         </Flex>
-      
+
         {filteredAnnouncements.map((announcement) => {
           return (
             <Card
@@ -418,20 +423,20 @@ function Main() {
               data-aos="fade-up"
               data-aos-anchor-placement="top-bottom"
               data-aos-duration="1000"
+              style={{ display: "flex", justifyContent: "flex-start" }}
             >
-              <Image
-                objectFit="cover"
-                maxW={{ base: "100%", sm: "300px" }}
-                src={announcement.image}
-                alt={announcement.title}
-              />
+              <Stack>
+                <MainCarousel carImages={announcement.images} />
+              </Stack>
 
               <Stack>
-                <CardBody>
-                  <div style={{ display: "flex" }}>
-                    <Heading textAlign="start" size="md">
-                      {announcement.title}
-                    </Heading>
+                <CardBody style={{}}>
+                  <div style={{ display: "flex", width: "100%" }}>
+                    <Link to={`/announcements/${announcement._id}`}>
+                      <Heading textAlign="start" size="md">
+                        {announcement.title}
+                      </Heading>
+                    </Link>
                   </div>
 
                   <Text textAlign="start" color="grey" py="2" text>
@@ -446,35 +451,48 @@ function Main() {
                     • {announcement.year}
                   </Text>
                 </CardBody>
+              </Stack>
+              <Flex w="container.lg"
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  alignItems: "end",
+                }}
+              >
+                <Text fontWeight="700" textAlign="end" p={5}>
+                  {" "}
+                  {announcement.price.toLocaleString("pt-pt", {
+                    minimumFractionDigits: 2,
+                  })}{" "}
+                  €
+                </Text>
 
                 {loggedUser && (
-                  <CardFooter>
-                    <Flex
-                      p={4}
-                      alignItem="center"
-                      justifyContent={"space-between"}
-                      roundedBottom={"sm"}
-                      cursor="pointer"
-                    >
-                      {user && user.favorites.includes(announcement._id) ? (
-                        <BsHeartFill
-                          onClick={() =>
-                            deleteFavoritess(announcement._id, loggedUser._id)
-                          }
-                          fill="red"
-                          fontSize={"24px"}
-                        />
-                      ) : (
-                        <BsHeart
-                          onClick={() => addToFavorites(announcement._id)}
-                          fontSize={"24px"}
-                        />
-                      )}
-                    </Flex>
-                  </CardFooter>
+                  <Flex
+                    p={4}
+                    alignItems="center"
+                    justifyContent={"space-between"}
+                    roundedBottom={"sm"}
+                    cursor="pointer"
+                  >
+                    {user && user.favorites.includes(announcement._id) ? (
+                      <BsHeartFill
+                        onClick={() =>
+                          deleteFavoritess(announcement._id, loggedUser._id)
+                        }
+                        fill="red"
+                        fontSize={"24px"}
+                      />
+                    ) : (
+                      <BsHeart
+                        onClick={() => addToFavorites(announcement._id)}
+                        fontSize={"24px"}
+                      />
+                    )}
+                  </Flex>
                 )}
-              </Stack>
-              <Box p={4}></Box>
+              </Flex>
             </Card>
           );
         })}
