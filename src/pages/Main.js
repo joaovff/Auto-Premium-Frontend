@@ -448,7 +448,7 @@ function Main() {
                     Km • {announcement.hp} HP •{" "}
                     {announcement.fuel.charAt(0).toUpperCase() +
                       announcement.fuel.slice(1)}{" "}
-                    • {announcement.year}
+                    • {announcement.year} • {}
                   </Text>
                 </CardBody>
               </Stack>
