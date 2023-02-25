@@ -68,10 +68,7 @@ function EditAnnouncement() {
     setKms(event.target.value);
   }
 
-  /*   function handleImageSelect(event) {
-    setImage(event.target.files[0]);
-  }
- */
+  
   function handlePriceChange(event) {
     setPrice(event.target.value);
   }
@@ -91,6 +88,8 @@ function EditAnnouncement() {
   function handleFuelChange(event) {
     setFuel(event.target.value);
   }
+
+  
 
   async function handleSubmitForm(event) {
     event.preventDefault();

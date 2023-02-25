@@ -144,7 +144,7 @@ function NewAnnouncement() {
       hp,
       engineDisplacement,
       fuel,
-      images: imagesURLs
+      images: imagesURLs,
       doors,
       traction,
       gearBox,
