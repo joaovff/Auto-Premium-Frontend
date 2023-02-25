@@ -89,7 +89,7 @@ const SidebarContent = ({ onClose, loggedUser, ...rest }) => {
     <Box
       transition="3s ease"
       borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      borderRightColor="transparent"
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
@@ -188,9 +188,9 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
+      bg="white"
+      color="black"
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}
     >
