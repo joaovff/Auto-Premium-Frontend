@@ -71,7 +71,7 @@ function Signup() {
         setEmail("");
         setPhone(null);
       } else {
-        navigate("/");
+        navigate("/login");
       }
     } catch (e) {
       console.log(`error ${e}`);
