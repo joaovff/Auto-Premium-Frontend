@@ -28,6 +28,9 @@ function NewAnnouncement() {
   const [hp, setHp] = useState(null);
   const [engineDisplacement, setEngineDisplacement] = useState(null);
   const [fuel, setFuel] = useState("");
+  const [doors, setDoors] = useState(0);
+  const [traction, setTraction] = useState("");
+  const [gearBox, setGearBox] = useState("");
 
   const [carMakes, setCarMakes] = useState([]);
 
@@ -101,6 +104,18 @@ function NewAnnouncement() {
     setFuel(event.target.value);
   }
 
+  function handleDoorsChange(event) {
+    setDoors(event.target.value);
+  }
+
+  function handleTractionChange(event) {
+    setTraction(event.target.value);
+  }
+
+  function handleGearBoxChange(event) {
+    setGearBox(event.target.value);
+  }
+
   async function handleSubmitForm(event) {
     event.preventDefault();
     //1. Upload the image through the backend
@@ -124,6 +139,9 @@ function NewAnnouncement() {
       engineDisplacement,
       fuel,
       image: response.data.fileUrl,
+      doors,
+      traction,
+      gearBox,
     });
 
     navigate("/");
@@ -297,6 +315,16 @@ function NewAnnouncement() {
       </FormControl>
 
       <FormControl isRequired>
+        <FormLabel htmlFor="doors">Doors</FormLabel>
+        <Input
+          id="doors"
+          type="number"
+          onChange={handleDoorsChange}
+          style={{ backgroundColor: "white" }}
+        />
+      </FormControl>
+
+      <FormControl isRequired>
         <FormLabel htmlFor="fuel" mb="8px">
           Fuel:
         </FormLabel>
@@ -316,6 +344,49 @@ function NewAnnouncement() {
           <option value="gasoline">Gasoline</option>
           <option value="eletric">Eletric</option>
           <option value="hybrid">Hybrid</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel htmlFor="traction" mb="8px">
+          Traction:
+        </FormLabel>
+
+        <Select
+          variant="outline"
+          id="traction"
+          onChange={handleTractionChange}
+          size="md"
+          style={{ backgroundColor: "white" }}
+        >
+          <option selected disabled hidden>
+            {" "}
+          </option>
+          <option selected disabled hidden></option>
+          <option value="rwd">Rear wheel drive</option>
+          <option value="fwd">Front wheel drive</option>
+          <option value="awd">All wheel drive</option>
+        </Select>
+      </FormControl>
+
+      <FormControl isRequired>
+        <FormLabel htmlFor="gearBox" mb="8px">
+          Gear Box:
+        </FormLabel>
+
+        <Select
+          variant="outline"
+          id="gearBox"
+          onChange={handleGearBoxChange}
+          size="md"
+          style={{ backgroundColor: "white" }}
+        >
+          <option selected disabled hidden>
+            {" "}
+          </option>
+          <option selected disabled hidden></option>
+          <option value="automatic">Automatic</option>
+          <option value="manual">Manual</option>
         </Select>
       </FormControl>
 
