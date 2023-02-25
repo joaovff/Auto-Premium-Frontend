@@ -24,6 +24,7 @@ import UserDetail from "./pages/UserDetail";
 import UserSettings from "./pages/UserSettings";
 import { Footer } from "antd/es/layout/layout";
 import Favorites from "./pages/Favorites";
+import EditUser from "./pages/EditUser";
 
 function App() {
   return (
@@ -61,6 +62,8 @@ function App() {
             />
 
             <Route path="/profile/favorites/:userId" element={<Favorites />} />
+
+            <Route path="profile/edit/:userId" element = {<EditUser/>}/>
           </Routes>
         </Navbar>
       </ChakraProvider>
