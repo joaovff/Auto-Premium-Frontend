@@ -123,19 +123,7 @@ function Signup() {
                 </FormControl>
                 <br />
               </Box>
-              {/* <Box>
-                <FormControl id="picture" isRequired>
-                  <FormLabel htmlFor="picture">Picture </FormLabel>
-                  <Input
-                    id="picture"
-                    type="file"
-                    value={picture}
-                    onChange={handlePictureSelect}
-                    style={{ width: "300px" }}
-                  />
-                </FormControl>
-                <br/>
-              </Box> */}
+              
 
               <FormControl id="picture">
                 <FormLabel htmlFor="picture">User Picture</FormLabel>
@@ -146,11 +134,6 @@ function Signup() {
                   onChange={handlePictureSelect}
                   style={{ width: "300px" }}
                 />
-                <Stack direction={["column", "row"]} spacing={6}>
-                  <Center w="full">
-                    <Button w="full">Insert picture</Button>
-                  </Center>
-                </Stack>
               </FormControl>
 
               <Box>
