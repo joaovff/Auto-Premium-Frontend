@@ -130,7 +130,8 @@ function NewAnnouncement() {
   }
 
   return (
-    <form className="create"
+    <form
+      className="create"
       onSubmit={handleSubmitForm}
       style={{
         display: "flex",

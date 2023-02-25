@@ -9,45 +9,38 @@ import {
   Img,
   Flex,
   Center,
-  useColorModeValue,
   HStack,
-  CheckboxGroup,
   Stack,
-  Checkbox,
   Card,
   CardBody,
   CardFooter,
   Button,
-  RangeSlider,
-  RangeSliderTrack,
-  RangeSliderFilledTrack,
-  RangeSliderThumb,
   Popover,
   PopoverTrigger,
   PopoverContent,
   PopoverBody,
   PopoverArrow,
   IconButton,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
   Image,
-  CardHeader,
-  StackDivider,
-  FormLabel,
-  FormControl,
-  Select,
 } from "@chakra-ui/react";
 import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
 import "aos/dist/aos.css";
-import { ArrowUpDownIcon, DragHandleIcon, SearchIcon } from "@chakra-ui/icons";
+import { ArrowUpDownIcon, DragHandleIcon } from "@chakra-ui/icons";
 import { UserContext } from "../context/user.context";
 import { updateFavorites, getFavorites } from "../api";
 import { deleteFavorites } from "../api";
 
 function Main() {
+  const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
+  const [announcements, setAnnoucements] = useState([]);
+
+  const { loggedUser } = useContext(UserContext);
+
+  const [className, setClassName] = useState("");
+  const [toggle, setToggle] = useState(true);
+
+  const [user, setUser] = useState(null);
+
   function handleSearch(keyword) {
     const filtered = announcements.filter((announcement) => {
       return announcement.title.toLowerCase().includes(keyword.toLowerCase());
@@ -103,16 +96,7 @@ function Main() {
     });
     setFilteredAnnouncements(filtered);
   }
-
-  const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
-  const [announcements, setAnnoucements] = useState([]);
-
-  const { loggedUser } = useContext(UserContext);
-
-  const [className, setClassName] = useState("");
-  const [toggle, setToggle] = useState(true);
-
-  const [user, setUser] = useState(null);
+  
 
   function sortByPrice() {
     const sorted = [...announcements].sort((a, b) =>
@@ -366,7 +350,7 @@ function Main() {
           handleMaxPriceSearch={handleMaxPriceSearch}
           handleFuelSearch={handleFuelSearch}
         />
-        <Flex justifyContent="end" mt={4}>
+        <Flex justifyContent="end" mt={2} mb={2}>
           <IconButton
             aria-label="Search database"
             onClick={switchDisplay}
@@ -421,7 +405,7 @@ function Main() {
             </PopoverContent>
           </Popover>
         </Flex>
-
+      
         {filteredAnnouncements.map((announcement) => {
           return (
             <Card
