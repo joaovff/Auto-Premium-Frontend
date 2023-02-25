@@ -41,9 +41,17 @@ export const updateAnnouncement = (announcementId, announcement) => {
   );
 };
 
+//UPLOAD ANNOUNCEMENT IMAGE
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
+
+
+//UPLOAD USER PICTURE
+export const UploadPicture = (uploadData) => {
+  return axios.post(`${BASE_URL}/upload`, uploadData);
+}
+
 
 export const getMakes = () => {
   return axios.get(

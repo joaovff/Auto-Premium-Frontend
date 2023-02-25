@@ -14,19 +14,20 @@ import {
   InputRightElement,
   InputLeftElement,
   InputLeftAddon,
+  Center,
 } from "@chakra-ui/react";
 import { MdEmail, MdOutlineEmail, MdPhone } from "react-icons/md";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { signup } from "../api";
-import { uploadImage } from "../api";
+import { uploadImage, signup, UploadPicture } from "../api";
+
 import { BsPerson } from "react-icons/bs";
 
 function Signup() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  /* const [picture, setPicture] = useState(null) */
+  const [picture, setPicture] = useState("");
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -40,9 +41,9 @@ function Signup() {
     setName(event.target.value);
   }
 
-  /* function handlePictureSelect(event) {
+  function handlePictureSelect(event) {
     setPicture(event.target.files[0]);
-  } */
+  }
 
   function handlePhoneChange(event) {
     setPhone(event.target.value);
@@ -55,23 +56,20 @@ function Signup() {
   async function handleSubmitForm(event) {
     event.preventDefault();
     try {
-      /* const uploadData = new FormData();
+      const uploadData = new FormData();
       uploadData.append("fileName", picture);
-      const responseImage = await uploadImage(uploadData); */
+      const responseImage = await UploadPicture(uploadData);
       const response = await signup({
         email,
         name,
         password,
-        /* picture, */ phone,
+        picture: responseImage.data.fileUrl,
+        phone,
       });
-      console.log(response);
       if (response.data.message) {
         setPassword("");
         setEmail("");
         setPhone(null);
-
-        /*  } else if (responseImage.data) {
-        setPicture(""); */
       } else {
         navigate("/");
       }
@@ -88,7 +86,7 @@ function Signup() {
       bg={useColorModeValue("gray.50", "gray.800")}
       style={{ flexDirection: "column", marginTop: "-150px" }}
     >
-      <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"} textAlign={"center"}>
             Sign up
@@ -139,7 +137,22 @@ function Signup() {
                 <br/>
               </Box> */}
 
-              
+              <FormControl id="picture">
+                <FormLabel htmlFor="picture">User Picture</FormLabel>
+                <Input
+                  id="picture"
+                  type="file"
+                  name="fileName"
+                  onChange={handlePictureSelect}
+                  style={{ width: "300px" }}
+                />
+                <Stack direction={["column", "row"]} spacing={6}>
+                  <Center w="full">
+                    <Button w="full">Insert picture</Button>
+                  </Center>
+                </Stack>
+              </FormControl>
+
               <Box>
                 <FormControl id="phone">
                   <FormLabel htmlFor="phone">Phone Number </FormLabel>
