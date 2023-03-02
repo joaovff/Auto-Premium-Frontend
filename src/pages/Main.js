@@ -95,7 +95,7 @@ function Main() {
 
   function handleFuelSearch(keyword) {
     const filtered = announcements.filter((announcement) => {
-      return announcement.fuel === keyword;
+      return announcement.fuel.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredAnnouncements(filtered);
   }
@@ -448,11 +448,14 @@ function Main() {
                     Km • {announcement.hp} HP •{" "}
                     {announcement.fuel.charAt(0).toUpperCase() +
                       announcement.fuel.slice(1)}{" "}
-                    • {announcement.year} • {}
+                    • {announcement.year} •{" "}
+                    {announcement.localization.charAt(0).toUpperCase() +
+                      announcement.localization.slice(1)}
                   </Text>
                 </CardBody>
               </Stack>
-              <Flex w="container.lg"
+              <Flex
+                w="container.lg"
                 style={{
                   display: "flex",
                   flexDirection: "column",

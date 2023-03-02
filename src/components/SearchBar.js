@@ -14,6 +14,14 @@ import {
   InputGroup,
   InputLeftAddon,
   Input,
+  RadioGroup,
+  Drawer,
+  Radio,
+  DrawerOverlay,
+  DrawerContent,
+  DrawerHeader,
+  DrawerBody,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
@@ -36,6 +44,11 @@ function SearchBar({
   const [maxYear, setMaxYear] = useState("");
   const [fuel, setFuel] = useState("");
 
+  const [show, setShow] = useState(false);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [placement, setPlacement] = useState("left");
+  const handlePlacementChange = (event) => setPlacement(event.target.value);
   function handleKeywordInput(event) {
     setKeyword(event.target.value);
     handleSearch(event.target.value);
@@ -76,17 +89,23 @@ function SearchBar({
     <Card
       direction={{ base: "column", sm: "row" }}
       overflow="hidden"
-      variant="outline"
-      style={{ justifyContent: "center", alignItems: "center" }}
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        display: "flex",
+      }}
     >
-      <Stack>
+      <Stack
+        style={{
+          justifyContent: "center",
+          alignItems: "center",
+          display: "flex",
+        }}
+      >
         <CardBody>
           <Flex>
             <InputGroup>
-              <InputLeftAddon
-                style={{ backgroundColor: "white", border: "0" }}
-                children={<Search2Icon style={{ backgroundColor: "white" }} />}
-              />
+              <InputLeftAddon children={<Search2Icon />} />
               <Input
                 value={keyword}
                 type="text"
@@ -96,99 +115,147 @@ function SearchBar({
               />
             </InputGroup>
           </Flex>
-          <br />
-          <br />
-          <Stack direction={{ base: "column", sm: "row" }}>
-            <FormControl display="flex">
-              <FormLabel>Price:</FormLabel>
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField
-                  placeholder="€ Min"
-                  value={minPrice}
-                  type="number"
-                  onChange={handleMinPrice}
-                />
-              </NumberInput>
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField
-                  value={maxPrice}
-                  type="number"
-                  onChange={handleMaxPrice}
-                  placeholder="€ Max"
-                />
-              </NumberInput>
-            </FormControl>
-
-            <FormControl display="flex">
-              <FormLabel>Km</FormLabel>
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField
-                  value={minKms}
-                  type="number"
-                  onChange={handleMinKms}
-                  placeholder="Km Min"
-                />
-              </NumberInput>
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField
-                  value={maxKms}
-                  type="number"
-                  onChange={handleMaxKms}
-                  placeholder="Km Max"
-                />
-              </NumberInput>
-            </FormControl>
-
-            <FormControl display="flex">
-              <FormLabel>Year</FormLabel>
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField
-                  value={minYear}
-                  type="number"
-                  onChange={handleMinYears}
-                  placeholder="Year Max"
-                />
-              </NumberInput>
-            </FormControl>
-
-            <FormControl display="flex">
-              <NumberInput size="md" maxW={24} min={1}>
-                <NumberInputField
-                  value={maxYear}
-                  type="number"
-                  onChange={handleMaxYears}
-                  placeholder="Year Max"
-                />
-              </NumberInput>
-            </FormControl>
-
-            <FormControl display="flex">
-              <FormLabel htmlFor="fuel" mb="8px">
-                Fuel:
-              </FormLabel>
-
-              <Select
-                variant="outline"
-                id="fuel"
-                size="md"
-                style={{ backgroundColor: "white" }}
-                onChange={handleFuel}
-              >
-                <option selected disabled hidden>
-                  {" "}
-                </option>
-                <option selected disabled hidden></option>
-                <option value="diesel">Diesel</option>
-                <option value="gasoline">Gasoline</option>
-                <option value="eletric">Eletric</option>
-                <option value="hybrid">Hybrid</option>
-              </Select>
-            </FormControl>
-          </Stack>
         </CardBody>
 
         <CardFooter>
-          <Button>Update Search</Button>
+          {" "}
+          <Button variantColor="blue" onClick={onOpen}>
+            Filters
+          </Button>
+          <Drawer placement={placement} onClose={onClose} isOpen={isOpen}>
+            <DrawerOverlay />
+            <DrawerContent>
+              <DrawerHeader borderBottomWidth="1px">Filters</DrawerHeader>
+              <DrawerBody>
+                <Stack
+                  style={{
+                    flexDirection: "column",
+                  }}
+                >
+                  <FormControl
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
+                  >
+                    <FormLabel>Price:</FormLabel>
+                    <NumberInput size="md" maxW={24} min={1}>
+                      <NumberInputField
+                        placeholder="€ Min"
+                        value={minPrice}
+                        type="number"
+                        fontSize="13px"
+                        onChange={handleMinPrice}
+                        marginLeft="-3%"
+                      />
+                    </NumberInput>
+                    <NumberInput size="md" maxW={24} min={1}>
+                      <NumberInputField
+                        value={maxPrice}
+                        type="number"
+                        fontSize="13px"
+                        onChange={handleMaxPrice}
+                        placeholder="€ Max"
+                        marginLeft="-1%"
+                      />
+                    </NumberInput>
+                  </FormControl>
+
+                  <FormControl
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
+                  >
+                    <FormLabel>Km:</FormLabel>
+                    <NumberInput size="md" maxW={24} min={1}>
+                      <NumberInputField
+                        value={minKms}
+                        type="number"
+                        onChange={handleMinKms}
+                        placeholder="Min"
+                        fontSize="13px"
+                        marginLeft="3%"
+                      />
+                    </NumberInput>
+                    <NumberInput size="md" maxW={24} min={1}>
+                      <NumberInputField
+                        value={maxKms}
+                        fontSize="13px"
+                        type="number"
+                        onChange={handleMaxKms}
+                        placeholder="Max"
+                      />
+                    </NumberInput>
+                  </FormControl>
+
+                  <FormControl
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-around",
+                      alignItems: "center",
+                    }}
+                  >
+                    <FormLabel>Year:</FormLabel>
+                    <NumberInput size="md" maxW={24} min={1}>
+                      <NumberInputField
+                        value={minYear}
+                        type="number"
+                        onChange={handleMinYears}
+                        placeholder="Min"
+                        fontSize="13px"
+                        marginLeft="-1%"
+                      />
+                    </NumberInput>
+
+                    <NumberInput size="md" maxW={24} min={1}>
+                      <NumberInputField
+                        value={maxYear}
+                        type="number"
+                        fontSize="13px"
+                        onChange={handleMaxYears}
+                        placeholder="Min"
+                        marginLeft="-2%"
+                      />
+                    </NumberInput>
+                  </FormControl>
+
+                  <FormControl
+                    style={{
+                      display: "flex",
+                      justifyContent: "left",
+                      alignItems: "center",
+                    }}
+                  >
+                    <FormLabel marginLeft="2%" htmlFor="fuel">
+                      Fuel:
+                    </FormLabel>
+
+                    <Select
+                      variant="outline"
+                      id="fuel"
+                      size="md"
+                      width="45%"
+                      style={{ backgroundColor: "white" }}
+                      onChange={handleFuel}
+                      marginLeft="4%"
+                    >
+                      <option selected disabled hidden>
+                        {" "}
+                      </option>
+                      <option selected value="i" >All</option>
+                      <option value="diesel">Diesel</option>
+                      <option value="gasoline">Gasoline</option>
+                      <option value="eletric">Eletric</option>
+                      <option value="hybrid">Hybrid</option>
+                    </Select>
+                  </FormControl>
+                </Stack>
+              </DrawerBody>
+            </DrawerContent>
+          </Drawer>{" "}
         </CardFooter>
       </Stack>
     </Card>

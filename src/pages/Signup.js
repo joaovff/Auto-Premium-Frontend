@@ -123,9 +123,16 @@ function Signup() {
                 </FormControl>
                 <br />
               </Box>
-              
 
-              <FormControl id="picture">
+              <FormControl
+                style={{
+                  display: "flex",
+                  justifyContent: "left",
+                  alignContent: "flex-start",
+                  flexDirection: "column",
+                }}
+                id="picture"
+              >
                 <FormLabel htmlFor="picture">User Picture</FormLabel>
                 <Input
                   id="picture"
@@ -135,6 +142,7 @@ function Signup() {
                   style={{ width: "300px" }}
                 />
               </FormControl>
+              <br />
 
               <Box>
                 <FormControl id="phone">

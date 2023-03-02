@@ -49,10 +49,10 @@ function UserDetail() {
         <Stack>
           <CardBody>
             <br />
-            {!user.picture ? (
-              <Avatar src="public/avataricon.png" size="lg" />
-            ) : (
+            {user && user.picture ? (
               <Avatar src={`${user.picture}`} size="lg" />
+            ) : (
+              <Avatar src="public/avataricon.png" size="lg" />
             )}
             <br />
             <Heading size="md">{user.name}</Heading>
@@ -81,9 +81,9 @@ function UserDetail() {
               ) : (
                 <>
                   {user &&
-                    user.announcements.map((item) => {
+                    user.announcements.map((announcement) => {
                       return (
-                        <Center key={item._id} py={6}>
+                        <Center key={announcement._id} py={6}>
                           <Box
                             w="xs"
                             rounded={"sm"}
@@ -95,7 +95,7 @@ function UserDetail() {
                           >
                             <Box h={"200px"}>
                               <Img
-                                src={item.images[0]}
+                                src={announcement.images[0]}
                                 roundedTop={"sm"}
                                 objectFit="cover"
                                 h="full"
@@ -113,7 +113,7 @@ function UserDetail() {
                                 mb={2}
                               >
                                 <Text fontSize={"xs"} fontWeight="medium">
-                                  {item.price.toLocaleString("pt-pt", {
+                                  {announcement.price.toLocaleString("pt-pt", {
                                     minimumFractionDigits: 2,
                                   })}{" "}
                                   €
@@ -124,18 +124,18 @@ function UserDetail() {
                                 fontSize={"2xl"}
                                 noOfLines={1}
                               >
-                                {item.title}
+                                {announcement.title}
                               </Heading>
                               <Text color={"gray.500"} noOfLines={2}>
-                                {item.kms
+                                {announcement.kms
                                   .toLocaleString("pt-pt", {
                                     minimumFractionDigits: 2,
                                   })
                                   .slice(0, -3)}{" "}
-                                Km • {item.hp} HP •{" "}
-                                {item.fuel.charAt(0).toUpperCase() +
-                                  item.fuel.slice(1)}{" "}
-                                • {item.year}
+                                Km • {announcement.hp} HP •{" "}
+                                {announcement.fuel.charAt(0).toUpperCase() +
+                                  announcement.fuel.slice(1)}{" "}
+                                • {announcement.year}
                               </Text>
                             </Box>
                             <HStack borderTop={"1px"} color="black">
@@ -146,12 +146,12 @@ function UserDetail() {
                                 roundedBottom={"sm"}
                                 w="full"
                               >
-                                <Link to={`/announcements/${item._id}`}>
+                                <Link to={`/announcements/${announcement._id}`}>
                                   <Text fontSize={"md"} fontWeight={"semibold"}>
                                     View more
                                   </Text>
                                 </Link>
-                                <Link to={`/announcements/${item._id}`}>
+                                <Link to={`/announcements/${announcement._id}`}>
                                   <BsArrowUpRight />{" "}
                                 </Link>
                               </Flex>

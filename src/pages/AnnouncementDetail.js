@@ -83,7 +83,7 @@ export default function Simple() {
                   announcement.description.slice(1)}
               </Text>
             </VStack>
-            <Box>
+            <Box style={{display:"flex", justifyContent:"center", flexDirection:"column", alignItems:"center"}}>
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
                 fontWeight={"500"}
@@ -97,7 +97,7 @@ export default function Simple() {
                 style={{
                   display: "flex",
                   justifyContent: "space-around",
-                  alignItems: "baseline",
+                  alignItems: "flex-start",
                 }}
               >
                 <List
@@ -152,6 +152,7 @@ export default function Simple() {
                 <List
                   textAlign="left"
                   spacing={2}
+                  ml={35}
                   style={{ display: "flex", flexDirection: "column" }}
                 >
                   <ListItem>
@@ -312,14 +313,6 @@ export default function Simple() {
               </SimpleGrid>
             </Box>
             <Box>
-              <Text
-                fontSize={{ base: "16px", lg: "18px" }}
-                fontWeight={"500"}
-                textTransform={"uppercase"}
-                mb={"4"}
-              >
-                Specs
-              </Text>
               <Box>
                 <Text
                   fontSize={{ base: "16px", lg: "18px" }}
@@ -333,7 +326,7 @@ export default function Simple() {
                 <Box
                   style={{
                     display: "flex",
-                    justifyContent: "space-around",
+                    justifyContent: "space-between",
                     alignItems: "baseline",
                   }}
                 >
