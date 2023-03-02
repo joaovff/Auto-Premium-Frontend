@@ -93,13 +93,10 @@ function ImageCarousel({ carImages }) {
           h="auto"
           onClick={handleImageClick}
           style={{
-            animation: "fadeIn 0.5s ease-in-out",
+            width: "100%", height:"450px"
           }}
         />
       </Flex>
-      <Badge textAlign="center" colorScheme="black" fontSize="lg">
-        {currentImageIndex + 1} / {carImages.length}
-      </Badge>
       <Modal isOpen={isOpen} onClose={onClose} size={"full"}>
         <ModalOverlay />
         <ModalContent>
@@ -116,14 +113,6 @@ function ImageCarousel({ carImages }) {
           </ModalBody>
         </ModalContent>
       </Modal>
-      <style>
-        {`
-          @keyframes fadeIn {
-            0% { opacity: 0; }
-            100% { opacity: 1; }
-          }
-        `}
-      </style>
     </Box>
   );
 }

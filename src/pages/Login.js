@@ -42,7 +42,7 @@ function Login() {
     try {
       const response = await login({ email, password });
       localStorage.setItem("authToken", response.data);
-      console.log(response.data)
+      console.log(response.data);
       authenticateUser();
       navigate("/");
     } catch (e) {
@@ -56,7 +56,7 @@ function Login() {
       align={"center"}
       justify={"center"}
       bg={useColorModeValue("gray.50", "gray.800")}
-      style={{ flexDirection: "column", marginTop: "-150px" }}
+      style={{ flexDirection: "column", marginTop: "-100px" }}
     >
       <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -69,12 +69,7 @@ function Login() {
         </Stack>
       </Stack>
 
-      <Box
-        rounded={"lg"}
-        bg={useColorModeValue("white", "gray.700")}
-        boxShadow={"lg"}
-        p={8}
-      >
+      <Box rounded={"lg"} boxShadow={"lg"} p={8} className="loginCard">
         <Stack spacing={4}>
           <HStack>
             <Box>
@@ -90,7 +85,6 @@ function Login() {
                       value={email}
                       onChange={handleEmailChange}
                       style={{ width: "350px" }}
-
                     />
                   </InputGroup>
                 </FormControl>
