@@ -8,7 +8,6 @@ import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
-import EditAnnouncement from "./pages/EditAnnouncement";
 import Test from "./pages/Test";
 
 import NotFound from "./pages/NotFound";
@@ -18,7 +17,6 @@ import UserSettings from "./pages/UserSettings";
 import Favorites from "./pages/Favorites";
 import EditPoster from "./pages/EditPoster";
 import theme from "./theme/theme";
-
 
 function App() {
   return (
@@ -45,7 +43,10 @@ function App() {
               element={<AnnouncementDetail />}
             />
 
-            <Route path="announcements/edit/:announcementId" element={<EditPoster/>}/>
+            <Route
+              path="announcements/edit/:announcementId"
+              element={<EditPoster />}
+            />
 
             <Route path="/profile/:userId" element={<UserDetail />} />
 
@@ -69,14 +70,6 @@ function App() {
 
             <Route path="/profile/edit/:userId" element={<UserSettings />} />
 
-            <Route
-              path="profile/edit/:userId"
-              element={
-                <IsPrivate>
-                  <EditUser />
-                </IsPrivate>
-              }
-            />
             <Route path="/profile/settings/:userId" element={<Test />} />
           </Routes>
         </Navbar>
