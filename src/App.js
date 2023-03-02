@@ -8,23 +8,14 @@ import NewAnnouncement from "./pages/NewAnnouncement";
 import { ChakraProvider } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
-import EditAnnouncement from "./pages/EditAnnouncement";
 
 import NotFound from "./pages/NotFound";
-import {
-  Box,
-  Container,
-  Link,
-  SimpleGrid,
-  Stack,
-  Text,
-  useColorModeValue,
-} from "@chakra-ui/react";
+
 import UserDetail from "./pages/UserDetail";
 import UserSettings from "./pages/UserSettings";
-import { Footer } from "antd/es/layout/layout";
 import Favorites from "./pages/Favorites";
-import EditUser from "./pages/EditUser";
+import EditPoster from "./pages/EditPoster";
+
 
 function App() {
   return (
@@ -50,10 +41,8 @@ function App() {
               element={<AnnouncementDetail />}
             />
 
-            <Route
-              path="/announcements/edit/:announcementId"
-              element={<EditAnnouncement />}
-            />
+            <Route path="announcements/edit/:announcementId" element={<EditPoster/>}/>
+
             <Route path="/profile/:userId" element={<UserDetail />} />
 
             <Route
@@ -61,11 +50,10 @@ function App() {
               element={<UserSettings />}
             />
 
-            <Route path="/profile/favorites/:userId" element={<Favorites />} />
+            <Route path="/profile/edit/:userId" element={<UserSettings />} />
 
-            <Route path="profile/edit/:userId" element = {<EditUser/>}/>
+            <Route path="/profile/favorites/:userId" element={<Favorites />} />
           </Routes>
-          
         </Navbar>
       </ChakraProvider>
     </div>

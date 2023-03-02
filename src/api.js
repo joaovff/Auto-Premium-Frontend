@@ -28,6 +28,8 @@ export const signup = (user) => {
   return axios.post(`${BASE_URL}/signup`, user);
 };
 
+
+
 export const verify = (token) => {
   return axios.get(`${BASE_URL}/verify`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -44,6 +46,13 @@ export const updateAnnouncement = (announcementId, announcement) => {
 //UPLOAD ANNOUNCEMENT IMAGE
 export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
+};
+
+
+
+//UPDATE USER
+export const editUser = (userId, user) => {
+  return axios.put(`${BASE_URL}/profile/edit/${userId}`, user);
 };
 
 

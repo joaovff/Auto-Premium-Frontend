@@ -27,6 +27,7 @@ function UserDetail() {
     async function handleUser() {
       const response = await getUser(userId);
       setUser(response.data);
+      console.log(user);
     }
     handleUser();
   }, []);
@@ -94,7 +95,7 @@ function UserDetail() {
                           >
                             <Box h={"200px"}>
                               <Img
-                                src={item.image}
+                                src={item.images[0]}
                                 roundedTop={"sm"}
                                 objectFit="cover"
                                 h="full"

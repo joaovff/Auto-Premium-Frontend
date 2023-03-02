@@ -68,3 +68,15 @@
   margin-left: -5%;
 
 }
+
+
+#userSettingsLayout {
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+.settingsCard {
+  height: max-content;
+  margin-bottom: -20rem;
+}
