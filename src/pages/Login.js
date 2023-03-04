@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { MdOutlineEmail } from "react-icons/md";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -42,11 +43,11 @@ function Login() {
     try {
       const response = await login({ email, password });
       localStorage.setItem("authToken", response.data);
-      console.log(response.data);
       authenticateUser();
+      toast.success("User logged in");
       navigate("/");
     } catch (e) {
-      console.log(`Invalid login`);
+      toast.error(`Invalid login`);
     }
   }
 
@@ -56,7 +57,7 @@ function Login() {
       align={"center"}
       justify={"center"}
       bg="transparent"
-      style={{ flexDirection: "column"}}
+      style={{ flexDirection: "column" }}
       mt={-150}
     >
       <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>

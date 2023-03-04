@@ -9,7 +9,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
 import Test from "./pages/Test";
-
+import { ToastContainer } from "react-toastify";
 import NotFound from "./pages/NotFound";
 
 import UserDetail from "./pages/UserDetail";
@@ -23,7 +23,9 @@ function App() {
     <div className="App">
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+
         <Navbar>
+          <ToastContainer />
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Main />} />
