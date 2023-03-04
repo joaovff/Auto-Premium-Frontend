@@ -85,7 +85,7 @@ input[type=file]::file-selector-button:hover {
   border-right: 1px solid #e5e5e5;
 }
 
-#userSettingsLayout {
+/* #userSettingsLayout {
   display: flex;
   flex-direction: row;
   min-height: 100vh;
@@ -94,4 +94,4 @@ input[type=file]::file-selector-button:hover {
 .settingsCard {
   height: max-content;
   margin-bottom: -20rem;
-}
+} */

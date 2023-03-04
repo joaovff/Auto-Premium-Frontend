@@ -45,56 +45,56 @@ function Main() {
   const navigate = useNavigate();
 
   function handleSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.title.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleMinKmsSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.kms >= keyword;
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleMaxKmsSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.kms <= keyword;
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleMinYearsSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.year >= keyword;
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleMaxYearsSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.year <= keyword;
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleMinPriceSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.price >= keyword;
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleMaxPriceSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.price <= keyword;
     });
     setFilteredAnnouncements(filtered);
   }
 
   function handleFuelSearch(keyword) {
-    const filtered = announcements.filter((announcement) => {
+    const filtered = [...announcements].filter((announcement) => {
       return announcement.fuel.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredAnnouncements(filtered);
@@ -144,6 +144,25 @@ function Main() {
     }
   }
 
+  const handleFilter = (
+    minPrice,
+    maxPrice,
+    minKm,
+    maxKm,
+    fuelType
+  ) => {
+  
+    const filteredCars = [...announcements].filter((car) => {
+       if ((Number(minPrice) <= Number(car.price) && Number(maxPrice) >= Number(car.price) && Number(maxPrice) > Number(minPrice)) && (Number(minKm) <= Number(car.kms) && Number(maxKm) >= Number(car.kms) && Number(maxKm) > Number(minKm)) && (fuelType === car.fuel)){
+        console.log('I ran');
+        return car
+       } 
+    })
+
+    setFilteredAnnouncements(filteredCars)
+
+  }
+
   async function deleteFavoritess(itemId, userId) {
     await deleteFavorites(userId, itemId);
     await handleGetAllAnnouncements();
@@ -170,6 +189,7 @@ function Main() {
           handleMinPriceSearch={handleMinPriceSearch}
           handleMaxPriceSearch={handleMaxPriceSearch}
           handleFuelSearch={handleFuelSearch}
+          handleFilter={handleFilter}
         />
 
         <Flex justifyContent="end" mt={4}>
