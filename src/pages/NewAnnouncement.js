@@ -175,7 +175,6 @@ function NewAnnouncement() {
               type="text"
               value={title}
               onChange={handleTitleChange}
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
@@ -190,7 +189,6 @@ function NewAnnouncement() {
               onChange={handleDescriptionChange}
               placeholder="Talk about the extras and a short description of the them or about the car."
               size="sm"
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
@@ -204,7 +202,6 @@ function NewAnnouncement() {
               id="make"
               onChange={handleMakeChange}
               size="md"
-              style={{ backgroundColor: "white" }}
             >
               <option selected disabled hidden>
                 {" "}
@@ -228,7 +225,6 @@ function NewAnnouncement() {
               type="text"
               value={model}
               onChange={handleModelChange}
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
@@ -239,7 +235,6 @@ function NewAnnouncement() {
               type="text"
               value={color}
               onChange={handleColorChange}
-              style={{ backgroundColor: "white" }}
               placeholder="Black"
             />
           </FormControl>
@@ -251,7 +246,6 @@ function NewAnnouncement() {
               type="number"
               value={year}
               onChange={handleYearChange}
-              style={{ backgroundColor: "white" }}
               placeholder="2020"
             />
           </FormControl>
@@ -263,7 +257,6 @@ function NewAnnouncement() {
               type="number"
               value={kms}
               onChange={handleKmsChange}
-              style={{ backgroundColor: "white" }}
               placeholder="15000"
             />
           </FormControl>
@@ -275,7 +268,6 @@ function NewAnnouncement() {
               type="file"
               multiple
               onChange={handleImagesSelect}
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
@@ -286,7 +278,6 @@ function NewAnnouncement() {
               type="number"
               /* multiple */
               onChange={handlePriceChange}
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
@@ -297,19 +288,12 @@ function NewAnnouncement() {
               type="text"
               value={localization}
               onChange={handleLocalizationChange}
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
           <FormControl isRequired>
             <FormLabel htmlFor="hp">Horse Power</FormLabel>
-            <Input
-              id="hp"
-              type="number"
-              value={hp}
-              onChange={handleHpChange}
-              style={{ backgroundColor: "white" }}
-            />
+            <Input id="hp" type="number" value={hp} onChange={handleHpChange} />
           </FormControl>
 
           <FormControl isRequired>
@@ -321,18 +305,12 @@ function NewAnnouncement() {
               type="number"
               value={engineDisplacement}
               onChange={handleEngineDisplacementChange}
-              style={{ backgroundColor: "white" }}
             />
           </FormControl>
 
           <FormControl isRequired>
             <FormLabel htmlFor="doors">Doors</FormLabel>
-            <Input
-              id="doors"
-              type="number"
-              onChange={handleDoorsChange}
-              style={{ backgroundColor: "white" }}
-            />
+            <Input id="doors" type="number" onChange={handleDoorsChange} />
           </FormControl>
 
           <FormControl isRequired>
@@ -345,7 +323,6 @@ function NewAnnouncement() {
               id="fuel"
               onChange={handleFuelChange}
               size="md"
-              style={{ backgroundColor: "white" }}
             >
               <option selected disabled hidden>
                 {" "}
@@ -368,7 +345,6 @@ function NewAnnouncement() {
               id="traction"
               onChange={handleTractionChange}
               size="md"
-              style={{ backgroundColor: "white" }}
             >
               <option selected disabled hidden>
                 {" "}
@@ -390,7 +366,6 @@ function NewAnnouncement() {
               id="gearBox"
               onChange={handleGearBoxChange}
               size="md"
-              style={{ backgroundColor: "white" }}
             >
               <option selected disabled hidden>
                 {" "}
@@ -400,7 +375,7 @@ function NewAnnouncement() {
               <option value="manual">Manual</option>
             </Select>
           </FormControl>
-
+          <br />
           <Button type="submit">Create</Button>
         </form>
       </Stack>

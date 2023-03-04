@@ -20,16 +20,38 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Editable,
+  EditableInput,
+  EditableTextarea,
+  EditablePreview,
+  InputGroup,
+  InputLeftAddon,
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { BsArrowUpRight } from "react-icons/bs";
-import { Link } from "react-router-dom";
-import { getUser } from "../api";
+import { Form, Link } from "react-router-dom";
+import { editUser, getUser, uploadImage } from "../api";
 import { UserContext } from "../context/user.context";
 
 function Test() {
   const [user, setUser] = useState("");
   const { loggedUser } = useContext(UserContext);
+
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [picture, setPicture] = useState("");
+
+  function handleNameChange(event) {
+    setName(event.target.value);
+  }
+
+  function handlePhoneChange(event) {
+    setPhone(event.target.value);
+  }
+
+  function handlePictureSelect(event) {
+    setPicture(event.target.files[0]);
+  }
 
   useEffect(() => {
     async function handleUser() {
@@ -41,9 +63,31 @@ function Test() {
     handleUser();
   }, [loggedUser]);
 
+  async function handleSubmitForm(event) {
+    event.preventDefault();
+    try {
+      const uploadData = new FormData();
+      uploadData.append("fileName", picture);
+      const responseImage = await uploadImage(uploadData);
+      const response = await editUser(loggedUser._id, {
+        name,
+        picture: responseImage.data.fileUrl,
+        phone,
+      });
+
+      if (response.status === 200) {
+        console.log("User editado com sucesso");
+      } else {
+        console.log("User falhou");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <Tabs isManual variant="enclosed" bg="white">
-      <TabList mb="1em">
+      <TabList mb="1em" color="black">
         <Tab>My profile</Tab>
         <Tab>My announcements</Tab>
         <Tab>Security</Tab>
@@ -63,7 +107,6 @@ function Test() {
                     aria-label="remove Image"
                     icon={<SmallCloseIcon />}
                   />
-                  
                 </Avatar>{" "}
                 <FormControl
                   style={{
@@ -79,16 +122,47 @@ function Test() {
                     id="picture"
                     type="file"
                     name="fileName"
-/*                     onChange={handlePictureSelect}
- */                    style={{ width: "300px" }}
+                    onChange={handlePictureSelect}
                   />
                 </FormControl>
+                <Flex flexDirection="column">
+                  <FormControl color="black" display="flex">
+                    <FormLabel m={2} htmlFor="name">
+                      Name:
+                    </FormLabel>
+                    <Input
+                      border="1px solid #E2E8F0"
+                      id="name"
+                      type="text"
+                      value={name}
+                      onChange={handleNameChange}
+                    />
+                  </FormControl>
+
+                  <FormControl color="black" display="flex">
+                    <FormLabel m={2} htmlFor="phone">
+                      Phone:
+                    </FormLabel>
+                    <InputGroup>
+                      <InputLeftAddon
+                        border="1px solid #E2E8F0"
+                        bg="#E2E8F0"
+                        children="+351"
+                      />
+                      <Input
+                        border="1px solid #E2E8F0"
+                        color="black"
+                        id="phone"
+                        type="tel"
+                        value={phone}
+                        onChange={handlePhoneChange}
+                        placeholder="Phone number"
+                      />
+                    </InputGroup>
+                  </FormControl>
+                </Flex>
               </Box>
-              <Text>Name:</Text>
-              <Text>Phone contact:</Text>
-              <Text>Picture:</Text>
             </Box>
-            <Box></Box>
           </Flex>
         </TabPanel>
         <TabPanel
@@ -157,7 +231,9 @@ function Test() {
                             roundedBottom={"sm"}
                             w="full"
                           >
-                            <Link to={`/announcements/${announcement._id}`}>
+                            <Link
+                              to={`/announcements/edit/${announcement._id}`}
+                            >
                               <Text fontSize={"md"} fontWeight={"semibold"}>
                                 Edit Announcement
                               </Text>

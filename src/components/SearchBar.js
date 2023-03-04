@@ -238,9 +238,9 @@ function SearchBar({
                       id="fuel"
                       size="md"
                       width="45%"
-                      style={{ backgroundColor: "white" }}
                       onChange={handleFuel}
                       marginLeft="4%"
+                      fontSize="13px"
                     >
                       <option selected disabled hidden>
                         {" "}

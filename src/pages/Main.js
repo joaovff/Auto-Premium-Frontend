@@ -178,6 +178,7 @@ function Main() {
             onClick={switchDisplay}
             icon={<DragHandleIcon />}
             className="switchBtn"
+            marginRight="6px"
           />
           <Popover placement="bottom" isLazy>
             <PopoverTrigger>
@@ -250,8 +251,9 @@ function Main() {
                   my={5}
                   mx={[0, 5]}
                   overflow={"hidden"}
-                  bg="white"
                   boxShadow={"2xl"}
+                  bg={"#2D3748"}
+                  border="1px solid #2D3748"
                 >
                   <Box h={"200px"}>
                     <Img
@@ -279,10 +281,10 @@ function Main() {
                         €
                       </Text>
                     </Box>
-                    <Heading color={"black"} fontSize={"2xl"} noOfLines={1}>
+                    <Heading fontSize={"2xl"} noOfLines={1}>
                       {announcement.title}
                     </Heading>
-                    <Text color={"gray.500"} noOfLines={2}>
+                    <Text color={"gray.400"} noOfLines={2}>
                       {announcement.kms
                         .toLocaleString("pt-pt", {
                           minimumFractionDigits: 2,
@@ -294,7 +296,7 @@ function Main() {
                       • {announcement.year}
                     </Text>
                   </Box>
-                  <HStack borderTop={"1px"} color="black">
+                  <HStack borderTop={"1px"}>
                     <Flex
                       p={4}
                       alignItems="center"
@@ -355,12 +357,13 @@ function Main() {
           handleMaxPriceSearch={handleMaxPriceSearch}
           handleFuelSearch={handleFuelSearch}
         />
-        <Flex justifyContent="end" mt={2} mb={2}>
+        <Flex justifyContent="end" mt={4} mb={4}>
           <IconButton
             aria-label="Search database"
             onClick={switchDisplay}
             icon={<DragHandleIcon />}
             className="switchBtn"
+            marginRight="6px"
           />
           <Popover placement="bottom" isLazy>
             <PopoverTrigger>
@@ -418,7 +421,6 @@ function Main() {
               overflow="hidden"
               variant="outline"
               marginBottom="10px"
-              bg="white"
               boxShadow={"2xl"}
               data-aos="fade-up"
               data-aos-anchor-placement="top-bottom"
@@ -430,7 +432,7 @@ function Main() {
               </Stack>
 
               <Stack>
-                <CardBody style={{}}>
+                <CardBody>
                   <div style={{ display: "flex", width: "100%" }}>
                     <Link to={`/announcements/${announcement._id}`}>
                       <Heading textAlign="start" size="md">

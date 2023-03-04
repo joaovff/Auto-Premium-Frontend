@@ -103,7 +103,11 @@ const SidebarContent = ({ onClose, loggedUser, ...rest }) => {
             width={"50px"}
           />
         </NavLink>
-        <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} color="white" />
+        <CloseButton
+          display={{ base: "flex", md: "none" }}
+          onClick={onClose}
+          color="white"
+        />
       </Flex>
 
       {loggedUser ? (
@@ -184,12 +188,11 @@ const NavItem = ({ icon, children, ...rest }) => {
 const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
   return (
     <Flex
+      color="white"
       ml={{ base: 0, md: 60 }}
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg="white"
-      color="black"
       borderBottomWidth="1px"
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}
@@ -208,10 +211,12 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
         fontFamily="monospace"
         fontWeight="bold"
       >
-        <img
-          src="https://res.cloudinary.com/dpk07trsw/image/upload/v1677008021/auto-premium/aologo_okqooj.png"
-          width={"35px"}
-        />
+        <NavLink to="/">
+          <img
+            src="https://res.cloudinary.com/dpk07trsw/image/upload/v1677008021/auto-premium/aologo_okqooj.png"
+            width={"35px"}
+          />
+        </NavLink>
       </Text>
 
       <HStack spacing={{ base: "0", md: "6" }}>
@@ -257,13 +262,15 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
               {loggedUser ? (
                 <>
                   <NavLink to={`/profile/${user._id}`}>
-                    <MenuItem>Profile</MenuItem>
+                    <MenuItem color="white">Profile</MenuItem>
                   </NavLink>
                   <NavLink to={`/profile/settings/${user._id}`}>
-                    <MenuItem>Settings</MenuItem>
+                    <MenuItem color="white">Settings</MenuItem>
                   </NavLink>
                   <MenuDivider />
-                  <MenuItem onClick={logout}>Logout</MenuItem>
+                  <MenuItem color="white" onClick={logout}>
+                    Logout
+                  </MenuItem>
                 </>
               ) : (
                 <>

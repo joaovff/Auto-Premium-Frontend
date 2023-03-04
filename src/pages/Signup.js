@@ -15,6 +15,7 @@ import {
   InputLeftElement,
   InputLeftAddon,
   Center,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { MdEmail, MdOutlineEmail, MdPhone } from "react-icons/md";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
@@ -83,8 +84,9 @@ function Signup() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-      style={{ flexDirection: "column", marginTop: "-150px" }}
+      bg="transparent "
+      style={{ flexDirection: "column" }}
+      mt={-10}
     >
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -141,6 +143,9 @@ function Signup() {
                   onChange={handlePictureSelect}
                   style={{ width: "300px" }}
                 />
+                <FormHelperText textAlign="left">
+                  Users with a photo sell their cars 65% faster.
+                </FormHelperText>
               </FormControl>
               <br />
 

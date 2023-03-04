@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { getFavorites, deleteFavorites  } from "../api";
+import { getFavorites, deleteFavorites } from "../api";
 import { useParams } from "react-router";
 
 import {
@@ -46,24 +46,10 @@ function Favorites() {
         variant="outline"
       >
         <Stack>
-          <CardBody>
-            <br />
-            {!user.picture ? (
-              <Avatar src="public/avataricon.png" size="lg" />
-            ) : (
-              <Avatar src={`${user.picture}`} size="lg" />
-            )}
-            <br />
-            <Heading size="md">{user.name}</Heading>
+          <Heading size="lg" mt={5}>
+            My Favorites
+          </Heading>
 
-            <br />
-            {loggedUser && (
-              <>
-                <Text py="2">{user.email}</Text>
-                {user.phone && <Text>+351 {user.phone}</Text>}
-              </>
-            )}
-          </CardBody>
           <Divider />
           <CardFooter>
             <div
