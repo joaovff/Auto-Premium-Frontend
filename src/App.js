@@ -72,7 +72,7 @@ function App() {
 
             <Route path="/profile/edit/:userId" element={<UserSettings />} />
 
-            <Route path="/profile/settings/:userId" element={<Test />} />
+            <Route path="/profile/settings/:userId" element={<UserSettings />} />
           </Routes>
         </Navbar>
       </ChakraProvider>

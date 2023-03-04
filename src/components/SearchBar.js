@@ -34,6 +34,7 @@ function SearchBar({
   handleMinPriceSearch,
   handleMaxPriceSearch,
   handleFuelSearch,
+  handleFilter,
 }) {
   const [keyword, setKeyword] = useState("");
   const [minKms, setMinKms] = useState("");
@@ -245,13 +246,24 @@ function SearchBar({
                       <option selected disabled hidden>
                         {" "}
                       </option>
-                      <option selected value="i" >All</option>
+                      <option selected value="i">
+                        All
+                      </option>
                       <option value="diesel">Diesel</option>
                       <option value="gasoline">Gasoline</option>
                       <option value="eletric">Eletric</option>
                       <option value="hybrid">Hybrid</option>
                     </Select>
                   </FormControl>
+                  <Button
+                    width={"fit-content"}
+                    p={8}
+                    onClick={() =>
+                      handleFilter( minPrice, maxPrice, minKms, maxKms, fuel )
+                    }
+                  >
+                    Apply filter
+                  </Button>
                 </Stack>
               </DrawerBody>
             </DrawerContent>

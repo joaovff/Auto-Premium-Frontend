@@ -199,7 +199,10 @@ import EditProfile from "../components/EditProfile"; */
   );
 } */
 
-import {
+//cards but not responsive
+//----------------------------------------------------------------------------------------
+
+/* import {
   Avatar,
   Box,
   Button,
@@ -298,15 +301,15 @@ function UserSettings() {
   }
 
   return (
-    <Flex>
-      UserSettings
+    <Flex wrap={'wrap'} >
       <Grid
         h="200px"
         templateRows="repeat(2, 1fr)"
-        templateColumns="repeat(5, 1fr)"
+        templateColumns={{sm: "repeat(5, 1fr)", base: "repeat(auto-fill, 0.5fr)" }}
         gap={4}
+        flexWrap={'wrap'}
       >
-        <GridItem rowSpan={2} colSpan={1}>
+        <GridItem   >
           <Card>
             <CardHeader>
               <Heading size="md"> General</Heading>
@@ -363,7 +366,7 @@ function UserSettings() {
           </Card>
         </GridItem>
 
-        <GridItem colSpan={2}>
+        <GridItem colSpan={3}>
           <Card>
             <CardHeader>
               <Heading size="md"> Security</Heading>
@@ -521,6 +524,203 @@ function UserSettings() {
           </Card>
         </GridItem>
       </Grid>
+    </Flex>
+  );
+}
+
+
+export default UserSettings; */
+
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Center,
+  Flex,
+  FormControl,
+  FormLabel,
+  Grid,
+  GridItem,
+  HStack,
+  Heading,
+  Img,
+  Input,
+  InputGroup,
+  InputLeftAddon,
+  InputLeftElement,
+  InputRightElement,
+  SimpleGrid,
+  Text,
+} from "@chakra-ui/react";
+import { useContext, useState, useEffect } from "react";
+import { UserContext } from "../context/user.context";
+import { editUser, uploadImage, userSettings } from "../api";
+import { MdOutlineEmail } from "react-icons/md";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { Link, useParams } from "react-router-dom";
+
+function UserSettings() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [picture, setPicture] = useState("");
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [user, setUser] = useState("");
+  const { userId } = useParams();
+  const { loggedUser } = useContext(UserContext);
+
+  useEffect(() => {
+    async function handleProfile() {
+      const response = await userSettings(userId);
+      setUser(response.data);
+      console.log(response.data);
+    }
+    handleProfile();
+  }, [userId]);
+
+  function handleEmailChange(event) {
+    setEmail(event.target.value);
+  }
+
+  function handlePasswordChange(event) {
+    setPassword(event.target.value);
+  }
+
+  function handleNameChange(event) {
+    setName(event.target.value);
+  }
+
+  function handlePhoneChange(event) {
+    setPhone(event.target.value);
+  }
+
+  function handlePictureSelect(event) {
+    setPicture(event.target.files[0]);
+  }
+
+  async function handleSubmitForm(event) {
+    event.preventDefault();
+    try {
+      const uploadData = new FormData();
+      uploadData.append("fileName", picture);
+      const responseImage = await uploadImage(uploadData);
+      const response = await editUser(loggedUser._id, {
+        email,
+        name,
+        password,
+        picture: responseImage.data.fileUrl,
+        phone,
+      });
+
+      if (response.status === 200) {
+        console.log("User editado com sucesso");
+      } else {
+        console.log("User falhou");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  return (
+    <Flex style={{ display: "flex", flexDirection: "column" }}>
+      User Settings
+      <Box
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Card>
+          <CardHeader>
+            <Heading size="md"> General</Heading>
+          </CardHeader>
+          <CardBody>
+            <FormControl onSubmit={handleSubmitForm}>
+              <FormLabel htmlFor="name">Name</FormLabel>
+              <Input
+                id="name"
+                type="text"
+                value={name}
+                onChange={handleNameChange}
+              />
+
+              <FormLabel htmlFor="phone">Phone Number </FormLabel>
+              <InputGroup>
+                <InputLeftAddon children="+351" />
+                <Input
+                  id="phone"
+                  type="tel"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  placeholder="Phone number"
+                />
+              </InputGroup>
+
+              <br />
+
+              <FormLabel htmlFor="picture">User Picture</FormLabel>
+              <Input
+                id="picture"
+                type="file"
+                name="fileName"
+                onChange={handlePictureSelect}
+              />
+
+              <CardFooter>
+                <Button type="submit">Edit</Button>
+              </CardFooter>
+            </FormControl>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardHeader>
+            <Heading size="md"> Security</Heading>
+          </CardHeader>
+          <CardBody>
+            <FormControl onSubmit={handleSubmitForm}>
+              <FormLabel htmlFor="email">Email</FormLabel>
+
+              <InputGroup>
+                <InputLeftElement children={<MdOutlineEmail />} />
+                <Input
+                  id="email"
+                  type="text"
+                  value={email}
+                  onChange={handleEmailChange}
+                />
+              </InputGroup>
+            </FormControl>
+
+            <FormLabel id="password">Password</FormLabel>
+            <InputGroup>
+              <Input
+                onChange={handlePasswordChange}
+                type={showPassword ? "text" : "password"}
+              />
+              <InputRightElement h={"full"}>
+                <Button
+                  variant={"ghost"}
+                  onClick={() =>
+                    setShowPassword((showPassword) => !showPassword)
+                  }
+                  onChange={handlePasswordChange}
+                >
+                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </CardBody>
+        </Card>
+      </Box>
     </Flex>
   );
 }
