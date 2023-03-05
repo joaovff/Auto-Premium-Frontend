@@ -76,7 +76,7 @@ function Signup() {
         navigate("/login");
       }
     } catch (e) {
-      toast.error(`error ${e}`);
+      toast.error(`${e.response.data.message}`);
     }
   }
 

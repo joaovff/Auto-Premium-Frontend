@@ -44,10 +44,11 @@ function Login() {
       const response = await login({ email, password });
       localStorage.setItem("authToken", response.data);
       authenticateUser();
-      toast.success("User logged in");
       navigate("/");
     } catch (e) {
-      toast.error(`Invalid login`);
+      toast.error(
+        `Sorry, we couldn't log you in with the information provided. Please check your login credentials and try again.`
+      );
     }
   }
 
