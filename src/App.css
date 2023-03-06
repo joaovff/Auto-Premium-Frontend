@@ -40,6 +40,10 @@
   display: flex;
   flex-wrap: wrap;
 }
+.carousel {
+  margin-left: -5%;
+
+}
 
 @media (max-width: 480px) {
 
@@ -59,7 +63,7 @@
 
     .carousel {
       width: 60vw;
-      margin-left: 50%;
+      margin-left: 2%;
     } 
 } 
 
@@ -70,10 +74,7 @@
 
 }
 
-.carousel {
-  margin-left: -5%;
 
-}
 
 input[type=file]::file-selector-button {
   background-color: #fff;

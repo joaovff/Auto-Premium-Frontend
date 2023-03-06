@@ -21,10 +21,11 @@ import {
   CircularProgress,
   AvatarGroup,
   Spinner,
+  Divider,
 } from "@chakra-ui/react";
 import { MdLocalShipping } from "react-icons/md";
 import { Avatar, AvatarBadge, Skeleton } from "@chakra-ui/react";
-import { Divider } from "antd";
+import ContactModal from "../components/ContactModal";
 
 export default function Simple() {
   const [announcement, setAnnouncement] = useState();
@@ -83,7 +84,14 @@ export default function Simple() {
                   announcement.description.slice(1)}
               </Text>
             </VStack>
-            <Box style={{display:"flex", justifyContent:"center", flexDirection:"column", alignItems:"center"}}>
+            <Box
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
               <Text
                 fontSize={{ base: "16px", lg: "18px" }}
                 fontWeight={"500"}
@@ -203,7 +211,7 @@ export default function Simple() {
             mb={"4"}
             style={{ marginBottom: "-8%" }}
           >
-            Contacts
+            Contact
           </Text>
           {announcement.user ? (
             <>
@@ -223,6 +231,7 @@ export default function Simple() {
                 )}
                 <Text marginTop="10px">{announcement.user.name}</Text>
               </Link>
+              <ContactModal announcement={announcement} />{" "}
             </>
           ) : (
             <>
@@ -230,12 +239,6 @@ export default function Simple() {
               <Text>Loading seller info</Text>
             </>
           )}
-          <Link
-            to={`/announcements/edit/${announcement._id}`}
-            style={{ color: "#0000EE" }}
-          >
-            <Text>Edit</Text>
-          </Link>
         </Stack>
       </SimpleGrid>
     </Container>

@@ -65,7 +65,7 @@ function Signup() {
         name,
         password,
         picture: responseImage.data.fileUrl,
-        phone,
+        phone: `351${phone}`,
       });
       if (response.data.message) {
         toast.info(response.data.message);
