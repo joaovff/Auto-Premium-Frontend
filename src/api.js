@@ -56,6 +56,12 @@ export const editUser = (userId, user) => {
 };
 
 
+//DELETE USER
+export const deleteUser = (userId, announcement) => {
+  return axios.delete(`${BASE_URL}/${userId}`, announcement)
+}
+
+
 //UPLOAD USER PICTURE
 export const UploadPicture = (uploadData) => {
   return axios.post(`${BASE_URL}/upload`, uploadData);

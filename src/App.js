@@ -48,6 +48,8 @@ function App() {
               element={<EditPoster />}
             />
 
+            <Route path="announcements/:announcementId" element={<UserSettings/>}/>
+
             <Route path="/profile/:userId" element={<UserDetail />} />
 
             {/*             <Route
@@ -70,7 +72,7 @@ function App() {
 
             <Route path="/profile/edit/:userId" element={<UserSettings />} />
 
-            <Route path="/profile/settings/:userId" element={<UserSettings />} />
+            <Route path="/profile/settings/:userId" element={<Test />} />
           </Routes>
         </Navbar>
       </ChakraProvider>

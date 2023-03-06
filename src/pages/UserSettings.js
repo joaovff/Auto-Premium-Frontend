@@ -543,8 +543,6 @@ import {
   Flex,
   FormControl,
   FormLabel,
-  Grid,
-  GridItem,
   HStack,
   Heading,
   Img,
@@ -553,15 +551,15 @@ import {
   InputLeftAddon,
   InputLeftElement,
   InputRightElement,
-  SimpleGrid,
   Text,
 } from "@chakra-ui/react";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/user.context";
-import { editUser, uploadImage, userSettings } from "../api";
+import { deleteUser, editUser, uploadImage, userSettings } from "../api";
 import { MdOutlineEmail } from "react-icons/md";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Link, useParams } from "react-router-dom";
+import { deleteAnnouncement } from "../api";
 
 function UserSettings() {
   const [email, setEmail] = useState("");
@@ -580,7 +578,6 @@ function UserSettings() {
     async function handleProfile() {
       const response = await userSettings(userId);
       setUser(response.data);
-      console.log(response.data);
     }
     handleProfile();
   }, [userId]);
@@ -630,21 +627,24 @@ function UserSettings() {
   }
 
   return (
-    <Flex style={{ display: "flex", flexDirection: "column" }}>
-      User Settings
+    <Flex
+      className="settings-page"
+      style={{ display: "flex", flexDirection: "column" }}
+    >
       <Box
+        className="settings-box"
         style={{
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "space-evenly",
           alignItems: "center",
         }}
       >
-        <Card>
+        <Card className="settings-cards">
           <CardHeader>
             <Heading size="md"> General</Heading>
           </CardHeader>
           <CardBody>
-            <FormControl onSubmit={handleSubmitForm}>
+            <FormControl className="settings-body" onSubmit={handleSubmitForm}>
               <FormLabel htmlFor="name">Name</FormLabel>
               <Input
                 id="name"
@@ -665,7 +665,6 @@ function UserSettings() {
                 />
               </InputGroup>
 
-              <br />
 
               <FormLabel htmlFor="picture">User Picture</FormLabel>
               <Input
@@ -681,7 +680,9 @@ function UserSettings() {
             </FormControl>
           </CardBody>
         </Card>
-        <Card>
+
+
+        <Card className="settings-cards">
           <CardHeader>
             <Heading size="md"> Security</Heading>
           </CardHeader>
@@ -700,27 +701,141 @@ function UserSettings() {
               </InputGroup>
             </FormControl>
 
-            <FormLabel id="password">Password</FormLabel>
-            <InputGroup>
-              <Input
-                onChange={handlePasswordChange}
-                type={showPassword ? "text" : "password"}
-              />
-              <InputRightElement h={"full"}>
-                <Button
-                  variant={"ghost"}
-                  onClick={() =>
-                    setShowPassword((showPassword) => !showPassword)
-                  }
+
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <InputGroup>
+                <Input
                   onChange={handlePasswordChange}
-                >
-                  {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                </Button>
-              </InputRightElement>
-            </InputGroup>
+                  type={showPassword ? "text" : "password"}
+                />
+                <InputRightElement h={"full"}>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }
+                    onChange={handlePasswordChange}
+                  >
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+
+            <CardFooter>
+              <Button type="submit">Edit</Button>
+            </CardFooter>
           </CardBody>
         </Card>
+
+
+        <Card style={{ alignItems: "center" }} className="settings-cards">
+          <br />
+          {!user.picture ? (
+            <Avatar src="public/avataricon.png" size="lg" />
+          ) : (
+            <Avatar src={`${user.picture}`} size="lg" />
+          )}
+          <CardHeader>
+            <Heading size="md">{user.name}</Heading>
+          </CardHeader>
+          <CardBody>
+            {loggedUser && (
+              <>
+                <Text py="2">{user.email}</Text>
+                {user.phone && <Text>+351 {user.phone}</Text>}
+              </>
+            )}
+          </CardBody>
+          <CardFooter>
+            <Button onClick={deleteUser} backgroundColor="red" color="white">
+              Delete User
+            </Button>
+          </CardFooter>
+        </Card>
       </Box>
+
+      <Card bg="#171923" className="announcement-settings">
+        <CardBody bg="#171923" className="announcement-body-settings">
+          <Flex
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
+          >
+            {user && user.announcements.length < 1 ? (
+              <Text color="grey">
+                This user has not posted announcements yet
+              </Text>
+            ) : (
+              <>
+                {user &&
+                  user.announcements.map((item) => {
+                    return (
+                      <Center bg="#171923" key={item._id} py={6}>
+                        <Box
+                          w="xs"
+                          rounded={"sm"}
+                          my={5}
+                          mx={[0, 5]}
+                          overflow={"hidden"}
+                          boxShadow={"2xl"}
+                          bg="#2D3748"
+                        >
+                          <Box h={"200px"}>
+                            <Img
+                              src={item.images[0]}
+                              roundedTop={"sm"}
+                              objectFit="cover"
+                              h="full"
+                              w="full"
+                              alt={"Blog Image"}
+                            />
+                          </Box>
+                          <Box p={4}>
+                            <Heading fontSize={"2xl"} noOfLines={1}>
+                              {item.title}
+                            </Heading>
+                          </Box>
+                          <HStack borderTop={"1px"}>
+                            <Flex
+                              p={4}
+                              alignItems="center"
+                              justifyContent={"space-between"}
+                              roundedBottom={"sm"}
+                              w="full"
+                            >
+                              <Link to={`/announcements/edit/${item._id}`}>
+                                <Button
+                                  style={{
+                                    backgroundColor: "grey",
+                                    color: "black",
+                                  }}
+                                >
+                                  Edit
+                                </Button>
+                              </Link>
+                              <Button
+                                style={{
+                                  backgroundColor: "red",
+                                  color: "white",
+                                }}
+                                onClick={deleteAnnouncement}
+                              >
+                                Delete
+                              </Button>
+                            </Flex>
+                          </HStack>
+                        </Box>
+                      </Center>
+                    );
+                  })}
+              </>
+            )}
+          </Flex>
+        </CardBody>
+      </Card>
     </Flex>
   );
 }
