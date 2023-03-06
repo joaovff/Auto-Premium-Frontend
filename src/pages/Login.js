@@ -57,9 +57,8 @@ function Login() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg="transparent"
       style={{ flexDirection: "column" }}
-      mt={-150}
+      mt={-100}
     >
       <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -72,7 +71,7 @@ function Login() {
         </Stack>
       </Stack>
 
-      <Box rounded={"lg"} boxShadow={"lg"} p={8} className="loginCard">
+      <Box p={8} className="loginCard">
         <Stack spacing={4}>
           <HStack>
             <Box>

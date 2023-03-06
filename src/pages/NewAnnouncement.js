@@ -15,6 +15,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createAnnouncement, getMakes, uploadImage } from "../api";
+import data from "../portugal.json";
 
 function NewAnnouncement() {
   const [title, setTitle] = useState("");
@@ -37,6 +38,10 @@ function NewAnnouncement() {
   const [carMakes, setCarMakes] = useState([]);
   const navigate = useNavigate();
 
+  const cities = data.map((city) => {
+    return city;
+  });
+  
   useEffect(() => {
     async function getAllMakes() {
       const response = await getMakes();
@@ -286,12 +291,24 @@ function NewAnnouncement() {
 
           <FormControl isRequired>
             <FormLabel htmlFor="localization">Localization</FormLabel>
-            <Input
+            <Select
+              variant="outline"
               id="localization"
-              type="text"
-              value={localization}
               onChange={handleLocalizationChange}
-            />
+              size="md"
+            >
+              <option selected disabled hidden>
+                {" "}
+              </option>
+              {cities &&
+                cities.map((city) => {
+                  return (
+                    <option key={city.name} value={JSON.stringify(city)}>
+                      {city.name}
+                    </option>
+                  );
+                })}
+            </Select>
           </FormControl>
 
           <FormControl isRequired>

@@ -64,15 +64,6 @@ function App() {
 
             <Route path="/profile/:userId" element={<UserDetail />} />
 
-            {/*             <Route
-              path="/profile/settings/:userId"
-              element={
-                <IsPrivate>
-                  <UserSettings />
-                </IsPrivate>
-              }
-            /> */}
-
             <Route
               path="/profile/favorites/:userId"
               element={

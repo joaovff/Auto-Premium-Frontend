@@ -62,39 +62,41 @@ ${text}`,
       toast.error(`There was an error sending the message: ${e}`);
     }
   }
-  return (
-    <>
-      <Button onClick={onOpen}>Send a message</Button>
+  if (loggedUser) {
+    return (
+      <>
+        <Button onClick={onOpen}>Send a message</Button>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>Contact the seller:</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Box>
-              <FormControl id="text">
-                <Textarea
-                  onChange={handleTextChange}
-                  value={text}
-                  placeholder="Your message here"
-                />
-              </FormControl>
-            </Box>
-          </ModalBody>
+        <Modal isOpen={isOpen} onClose={onClose}>
+          <ModalOverlay />
+          <ModalContent>
+            <ModalHeader>Contact the seller:</ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <Box>
+                <FormControl id="text">
+                  <Textarea
+                    onChange={handleTextChange}
+                    value={text}
+                    placeholder="Your message here"
+                  />
+                </FormControl>
+              </Box>
+            </ModalBody>
 
-          <ModalFooter>
-            <Button colorScheme="red" mr={3} onClick={onClose}>
-              Close
-            </Button>
-            <Button onClick={handleSubmitMessage} colorScheme="green">
-              Send message
-            </Button>
-          </ModalFooter>
-        </ModalContent>
-      </Modal>
-    </>
-  );
+            <ModalFooter>
+              <Button colorScheme="red" mr={3} onClick={onClose}>
+                Close
+              </Button>
+              <Button onClick={handleSubmitMessage} colorScheme="green">
+                Send message
+              </Button>
+            </ModalFooter>
+          </ModalContent>
+        </Modal>
+      </>
+    );
+  };
 }
 
 export default ContactModal;

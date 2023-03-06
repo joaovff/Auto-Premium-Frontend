@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { deleteAnnouncement, getAnnouncement, getUser } from "../api";
 import { Link } from "react-router-dom";
 import Carousel from "../components/Corousel";
+import Demo from "../components/Demo";
 import {
   Box,
   chakra,
@@ -26,10 +27,14 @@ import {
 import { MdLocalShipping } from "react-icons/md";
 import { Avatar, AvatarBadge, Skeleton } from "@chakra-ui/react";
 import ContactModal from "../components/ContactModal";
+import { UserContext } from "../context/user.context";
 
 export default function Simple() {
   const [announcement, setAnnouncement] = useState();
   const { announcementId } = useParams();
+  const { loggedUser } = useContext(UserContext);
+  const [localization, setLocalization] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -40,10 +45,17 @@ export default function Simple() {
     handleGetAnnouncementDetail();
   }, [announcementId]);
 
-  async function handleDeleteAnnouncement() {
-    await deleteAnnouncement(announcementId);
-    navigate("/");
-  }
+  useEffect(() => {
+    function getLocal() {
+      if (announcement) {
+        const local = JSON.parse(announcement.localization);
+        setLocalization(local);
+      }
+    }
+    getLocal();
+  }, [announcement]);
+
+  console.log(localization)
 
   return announcement ? (
     <Container maxW={"7xl"}>
@@ -52,8 +64,9 @@ export default function Simple() {
         spacing={{ base: 8, md: 10 }}
         py={{ base: 18, md: 24 }}
       >
-        <Flex>
+        <Flex flexDirection="column">
           <Carousel carImages={announcement.images} />
+          {localization !== "" ? <Demo localization={localization} /> : <>Loading map</>}
         </Flex>
 
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -72,7 +85,6 @@ export default function Simple() {
               €
             </Text>
           </Box>
-
           <Stack
             spacing={{ base: 4, sm: 6 }}
             direction={"column"}
@@ -213,32 +225,34 @@ export default function Simple() {
           >
             Contact
           </Text>
-          {announcement.user ? (
-            <>
-              <Link to={`/profile/${announcement.user._id}`}>
-                {!announcement.user.picture ? (
-                  <Avatar
-                    src="https://bit.ly/broken-link"
-                    size="lg"
-                    style={{ marginTop: "25px" }}
-                  />
-                ) : (
-                  <Avatar
-                    src={`${announcement.user.picture}`}
-                    size="lg"
-                    style={{ marginTop: "25px" }}
-                  />
-                )}
-                <Text marginTop="10px">{announcement.user.name}</Text>
-              </Link>
-              <ContactModal announcement={announcement} />{" "}
-            </>
-          ) : (
-            <>
-              <Spinner color="black" />
-              <Text>Loading seller info</Text>
-            </>
-          )}
+          <Box>
+            {announcement.user ? (
+              <>
+                <Link to={`/profile/${announcement.user._id}`}>
+                  {!announcement.user.picture ? (
+                    <Avatar
+                      src="https://bit.ly/broken-link"
+                      size="lg"
+                      style={{ marginTop: "25px" }}
+                    />
+                  ) : (
+                    <Avatar
+                      src={`${announcement.user.picture}`}
+                      size="lg"
+                      style={{ marginTop: "25px" }}
+                    />
+                  )}
+                  <Text marginTop="10px">{announcement.user.name}</Text>
+                </Link>
+              </>
+            ) : (
+              <>
+                <Spinner color="black" />
+                <Text>Loading seller info</Text>
+              </>
+            )}
+          </Box>
+          <ContactModal announcement={announcement} />{" "}
         </Stack>
       </SimpleGrid>
     </Container>

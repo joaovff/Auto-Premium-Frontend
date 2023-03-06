@@ -144,24 +144,23 @@ function Main() {
     }
   }
 
-  const handleFilter = (
-    minPrice,
-    maxPrice,
-    minKm,
-    maxKm,
-    fuelType
-  ) => {
-  
+  const handleFilter = (minPrice, maxPrice, minKm, maxKm, fuelType) => {
     const filteredCars = [...announcements].filter((car) => {
-       if ((Number(minPrice) <= Number(car.price) && Number(maxPrice) >= Number(car.price) && Number(maxPrice) > Number(minPrice)) && (Number(minKm) <= Number(car.kms) && Number(maxKm) >= Number(car.kms) && Number(maxKm) > Number(minKm)) && (fuelType === car.fuel)){
-        console.log('I ran');
-        return car
-       } 
-    })
+      if (
+        Number(minPrice) <= Number(car.price) &&
+        Number(maxPrice) >= Number(car.price) &&
+        Number(maxPrice) > Number(minPrice) &&
+        Number(minKm) <= Number(car.kms) &&
+        Number(maxKm) >= Number(car.kms) &&
+        Number(maxKm) > Number(minKm) &&
+        fuelType === car.fuel
+      ) {
+        return car;
+      }
+    });
 
-    setFilteredAnnouncements(filteredCars)
-
-  }
+    setFilteredAnnouncements(filteredCars);
+  };
 
   async function deleteFavoritess(itemId, userId) {
     await deleteFavorites(userId, itemId);
@@ -178,6 +177,7 @@ function Main() {
   }
 
   if (className === "") {
+    let a = "";
     return (
       <div>
         <SearchBar
@@ -325,8 +325,7 @@ function Main() {
                       w="full"
                     >
                       <Text fontSize={"md"} fontWeight={"semibold"}>
-                        {announcement.localization.charAt(0).toUpperCase() +
-                          announcement.localization.slice(1)}{" "}
+                        E agora??
                       </Text>
                       <Link to={`/announcements/${announcement._id}`}>
                         <BsArrowUpRight />{" "}
