@@ -13,7 +13,9 @@ import {
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { createAnnouncement, getMakes, uploadImage } from "../api";
+import data from "../portugal.json";
 
 function NewAnnouncement() {
   const [title, setTitle] = useState("");
@@ -34,7 +36,12 @@ function NewAnnouncement() {
   const [gearBox, setGearBox] = useState("");
 
   const [carMakes, setCarMakes] = useState([]);
+  const navigate = useNavigate();
 
+  const cities = data.map((city) => {
+    return city;
+  });
+  
   useEffect(() => {
     async function getAllMakes() {
       const response = await getMakes();
@@ -51,7 +58,6 @@ function NewAnnouncement() {
     }
     getAllMakes();
   }, []);
-  const navigate = useNavigate();
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
@@ -118,40 +124,42 @@ function NewAnnouncement() {
   }
 
   async function handleSubmitForm(event) {
-    event.preventDefault();
-    //1. Upload the image through the backend
-    const uploadImagePromises = [];
-    Object.keys(images).forEach((img) => {
-      const uploadData = new FormData();
-      uploadData.append("fileName", images[img]);
-      uploadImagePromises.push(uploadImage(uploadData));
-    });
+    try {
+      event.preventDefault();
+      //1. Upload the image through the backend
+      const uploadImagePromises = [];
+      Object.keys(images).forEach((img) => {
+        const uploadData = new FormData();
+        uploadData.append("fileName", images[img]);
+        uploadImagePromises.push(uploadImage(uploadData));
+      });
 
-    const responses = await Promise.all(uploadImagePromises);
-    const imagesURLs = responses.map((response) => response.data.fileUrl);
+      const responses = await Promise.all(uploadImagePromises);
+      const imagesURLs = responses.map((response) => response.data.fileUrl);
 
-    //2. Once we get he imageUrl -> create a project
-    //with title, description and imageUrl
-    await createAnnouncement({
-      title,
-      description,
-      make,
-      model,
-      color,
-      year,
-      kms,
-      price,
-      localization,
-      hp,
-      engineDisplacement,
-      fuel,
-      images: imagesURLs,
-      doors,
-      traction,
-      gearBox,
-    });
-
-    navigate("/");
+      //2. Once we get he imageUrl -> create a announcement
+      await createAnnouncement({
+        title,
+        description,
+        make,
+        model,
+        color,
+        year,
+        kms,
+        price,
+        localization,
+        hp,
+        engineDisplacement,
+        fuel,
+        images: imagesURLs,
+        doors,
+        traction,
+        gearBox,
+      });
+      navigate("/");
+    } catch (e) {
+      toast.error(`${e.response.data.message}`);
+    }
   }
 
   return (
@@ -283,12 +291,24 @@ function NewAnnouncement() {
 
           <FormControl isRequired>
             <FormLabel htmlFor="localization">Localization</FormLabel>
-            <Input
+            <Select
+              variant="outline"
               id="localization"
-              type="text"
-              value={localization}
               onChange={handleLocalizationChange}
-            />
+              size="md"
+            >
+              <option selected disabled hidden>
+                {" "}
+              </option>
+              {cities &&
+                cities.map((city) => {
+                  return (
+                    <option key={city.name} value={JSON.stringify(city)}>
+                      {city.name}
+                    </option>
+                  );
+                })}
+            </Select>
           </FormControl>
 
           <FormControl isRequired>

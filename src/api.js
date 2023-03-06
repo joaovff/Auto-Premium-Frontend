@@ -28,8 +28,6 @@ export const signup = (user) => {
   return axios.post(`${BASE_URL}/signup`, user);
 };
 
-
-
 export const verify = (token) => {
   return axios.get(`${BASE_URL}/verify`, {
     headers: { Authorization: `Bearer ${token}` },
@@ -48,8 +46,6 @@ export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
 
-
-
 //UPDATE USER
 export const editUser = (userId, user) => {
   return axios.put(`${BASE_URL}/profile/edit/${userId}`, user);
@@ -65,8 +61,7 @@ export const deleteUser = (userId, announcement) => {
 //UPLOAD USER PICTURE
 export const UploadPicture = (uploadData) => {
   return axios.post(`${BASE_URL}/upload`, uploadData);
-}
-
+};
 
 export const getMakes = () => {
   return axios.get(
@@ -94,4 +89,8 @@ export const deleteFavorites = (userId, itemId) => {
   return axios.patch(`${BASE_URL}/profile/favorites/${userId}`, {
     itemId: itemId,
   });
+};
+
+export const sendMessage = (sms) => {
+  return axios.post(`${BASE_URL}/send-sms`, sms);
 };

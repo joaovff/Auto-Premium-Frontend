@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { MdOutlineEmail } from "react-icons/md";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -42,11 +43,12 @@ function Login() {
     try {
       const response = await login({ email, password });
       localStorage.setItem("authToken", response.data);
-      console.log(response.data);
       authenticateUser();
       navigate("/");
     } catch (e) {
-      console.log(`Invalid login`);
+      toast.error(
+        `Sorry, we couldn't log you in with the information provided. Please check your login credentials and try again.`
+      );
     }
   }
 
@@ -55,9 +57,8 @@ function Login() {
       minH={"100vh"}
       align={"center"}
       justify={"center"}
-      bg="transparent"
-      style={{ flexDirection: "column"}}
-      mt={-150}
+      style={{ flexDirection: "column" }}
+      mt={-100}
     >
       <Stack Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
@@ -70,7 +71,7 @@ function Login() {
         </Stack>
       </Stack>
 
-      <Box rounded={"lg"} boxShadow={"lg"} p={8} className="loginCard">
+      <Box p={8} className="loginCard">
         <Stack spacing={4}>
           <HStack>
             <Box>

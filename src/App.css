@@ -40,35 +40,82 @@
   display: flex;
   flex-wrap: wrap;
 }
-
-@media (max-width: 480px) {
-    .switchBtn {
-      visibility: hidden;
-    }
-
-    .carousel {
-      width: 100vw;
-    } 
-} 
-@media (min-width: 480px) and (max-width: 768px) {
-
-    .carousel {
-      width: 100vw;
-    } 
-} 
-@media (min-width: 768px) and (max-width: 990px) {
-
-    
-    .carousel {
-      width: 60vw;
-      margin-left: 50%;
-    } 
-} 
-
 .carousel {
   margin-left: -5%;
 
 }
+
+@media (max-width: 480px) {
+    .carousel {
+      width: 100vw;
+    } 
+    .mapContainer {
+      width: 80vw;
+      height: 15vh;
+      margin-left: 0px;
+      border-radius: 6px;
+
+    }
+} 
+
+@media (min-width: 480px) and (max-width: 768px) {
+    .carousel {
+      width: 100vw;
+    } 
+    .mapContainer {
+      width: 80vw;
+      height: 15vh;
+      margin-left: 0px;
+      border-radius: 6px;
+
+    }
+}
+
+@media (min-width: 768px) and (max-width: 990px) {
+    .carousel {
+      width: 60vw;
+      margin-left: 2%;
+
+    } 
+    .mapContainer {
+      width: 60vw;
+      height: 15vh;
+      margin-left: 0px;
+      border-radius: 6px;
+
+    }
+} 
+
+@media (max-width: 990px) {
+  .switchBtn {
+    visibility: hidden;
+  }
+}
+
+@media (min-width: 990px) and (max-width: 1500px) {
+  .mapContainer {
+    align-self: center;
+    width: 30vw;
+    height: 35vh;
+    border-radius: 6px;
+
+  }
+}
+
+@media (min-width: 1500px) {
+  .mapContainer {
+    align-self: center;
+    margin-left: -5%;
+    width: 30vw;
+    height: 29.5vh;
+    border-radius: 6px;
+   }
+} 
+@media (min-width: 1130px) and (max-height: 1600px) {
+ .carousel {
+  margin-left: 1px;
+ }
+} 
 
 input[type=file]::file-selector-button {
   background-color: #fff;

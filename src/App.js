@@ -9,7 +9,7 @@ import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import IsPrivate from "./components/IsPrivate";
 import AnnouncementDetail from "./pages/AnnouncementDetail";
 import Test from "./pages/Test";
-
+import { ToastContainer, Zoom } from "react-toastify";
 import NotFound from "./pages/NotFound";
 
 import UserDetail from "./pages/UserDetail";
@@ -23,7 +23,21 @@ function App() {
     <div className="App">
       <ChakraProvider theme={theme}>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
+
         <Navbar>
+          <ToastContainer
+            position="bottom-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            transition={Zoom}
+            theme="dark"
+          />
           <Routes>
             <Route path="*" element={<NotFound />} />
             <Route path="/" element={<Main />} />
@@ -51,15 +65,6 @@ function App() {
             <Route path="announcements/:announcementId" element={<UserSettings/>}/>
 
             <Route path="/profile/:userId" element={<UserDetail />} />
-
-            {/*             <Route
-              path="/profile/settings/:userId"
-              element={
-                <IsPrivate>
-                  <UserSettings />
-                </IsPrivate>
-              }
-            /> */}
 
             <Route
               path="/profile/favorites/:userId"

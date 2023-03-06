@@ -35,6 +35,7 @@ function EditAnnouncement() {
   const [gearBox, setGearBox] = useState("");
 
   const [carMakes, setCarMakes] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function getAllMakes() {
@@ -52,8 +53,6 @@ function EditAnnouncement() {
     }
     getAllMakes();
   }, []);
-
-  const navigate = useNavigate();
 
   function handleTitleChange(event) {
     setTitle(event.target.value);
@@ -177,6 +176,7 @@ function EditAnnouncement() {
                 id="title"
                 type="text"
                 value={title}
+                placeholder={title}
                 onChange={handleTitleChange}
               />
             </FormControl>
@@ -190,7 +190,7 @@ function EditAnnouncement() {
                 type="text"
                 value={description}
                 onChange={handleDescriptionChange}
-                placeholder="Talk about the extras and a short description of the them or about the car."
+                placeholder={description}
                 size="sm"
               />
             </FormControl>
@@ -227,6 +227,7 @@ function EditAnnouncement() {
                 id="model"
                 type="text"
                 value={model}
+                placeholder={model}
                 onChange={handleModelChange}
               />
             </FormControl>
@@ -238,7 +239,7 @@ function EditAnnouncement() {
                 type="text"
                 value={color}
                 onChange={handleColorChange}
-                placeholder="Black"
+                placeholder={color}
               />
             </FormControl>
 
@@ -248,8 +249,8 @@ function EditAnnouncement() {
                 id="year"
                 type="number"
                 value={year}
+                placeholder={year}
                 onChange={handleYearChange}
-                placeholder="2020"
               />
             </FormControl>
 
@@ -258,9 +259,9 @@ function EditAnnouncement() {
               <Input
                 id="kms"
                 type="number"
+                placeholder={kms}
                 value={kms}
                 onChange={handleKmsChange}
-                placeholder="15000"
               />
             </FormControl>
 
@@ -290,6 +291,7 @@ function EditAnnouncement() {
                 id="localization"
                 type="text"
                 value={localization}
+                placeholder={localization}
                 onChange={handleLocalizationChange}
               />
             </FormControl>
@@ -301,6 +303,7 @@ function EditAnnouncement() {
                 type="number"
                 value={hp}
                 onChange={handleHpChange}
+                placeholder={hp}
               />
             </FormControl>
 
@@ -312,13 +315,19 @@ function EditAnnouncement() {
                 id="engineDisplacement"
                 type="number"
                 value={engineDisplacement}
+                placeholder={engineDisplacement}
                 onChange={handleEngineDisplacementChange}
               />
             </FormControl>
 
             <FormControl isRequired>
               <FormLabel htmlFor="doors">Doors</FormLabel>
-              <Input id="doors" type="number" onChange={handleDoorsChange} />
+              <Input
+                id="doors"
+                placeholder={doors}
+                type="number"
+                onChange={handleDoorsChange}
+              />
             </FormControl>
 
             <FormControl isRequired>

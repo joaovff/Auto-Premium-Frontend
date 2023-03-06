@@ -22,7 +22,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { uploadImage, signup, UploadPicture } from "../api";
-
+import { toast } from "react-toastify";
 import { BsPerson } from "react-icons/bs";
 
 function Signup() {
@@ -65,9 +65,10 @@ function Signup() {
         name,
         password,
         picture: responseImage.data.fileUrl,
-        phone,
+        phone: `351${phone}`,
       });
       if (response.data.message) {
+        toast.info(response.data.message);
         setPassword("");
         setEmail("");
         setPhone(null);
@@ -75,7 +76,7 @@ function Signup() {
         navigate("/login");
       }
     } catch (e) {
-      console.log(`error ${e}`);
+      toast.error(`${e.response.data.message}`);
     }
   }
 

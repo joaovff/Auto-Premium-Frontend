@@ -55,6 +55,7 @@ function ImageCarousel({ carImages }) {
         className="carousel"
         marginLeft="2%"
         marginBottom="-1%"
+
       >
         <IconButton
           aria-label="Previous"
