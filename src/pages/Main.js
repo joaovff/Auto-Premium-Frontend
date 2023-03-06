@@ -257,6 +257,8 @@ function Main() {
           }}
         >
           {filteredAnnouncements.map((announcement) => {
+            let localization = "";
+            localization = JSON.parse(announcement.localization);
             return (
               <Center
                 data-aos="fade-up"
@@ -325,7 +327,7 @@ function Main() {
                       w="full"
                     >
                       <Text fontSize={"md"} fontWeight={"semibold"}>
-                        E agora??
+                        {localization.name}
                       </Text>
                       <Link to={`/announcements/${announcement._id}`}>
                         <BsArrowUpRight />{" "}
@@ -434,6 +436,9 @@ function Main() {
         </Flex>
 
         {filteredAnnouncements.map((announcement) => {
+          let localization = "";
+          localization = JSON.parse(announcement.localization);
+
           return (
             <Card
               direction={{ base: "column", sm: "row" }}
@@ -470,8 +475,7 @@ function Main() {
                     {announcement.fuel.charAt(0).toUpperCase() +
                       announcement.fuel.slice(1)}{" "}
                     • {announcement.year} •{" "}
-                    {announcement.localization.charAt(0).toUpperCase() +
-                      announcement.localization.slice(1)}
+                    {localization.name}
                   </Text>
                 </CardBody>
               </Stack>

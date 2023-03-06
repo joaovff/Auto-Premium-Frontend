@@ -255,14 +255,16 @@ function SearchBar({
                       <option value="hybrid">Hybrid</option>
                     </Select>
                   </FormControl>
+                  <br/>
                   <Button
                     width={"fit-content"}
-                    p={8}
+                    p={4}
+                    alignSelf="center"
                     onClick={() =>
                       handleFilter( minPrice, maxPrice, minKms, maxKms, fuel )
                     }
                   >
-                    Apply filter
+                    Apply filters
                   </Button>
                 </Stack>
               </DrawerBody>

@@ -256,7 +256,6 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               {loggedUser ? (
@@ -267,7 +266,7 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
                   <NavLink to={`/profile/settings/${user._id}`}>
                     <MenuItem color="white">Settings</MenuItem>
                   </NavLink>
-                  <MenuDivider />
+                  <MenuDivider border="1px solid white" />
                   <MenuItem color="white" onClick={logout}>
                     Logout
                   </MenuItem>
