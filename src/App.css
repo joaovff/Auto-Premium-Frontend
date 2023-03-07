@@ -144,23 +144,8 @@ input[type=file]::file-selector-button:hover {
 
 
 .settings-cards {
-  height: 20rem;
+  height: 25rem;
   width: 25rem;
 }
 
 
-.settings-page {
-  overflow: hidden !important;
-
-}
-
-
-.announcement-settings {
-  height: 60vh;
-}
-
-
-.announcement-body-settings {
-  overflow-x: scroll;
-  overflow-y: hidden;
-}

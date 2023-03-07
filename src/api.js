@@ -46,15 +46,20 @@ export const uploadImage = (uploadData) => {
   return axios.post(`${BASE_URL}/announcements/upload`, uploadData);
 };
 
-//UPDATE USER
+//UPDATE USER (email and password)
 export const editUser = (userId, user) => {
-  return axios.put(`${BASE_URL}/profile/edit/${userId}`, user);
+  return axios.put(`${BASE_URL}/profile/edit/security/${userId}`, user);
 };
+
+//UPDATE USER (name,phone,picture)
+export const editUserGeneral = (userId, user) => {
+  return axios.put(`${BASE_URL}/profile/edit/${userId}`, user)
+}
 
 
 //DELETE USER
-export const deleteUser = (userId, announcement) => {
-  return axios.delete(`${BASE_URL}/${userId}`, announcement)
+export const deleteUser = (userId) => {
+  return axios.delete(`${BASE_URL}/${userId}`)
 }
 
 
