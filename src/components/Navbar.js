@@ -32,6 +32,8 @@ import {
 import { NavLink } from "react-router-dom";
 import { UserContext } from "../context/user.context";
 import { getUser } from "../api";
+import { SettingsIcon } from "@chakra-ui/icons";
+import { TiPower } from "react-icons/ti";
 
 export default function SidebarWithHeader({ children }) {
   const { loggedUser, logout } = useContext(UserContext);
@@ -255,19 +257,21 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
                 </Box>
               </HStack>
             </MenuButton>
-            <MenuList
-              borderColor={useColorModeValue("gray.200", "gray.700")}
-            >
+            <MenuList borderColor={useColorModeValue("gray.200", "gray.700")}>
               {loggedUser ? (
                 <>
                   <NavLink to={`/profile/${user._id}`}>
                     <MenuItem color="white">Profile</MenuItem>
                   </NavLink>
                   <NavLink to={`/profile/settings/${user._id}`}>
-                    <MenuItem color="white">Settings</MenuItem>
+                    <MenuItem color="white">
+                      {" "}
+                      Settings
+                    </MenuItem>
                   </NavLink>
                   <MenuDivider border="1px solid white" />
-                  <MenuItem color="white" onClick={logout}>
+                  <MenuItem marginLeft="-2px" color="white" onClick={logout}>
+                    <TiPower fontSize="23px" />
                     Logout
                   </MenuItem>
                 </>

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router";
 import { deleteAnnouncement, getAnnouncement, getUser } from "../api";
 import { Link } from "react-router-dom";
 import Carousel from "../components/Corousel";
-import Demo from "../components/Demo";
+import MapsApi from "../components/MapsApi";
 import {
   Box,
   chakra,
@@ -33,6 +33,8 @@ export default function Simple() {
   const [announcement, setAnnouncement] = useState();
   const { announcementId } = useParams();
   const { loggedUser } = useContext(UserContext);
+  const [lat, setLat] = useState(0);
+  const [long, setLong] = useState(0);
   const [localization, setLocalization] = useState("");
 
   const navigate = useNavigate();
@@ -53,9 +55,8 @@ export default function Simple() {
       }
     }
     getLocal();
+    console.log(localization);
   }, [announcement]);
-
-  console.log(localization)
 
   return announcement ? (
     <Container maxW={"7xl"}>
@@ -66,7 +67,11 @@ export default function Simple() {
       >
         <Flex flexDirection="column">
           <Carousel carImages={announcement.images} />
-          {localization !== "" ? <Demo localization={localization} /> : <>Loading map</>}
+          {localization !== "" ? (
+            <MapsApi localization={localization} />
+          ) : (
+            <Spinner color="white" />
+          )}
         </Flex>
 
         <Stack spacing={{ base: 6, md: 10 }}>
@@ -246,10 +251,7 @@ export default function Simple() {
                 </Link>
               </>
             ) : (
-              <>
-                <Spinner color="black" />
-                <Text>Loading seller info</Text>
-              </>
+              <></>
             )}
           </Box>
           <ContactModal announcement={announcement} />{" "}

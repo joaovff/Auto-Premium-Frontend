@@ -60,7 +60,9 @@ function Favorites() {
               }}
             >
               {user && user.favorites.length < 1 ? (
-                <Text color="grey">You don't have any favorite announcement yet.</Text>
+                <Text color="grey">
+                  You don't have any favorite announcement yet.
+                </Text>
               ) : (
                 <>
                   {user &&
