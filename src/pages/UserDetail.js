@@ -55,15 +55,7 @@ function UserDetail() {
               <Avatar src="public/avataricon.png" size="lg" />
             )}
             <br />
-            <Heading size="md">{user.name}</Heading>
-
-            <br />
-            {loggedUser && (
-              <>
-                <Text py="2">{user.email}</Text>
-                {user.phone && <Text>+351 {user.phone}</Text>}
-              </>
-            )}
+            <Heading mt={5} size="md">{user.name}</Heading>
           </CardBody>
           <Divider />
           <CardFooter>

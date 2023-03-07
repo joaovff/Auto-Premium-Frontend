@@ -42,7 +42,7 @@ function MapsApi({ localization }) {
             lat: Number(localization.lat),
             lng: Number(localization.long),
           }}
-          radius={8500}
+          radius={9000}
           options={{
             strokeColor: "#FF0000",
             strokeOpacity: 0.8,
