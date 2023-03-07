@@ -101,17 +101,21 @@ function Main() {
   }
 
   function sortByPrice() {
-    const sorted = [...announcements].sort((a, b) =>
+    const sorted = [...filteredAnnouncements].sort((a, b) =>
       a.price > b.price ? 1 : -1
     );
     setFilteredAnnouncements(sorted);
   }
   function sortByHp() {
-    const sorted = [...announcements].sort((a, b) => (a.hp > b.hp ? 1 : -1));
+    const sorted = [...filteredAnnouncements].sort((a, b) =>
+      a.hp > b.hp ? 1 : -1
+    );
     setFilteredAnnouncements(sorted);
   }
   function sortByKms() {
-    const sorted = [...announcements].sort((a, b) => (a.kms > b.kms ? 1 : -1));
+    const sorted = [...filteredAnnouncements].sort((a, b) =>
+      a.kms > b.kms ? 1 : -1
+    );
     setFilteredAnnouncements(sorted);
   }
 
@@ -144,7 +148,15 @@ function Main() {
     }
   }
 
-  const handleFilter = (minPrice, maxPrice, minKm, maxKm, fuelType) => {
+  const handleFilter = (
+    minPrice,
+    maxPrice,
+    minKm,
+    maxKm,
+    minYear,
+    maxYear,
+    fuelType
+  ) => {
     const filteredCars = [...announcements].filter((car) => {
       if (
         Number(minPrice) <= Number(car.price) &&
@@ -153,6 +165,8 @@ function Main() {
         Number(minKm) <= Number(car.kms) &&
         Number(maxKm) >= Number(car.kms) &&
         Number(maxKm) > Number(minKm) &&
+        Number(minYear) <= Number(car.year) &&
+        Number(maxYear) >= Number(car.year) &&
         fuelType === car.fuel
       ) {
         return car;
@@ -190,6 +204,8 @@ function Main() {
           handleMaxPriceSearch={handleMaxPriceSearch}
           handleFuelSearch={handleFuelSearch}
           handleFilter={handleFilter}
+          setFilteredAnnouncements={setFilteredAnnouncements}
+          announcements={announcements}
         />
 
         <Flex justifyContent="end" mt={4}>
@@ -474,8 +490,7 @@ function Main() {
                     Km • {announcement.hp} HP •{" "}
                     {announcement.fuel.charAt(0).toUpperCase() +
                       announcement.fuel.slice(1)}{" "}
-                    • {announcement.year} •{" "}
-                    {localization.name}
+                    • {announcement.year} • {localization.name}
                   </Text>
                 </CardBody>
               </Stack>

@@ -35,15 +35,17 @@ function SearchBar({
   handleMaxPriceSearch,
   handleFuelSearch,
   handleFilter,
+  setFilteredAnnouncements,
+  announcements,
 }) {
   const [keyword, setKeyword] = useState("");
-  const [minKms, setMinKms] = useState("");
-  const [maxKms, setMaxKms] = useState("");
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [minYear, setMinYear] = useState("");
-  const [maxYear, setMaxYear] = useState("");
-  const [fuel, setFuel] = useState("");
+  const [minKms, setMinKms] = useState(0);
+  const [maxKms, setMaxKms] = useState(1000000);
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(99999999);
+  const [minYear, setMinYear] = useState(1900);
+  const [maxYear, setMaxYear] = useState(2023);
+  const [fuel, setFuel] = useState("gasoline");
 
   const [show, setShow] = useState(false);
 
@@ -55,35 +57,33 @@ function SearchBar({
     handleSearch(event.target.value);
   }
 
+  function resetFilters() {
+    const filtered = [...announcements];
+    setFilteredAnnouncements(filtered);
+  }
+
   function handleMinKms(event) {
     setMinKms(event.target.value);
-    handleMinKmsSearch(event.target.value);
   }
 
   function handleMaxKms(event) {
     setMaxKms(event.target.value);
-    handleMaxKmsSearch(event.target.value);
   }
   function handleMinYears(event) {
     setMinYear(event.target.value);
-    handleMinYearsSearch(event.target.value);
   }
   function handleMaxYears(event) {
     setMaxYear(event.target.value);
-    handleMaxYearsSearch(event.target.value);
   }
   function handleMinPrice(event) {
     setMinPrice(event.target.value);
-    handleMinPriceSearch(event.target.value);
   }
   function handleMaxPrice(event) {
     setMaxPrice(event.target.value);
-    handleMaxPriceSearch(event.target.value);
   }
 
   function handleFuel(event) {
     setFuel(event.target.value);
-    handleFuelSearch(event.target.value);
   }
 
   return (
@@ -147,6 +147,7 @@ function SearchBar({
                         value={minPrice}
                         type="number"
                         fontSize="13px"
+                        min={0}
                         onChange={handleMinPrice}
                         marginLeft="-3%"
                       />
@@ -177,6 +178,7 @@ function SearchBar({
                         type="number"
                         onChange={handleMinKms}
                         placeholder="Min"
+                        min="1"
                         fontSize="13px"
                         marginLeft="3%"
                       />
@@ -206,6 +208,7 @@ function SearchBar({
                         type="number"
                         onChange={handleMinYears}
                         placeholder="Min"
+                        min="1900"
                         fontSize="13px"
                         marginLeft="-1%"
                       />
@@ -217,7 +220,7 @@ function SearchBar({
                         type="number"
                         fontSize="13px"
                         onChange={handleMaxYears}
-                        placeholder="Min"
+                        placeholder="Max"
                         marginLeft="-2%"
                       />
                     </NumberInput>
@@ -255,16 +258,33 @@ function SearchBar({
                       <option value="hybrid">Hybrid</option>
                     </Select>
                   </FormControl>
-                  <br/>
+                  <br />
                   <Button
                     width={"fit-content"}
                     p={4}
                     alignSelf="center"
                     onClick={() =>
-                      handleFilter( minPrice, maxPrice, minKms, maxKms, fuel )
+                      handleFilter(
+                        minPrice,
+                        maxPrice,
+                        minKms,
+                        maxKms,
+                        minYear,
+                        maxYear,
+                        fuel
+                      )
                     }
                   >
                     Apply filters
+                  </Button>
+
+                  <Button
+                    width={"fit-content"}
+                    p={4}
+                    alignSelf="center"
+                    onClick={() => resetFilters()}
+                  >
+                    Reset filters
                   </Button>
                 </Stack>
               </DrawerBody>

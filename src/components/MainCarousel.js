@@ -8,13 +8,9 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
   ModalCloseButton,
   ModalBody,
-  Button,
-  Badge,
 } from "@chakra-ui/react";
-import { ChevronLeftIcon, ChevronRightIcon, ViewIcon } from "@chakra-ui/icons";
 import { BiLeftArrowAlt, BiRightArrowAlt } from "react-icons/bi";
 
 function ImageCarousel({ carImages }) {
@@ -92,8 +88,9 @@ function ImageCarousel({ carImages }) {
           rounded={"md"}
           fit={"cover"}
           align={"center"}
-          w="500px"
           h="350px"
+          maxW="500px"
+          minW="500px"
           onClick={handleImageClick}
         />
       </Flex>

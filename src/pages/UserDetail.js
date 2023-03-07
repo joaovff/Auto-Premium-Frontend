@@ -49,7 +49,7 @@ function UserDetail() {
         <Stack>
           <CardBody>
             <br />
-            {user && user.picture ? (
+            {user && user.picture !== "" ? (
               <Avatar src={`${user.picture}`} size="lg" />
             ) : (
               <Avatar src="public/avataricon.png" size="lg" />
