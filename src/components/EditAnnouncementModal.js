@@ -18,32 +18,40 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMakes, updateAnnouncement, uploadImage } from "../api";
 import { EditIcon } from "@chakra-ui/icons";
+import data from "../portugal.json";
+import { toast } from "react-toastify";
 
-function EditAnnouncementModal({ announcementId }) {
+function EditAnnouncementModal({ announcement }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const initialRef = useRef(null);
   const finalRef = useRef(null);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [make, setMake] = useState("");
-  const [model, setModel] = useState("");
-  const [color, setColor] = useState("");
-  const [year, setYear] = useState("");
-  const [kms, setKms] = useState(0);
+  const [title, setTitle] = useState(announcement.title);
+  const [description, setDescription] = useState(announcement.description);
+  const [make, setMake] = useState(announcement.make);
+  const [model, setModel] = useState(announcement.model);
+  const [color, setColor] = useState(announcement.color);
+  const [year, setYear] = useState(announcement.year);
+  const [kms, setKms] = useState(announcement.kms);
   const [images, setImages] = useState(null);
-  const [price, setPrice] = useState(null);
+  const [price, setPrice] = useState(announcement.price);
   const [localization, setLocalization] = useState("");
-  const [hp, setHp] = useState(null);
-  const [engineDisplacement, setEngineDisplacement] = useState(null);
+  const [hp, setHp] = useState(announcement.hp);
+  const [engineDisplacement, setEngineDisplacement] = useState(
+    announcement.engineDisplacement
+  );
   const [fuel, setFuel] = useState("");
-  const [doors, setDoors] = useState(0);
+  const [doors, setDoors] = useState(announcement.doors);
   const [traction, setTraction] = useState("");
   const [gearBox, setGearBox] = useState("");
 
   const [carMakes, setCarMakes] = useState([]);
   const navigate = useNavigate();
+
+  const cities = data.map((city) => {
+    return city;
+  });
 
   useEffect(() => {
     async function getAllMakes() {
@@ -126,6 +134,8 @@ function EditAnnouncementModal({ announcementId }) {
     setGearBox(event.target.value);
   }
 
+  console.log(announcement);
+
   async function handleSubmitForm(event) {
     event.preventDefault();
     //1. Upload the image through the backend
@@ -140,8 +150,7 @@ function EditAnnouncementModal({ announcementId }) {
     const imagesURLs = responses.map((response) => response.data.fileUrl);
 
     //2. Once we get he imageUrl -> create a project
-    //with title, description and imageUrl
-    await updateAnnouncement(announcementId, {
+    const editedAnnouncement = await updateAnnouncement(announcement._id, {
       title,
       description,
       make,
@@ -159,15 +168,21 @@ function EditAnnouncementModal({ announcementId }) {
       traction,
       gearBox,
     });
-
-    navigate(0);
-  }
+    if (editedAnnouncement.data.message) {
+      toast.error(editedAnnouncement.data.message);
+    } else {
+      toast.success("Your announcement has been updated.");
+      setTimeout(() => {
+        navigate(0);
+      }, 3000);
+    }
+    }
 
   return (
     <>
-      <Button onClick={onOpen}>
-        Edit
-        <EditIcon />
+      <Button border="1px solid #DCDCDC" onClick={onOpen}>
+        Edit Announcement
+        <EditIcon marginLeft="8px" />
       </Button>
 
       <Modal
@@ -291,21 +306,30 @@ function EditAnnouncementModal({ announcementId }) {
               <Input
                 id="price"
                 type="number"
-                /* multiple */
+                value={price}
                 onChange={handlePriceChange}
               />
             </FormControl>
 
-            <FormControl isRequired>
-              <FormLabel htmlFor="localization">Localization</FormLabel>
-              <Input
-                id="localization"
-                type="text"
-                value={localization}
-                placeholder={localization}
-                onChange={handleLocalizationChange}
-              />
-            </FormControl>
+            <FormLabel htmlFor="localization">Localization</FormLabel>
+            <Select
+              variant="outline"
+              id="localization"
+              onChange={handleLocalizationChange}
+              size="md"
+            >
+              <option selected disabled hidden>
+                {" "}
+              </option>
+              {cities &&
+                cities.map((city) => {
+                  return (
+                    <option key={city.name} value={JSON.stringify(city)}>
+                      {city.name}
+                    </option>
+                  );
+                })}
+            </Select>
 
             <FormControl isRequired>
               <FormLabel htmlFor="hp">Horse Power</FormLabel>
@@ -334,8 +358,8 @@ function EditAnnouncementModal({ announcementId }) {
             <FormControl isRequired>
               <FormLabel htmlFor="doors">Doors</FormLabel>
               <Input
+                value={doors}
                 id="doors"
-                placeholder={doors}
                 type="number"
                 onChange={handleDoorsChange}
               />

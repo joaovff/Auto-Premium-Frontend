@@ -22,7 +22,14 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useState, useEffect } from "react";
 import { UserContext } from "../context/user.context";
-import { deleteUser, editUser, editUserGeneral, uploadImage, userSettings } from "../api";
+import {
+  deleteUser,
+  editUser,
+  editUserGeneral,
+  getUser,
+  uploadImage,
+  userSettings,
+} from "../api";
 import { MdOutlineEmail } from "react-icons/md";
 import {
   DeleteIcon,
@@ -32,9 +39,12 @@ import {
   ViewIcon,
   ViewOffIcon,
 } from "@chakra-ui/icons";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { deleteAnnouncement } from "../api";
 import EditAnnouncementModal from "../components/EditAnnouncementModal";
+import ConfirmModal from "../components/ConfirmModal";
+import ConfirmAnnouncementModal from "../components/ConfirmAnnouncementModal";
+import { toast } from "react-toastify";
 
 function UserSettings() {
   const [email, setEmail] = useState("");
@@ -46,18 +56,19 @@ function UserSettings() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [user, setUser] = useState("");
-  const { userId } = useParams();
-  const { loggedUser } = useContext(UserContext);
-  const navigate = useNavigate()
+  const { loggedUser, loggout } = useContext(UserContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function handleProfile() {
-      const response = await userSettings(userId);
+      const response = await getUser(loggedUser._id);
       setUser(response.data);
-      console.log(response.data);
+      setEmail(response.data.email);
+      setName(response.data.name);
+      setPhone(response.data.phone);
     }
     handleProfile();
-  }, [userId]);
+  }, [loggedUser]);
 
   function handleEmailChange(event) {
     setEmail(event.target.value);
@@ -79,6 +90,27 @@ function UserSettings() {
     setPicture(event.target.files[0]);
   }
 
+  async function handleDeleteAll() {
+    try {
+      const idsToDelete = [];
+      if (user.announcements.length >= 1) {
+        user.announcements.forEach((announcement) => {
+          idsToDelete.push(announcement._id);
+        });
+        for (let i = 0; i < idsToDelete.length; i++) {
+          await deleteAnnouncement(idsToDelete[i]);
+        }
+        await deleteUser(user._id);
+        navigate("/login");
+      } else {
+        await deleteUser(user._id);
+        navigate("/login");
+      }
+    } catch (error) {
+      toast.error(error);
+    }
+  }
+
   async function handleGeneralSubmitForm(event) {
     event.preventDefault();
     try {
@@ -91,34 +123,34 @@ function UserSettings() {
         phone,
       });
 
-      if (response.status === 200) {
-        console.log("User editado com sucesso");
-
-        navigate(0)
-
+      if (response.data.message) {
+        toast.error(response.data.message);
       } else {
-        console.log("User falhou");
+        toast.success("User profile updated.");
+        navigate(0);
       }
     } catch (error) {
-      console.log(error);
+      if (!picture) {
+        toast.error("Picture is a mandatory field.");
+      }
     }
-
   }
-
 
   async function handleSubmitForm(event) {
     event.preventDefault();
     try {
-      const response = await editUser(loggedUser._id, {email, password})
+      const response = await editUser(loggedUser._id, { email, password });
 
-      if(response.status === 200) {
-        console.log("user edited with success")
+      if (response.data.message) {
+        toast.error(response.data.message);
       } else {
-        console.log("failed update")
+        toast.success("Security info updated.");
+        setTimeout(() => {
+          navigate(0);
+        }, 3500);
       }
-
     } catch (error) {
-      console.log(error)
+      toast.error(error.response.data.message);
     }
   }
 
@@ -168,9 +200,9 @@ function UserSettings() {
                 onChange={handlePictureSelect}
               />
 
-              <CardFooter>
+              <CardFooter justifyContent="center">
                 <Button type="submit" onClick={handleGeneralSubmitForm}>
-                  Edit
+                  Edit profile
                 </Button>
               </CardFooter>
             </FormControl>
@@ -221,9 +253,9 @@ function UserSettings() {
               </InputGroup>
             </FormControl>
 
-            <CardFooter>
-              <Button type="submit" onClick={handleSubmitForm}>
-                Edit
+            <CardFooter justifyContent="center">
+              <Button padding="20px" type="submit" onClick={handleSubmitForm}>
+                Change
               </Button>
             </CardFooter>
           </CardBody>
@@ -231,7 +263,10 @@ function UserSettings() {
 
         <br />
 
-        <Card style={{ alignItems: "center" }} className="settings-cards">
+        <Card
+          style={{ alignItems: "center", justifyContent: "center" }}
+          className="settings-cards"
+        >
           <br />
           {!user.picture ? (
             <Avatar src="public/avataricon.png" size="lg" />
@@ -256,10 +291,8 @@ function UserSettings() {
                 )}
               </>
             )}
-            <CardFooter>
-              <Button backgroundColor="red" color="white" onClick={deleteUser}>
-                Delete User
-              </Button>
+            <CardFooter justifyContent="center">
+              <ConfirmModal handleDeleteAll={handleDeleteAll} />
             </CardFooter>
           </CardBody>
         </Card>
@@ -269,7 +302,7 @@ function UserSettings() {
 
       <Card>
         <CardHeader>
-          <Heading size="md">My Announcements:</Heading>
+          <Heading size="md">My Announcements</Heading>
         </CardHeader>
         <CardBody>
           <Flex
@@ -281,7 +314,7 @@ function UserSettings() {
           >
             {user && user.announcements.length < 1 ? (
               <Text color="grey">
-                This user has not posted announcements yet
+                You dont have any posted announcements yet.
               </Text>
             ) : (
               <>
@@ -325,21 +358,11 @@ function UserSettings() {
                               roundedBottom={"sm"}
                               w="full"
                             >
-                              <EditAnnouncementModal
+                              <EditAnnouncementModal announcement={item} />
+
+                              <ConfirmAnnouncementModal
                                 announcementId={item._id}
                               />
-                              {/* <Link to={`/announcements/edit/${item._id}`}>
-                                  <Button>Edit 
-                                    <EditIcon/> 
-                                  </Button>
-                                </Link> */}
-                              <Button
-                                style={{ color: "red" }}
-                                onClick={() => deleteAnnouncement(item._id)}
-                              >
-                                {" "}
-                                <DeleteIcon />{" "}
-                              </Button>
                             </Flex>
                           </HStack>
                         </Box>

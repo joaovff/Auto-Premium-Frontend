@@ -135,13 +135,18 @@ input[type=file]::file-selector-button:hover {
 
 
 
-@media (max-width: 480px) {
+@media (max-width: 480px){
   .settings-box {
     flex-direction: column;
   }
 
 }
+@media (min-width: 480px) and (max-width: 1100px){
+  .settings-box {
+    flex-direction: column;
+  }
 
+}
 
 .settings-cards {
   height: 25rem;
