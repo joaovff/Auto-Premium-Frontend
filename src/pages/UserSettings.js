@@ -120,7 +120,7 @@ function UserSettings() {
       const response = await editUserGeneral(loggedUser._id, {
         name,
         picture: responseImage.data.fileUrl,
-        phone,
+        phone: `351${phone}`,
       });
 
       if (response.data.message) {
