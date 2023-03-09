@@ -56,7 +56,7 @@ function UserSettings() {
   const [showPassword, setShowPassword] = useState(false);
 
   const [user, setUser] = useState("");
-  const { loggedUser, loggout } = useContext(UserContext);
+  const { loggedUser, logout } = useContext(UserContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -100,12 +100,10 @@ function UserSettings() {
         for (let i = 0; i < idsToDelete.length; i++) {
           await deleteAnnouncement(idsToDelete[i]);
         }
-        await deleteUser(user._id);
-        navigate("/login");
-      } else {
-        await deleteUser(user._id);
-        navigate("/login");
       }
+      await deleteUser(user._id);
+      navigate("/");
+      logout();
     } catch (error) {
       toast.error(error);
     }

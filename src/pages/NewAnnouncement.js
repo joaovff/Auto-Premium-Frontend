@@ -41,7 +41,7 @@ function NewAnnouncement() {
   const cities = data.map((city) => {
     return city;
   });
-  
+
   useEffect(() => {
     async function getAllMakes() {
       const response = await getMakes();
