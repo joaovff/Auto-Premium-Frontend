@@ -153,4 +153,17 @@ input[type=file]::file-selector-button:hover {
   width: 25rem;
 }
 
+::-webkit-scrollbar-track {
+  background-color: transparent;
+  
+}
+::-webkit-scrollbar {
+  width: 6px;
+  background: transparent;
+  
+}
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-left: 1px solid #ffffff;
 
+}

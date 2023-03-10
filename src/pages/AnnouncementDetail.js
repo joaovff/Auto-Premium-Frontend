@@ -33,8 +33,6 @@ export default function Simple() {
   const [announcement, setAnnouncement] = useState();
   const { announcementId } = useParams();
   const { loggedUser } = useContext(UserContext);
-  const [lat, setLat] = useState(0);
-  const [long, setLong] = useState(0);
   const [localization, setLocalization] = useState("");
 
   const navigate = useNavigate();
@@ -55,7 +53,6 @@ export default function Simple() {
       }
     }
     getLocal();
-    console.log(localization);
   }, [announcement]);
 
   return announcement ? (

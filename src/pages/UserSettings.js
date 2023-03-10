@@ -104,6 +104,7 @@ function UserSettings() {
       await deleteUser(user._id);
       navigate("/");
       logout();
+      toast.success("deleted!!");
     } catch (error) {
       toast.error(error);
     }
@@ -284,7 +285,12 @@ function UserSettings() {
                 <br />
                 {user.phone && (
                   <Text>
-                    <PhoneIcon /> +351 {user.phone}
+                    <PhoneIcon /> +
+                    {user.phone
+                      .toLocaleString("pt-pt", {
+                        minimumFractionDigits: 2,
+                      })
+                      .slice(0, -3)}
                   </Text>
                 )}
               </>
