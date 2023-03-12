@@ -65,9 +65,6 @@ function Login() {
           <Heading fontSize={"4xl"} textAlign={"center"}>
             Login
           </Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            Some text{" "}
-          </Text>
         </Stack>
       </Stack>
 
