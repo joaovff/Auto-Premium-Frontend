@@ -1,70 +1,19 @@
-# Getting Started with Create React App
+# Auto Premium (Frontend)
+Auto Premium is a project developed for advertising and selling cars, where any user can create an account and advertise their car for sale, being able to add images, relevant information about the vehicle, location, etc. Logged in users can contact the seller via SMS directly using the contact form.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Technologies:
+React, Nodejs, MongoDB, Javascript, ChakraUI.
 
-## Available Scripts
+# Project Status:
+Complete and Deployed
 
-In the project directory, you can run:
+![image](https://github.com/joaovff/Auto-Premium-Frontend/assets/110693830/81b9d80c-2918-4e59-949e-601a968fff68)
 
-### `npm start`
+![image](https://github.com/joaovff/Auto-Premium-Frontend/assets/110693830/bab99754-afca-448e-8801-5ccee7c07576)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+# To Visit App:
+https://auto-premium.netlify.app/
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+# Reflection
+At the end of the day, it was a pleasure to develop Auto Premium because there is passion for cars.
+There were some challenges during the development of the project, such as authentication and the rendering of the map based on the location entered by the user, but all the goals set at the beginning of the project were achieved and some unplanned features came to life as ideas emerged.
