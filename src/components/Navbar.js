@@ -281,7 +281,7 @@ const MobileNav = ({ onOpen, loggedUser, logout, user, ...rest }) => {
                     <MenuItem>Login</MenuItem>
                   </NavLink>
                   <NavLink to="/signup">
-                    <MenuItem>Signup</MenuItem>
+                    <MenuItem>Sign up</MenuItem>
                   </NavLink>
                 </>
               )}

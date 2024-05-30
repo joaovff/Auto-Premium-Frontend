@@ -149,8 +149,9 @@ input[type=file]::file-selector-button:hover {
 }
 
 .settings-cards {
-  height: 25rem;
+  height: 30rem;
   width: 25rem;
+  max-width: 92vw;
 }
 
 ::-webkit-scrollbar-track {

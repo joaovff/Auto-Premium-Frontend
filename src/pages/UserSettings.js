@@ -49,12 +49,11 @@ import { toast } from "react-toastify";
 function UserSettings() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [picture, setPicture] = useState("");
-
   const [showPassword, setShowPassword] = useState(false);
-
   const [user, setUser] = useState("");
   const { loggedUser, logout } = useContext(UserContext);
   const navigate = useNavigate();
@@ -76,6 +75,10 @@ function UserSettings() {
 
   function handlePasswordChange(event) {
     setPassword(event.target.value);
+  }
+
+  function handleConfirmPasswordChange(event) {
+    setConfirmPassword(event.target.value);
   }
 
   function handleNameChange(event) {
@@ -138,6 +141,11 @@ function UserSettings() {
   async function handleSubmitForm(event) {
     event.preventDefault();
     try {
+      if (password !== confirmPassword) {
+        toast.error("Passwords do not match.");
+        return;
+      }
+
       const response = await editUser(loggedUser._id, { email, password });
 
       if (response.data.message) {
@@ -225,6 +233,7 @@ function UserSettings() {
                   type="text"
                   value={email}
                   onChange={handleEmailChange}
+                  isDisabled={true} // Desabilitando o campo de e-mail
                 />
               </InputGroup>
             </FormControl>
@@ -244,7 +253,6 @@ function UserSettings() {
                     onClick={() =>
                       setShowPassword((showPassword) => !showPassword)
                     }
-                    onChange={handlePasswordChange}
                   >
                     {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
@@ -252,8 +260,21 @@ function UserSettings() {
               </InputGroup>
             </FormControl>
 
+            <br />
+
+            {/* Novo campo de confirmação de senha */}
+            <FormControl id="confirmPassword">
+              <FormLabel>Confirm Password</FormLabel>
+              <Input onChange={handleConfirmPasswordChange} type="password" />
+            </FormControl>
+
             <CardFooter justifyContent="center">
-              <Button padding="20px" type="submit" onClick={handleSubmitForm}>
+              <Button
+                padding="20px
+"
+                type="submit"
+                onClick={handleSubmitForm}
+              >
                 Change
               </Button>
             </CardFooter>

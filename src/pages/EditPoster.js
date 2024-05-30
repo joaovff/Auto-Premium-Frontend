@@ -3,9 +3,9 @@ import EditAnnouncement from "../components/EditAnnouncement";
 function EditPoster() {
   return (
     <div>
-       <EditAnnouncement/>
+      <EditAnnouncement />
     </div>
-  )
+  );
 }
 
-export default EditPoster
+export default EditPoster;

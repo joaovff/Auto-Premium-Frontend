@@ -1,0 +1,23 @@
+/* styles.css */
+
+@keyframes progressComplete {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
+.css-po99uc {
+  background-image: linear-gradient(
+    to right,
+    #4586f0,
+    #73a5f6 25%,
+    #a0c1f6 50%,
+    rgb(212, 224, 240) 75%,
+    #4586f0
+  ) !important;
+  background-size: 200% 100% !important;
+  animation: progressComplete 2s alternate-reverse infinite !important;
+}

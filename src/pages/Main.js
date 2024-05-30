@@ -34,6 +34,7 @@ import MainCarousel from "../components/MainCarousel";
 function Main() {
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
   const [announcements, setAnnoucements] = useState([]);
+  const [noResults, setNoResults] = useState(false); // Estado para controlar se nenhum resultado foi encontrado
 
   const { loggedUser } = useContext(UserContext);
 
@@ -49,6 +50,7 @@ function Main() {
       return announcement.title.toLowerCase().includes(keyword.toLowerCase());
     });
     setFilteredAnnouncements(filtered);
+    setNoResults(filtered.length === 0);
   }
 
   function handleMinKmsSearch(keyword) {
@@ -293,47 +295,49 @@ function Main() {
                   bg={"#2D3748"}
                   border="1px solid #2D3748"
                 >
-                  <Box h={"200px"}>
-                    <Img
-                      src={announcement.images[0]}
-                      roundedTop={"sm"}
-                      objectFit="cover"
-                      h="full"
-                      w="full"
-                      alt={"Blog Image"}
-                    />
-                  </Box>
-                  <Box p={4}>
-                    <Box
-                      bg="black"
-                      display={"inline-block"}
-                      px={2}
-                      py={1}
-                      color="white"
-                      mb={2}
-                    >
-                      <Text fontSize={"xs"} fontWeight="medium">
-                        {announcement.price.toLocaleString("pt-pt", {
-                          minimumFractionDigits: 2,
-                        })}{" "}
-                        €
+                  <Link to={`/announcements/${announcement._id}`}>
+                    <Box h={"200px"}>
+                      <Img
+                        src={announcement.images[0]}
+                        roundedTop={"sm"}
+                        objectFit="cover"
+                        h="full"
+                        w="full"
+                        alt={"Blog Image"}
+                      />
+                    </Box>
+                    <Box p={4}>
+                      <Box
+                        bg="black"
+                        display={"inline-block"}
+                        px={2}
+                        py={1}
+                        color="white"
+                        mb={2}
+                      >
+                        <Text fontSize={"xs"} fontWeight="medium">
+                          {announcement.price.toLocaleString("pt-pt", {
+                            minimumFractionDigits: 2,
+                          })}{" "}
+                          €
+                        </Text>
+                      </Box>
+                      <Heading fontSize={"2xl"} noOfLines={1}>
+                        {announcement.title}
+                      </Heading>
+                      <Text color={"gray.400"} noOfLines={2}>
+                        {announcement.kms
+                          .toLocaleString("pt-pt", {
+                            minimumFractionDigits: 2,
+                          })
+                          .slice(0, -3)}{" "}
+                        Km • {announcement.hp} HP •{" "}
+                        {announcement.fuel.charAt(0).toUpperCase() +
+                          announcement.fuel.slice(1)}{" "}
+                        • {announcement.year}
                       </Text>
                     </Box>
-                    <Heading fontSize={"2xl"} noOfLines={1}>
-                      {announcement.title}
-                    </Heading>
-                    <Text color={"gray.400"} noOfLines={2}>
-                      {announcement.kms
-                        .toLocaleString("pt-pt", {
-                          minimumFractionDigits: 2,
-                        })
-                        .slice(0, -3)}{" "}
-                      Km • {announcement.hp} HP •{" "}
-                      {announcement.fuel.charAt(0).toUpperCase() +
-                        announcement.fuel.slice(1)}{" "}
-                      • {announcement.year}
-                    </Text>
-                  </Box>
+                  </Link>
                   <HStack borderTop={"1px"}>
                     <Flex
                       p={4}
@@ -521,6 +525,7 @@ function Main() {
                   >
                     {user && user.favorites.includes(announcement._id) ? (
                       <BsHeartFill
+                        style={{ zIndex: 9999999 }}
                         onClick={() =>
                           deleteFavoritess(announcement._id, loggedUser._id)
                         }
@@ -529,6 +534,7 @@ function Main() {
                       />
                     ) : (
                       <BsHeart
+                        style={{ zIndex: 9999999 }}
                         onClick={() => addToFavorites(announcement._id)}
                         fontSize={"24px"}
                       />

@@ -1,5 +1,0 @@
-[[redirects]]
-  from = "/api/*"
-  to = "https://auto-premium-backend-7nhz93uy5-joaovffs-projects.vercel.app/:splat"
-  status = 200
-  force = true

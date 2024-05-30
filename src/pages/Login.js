@@ -113,15 +113,17 @@ function Login() {
                 </FormControl>
               </Box>
               <form onSubmit={handleSubmitForm}>
-                <br />
-                <Button type="submit">Login</Button>
+                <Button type="submit" mt={8}>Login</Button>
               </form>
             </Box>
           </HStack>
           <br />
 
-          <p>Don't have an account?</p>
-          <Link to="/signup" style={{ color: "#0000EE" }}>
+          <Text>Don't have an account?</Text>
+          <Link
+            to="/signup"
+            style={{ textDecoration: "underline", color: "#bcd2f2" }}
+          >
             Signup
           </Link>
         </Stack>

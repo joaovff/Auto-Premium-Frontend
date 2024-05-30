@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = `${process.env.REACT_APP_AUTO_PREMIUM_API}`;
+const BASE_URL = `${process.env.REACT_APP_AUTO_PREMIUM_API}`; /* "http://localhost:5005" */
 export const getAllAnnouncements = () => {
   return axios.get(`${BASE_URL}/announcements`);
 };
@@ -53,15 +53,13 @@ export const editUser = (userId, user) => {
 
 //UPDATE USER (name,phone,picture)
 export const editUserGeneral = (userId, user) => {
-  return axios.put(`${BASE_URL}/profile/edit/${userId}`, user)
-}
-
+  return axios.put(`${BASE_URL}/profile/edit/${userId}`, user);
+};
 
 //DELETE USER
 export const deleteUser = (userId) => {
-  return axios.delete(`${BASE_URL}/${userId}`)
-}
-
+  return axios.delete(`${BASE_URL}/${userId}`);
+};
 
 //UPLOAD USER PICTURE
 export const UploadPicture = (uploadData) => {
