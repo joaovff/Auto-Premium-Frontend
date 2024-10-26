@@ -26,12 +26,10 @@ export default function SimpleSidebar({ children, handleSettings }) {
   const { loggedUser } = useContext(UserContext);
 
   function handleSettingsTypeProfile(type) {
-    console.log(type);
     handleSettings(type);
   }
 
   function handleSettingsTypeAnnouncement(type) {
-    console.log(type);
     handleSettings(type);
   }
 

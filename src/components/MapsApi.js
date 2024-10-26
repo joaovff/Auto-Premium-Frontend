@@ -18,8 +18,6 @@ function MapsApi({ localization }) {
       </Flex>
     );
 
-  console.log(typeof localization.lat);
-
   function Map() {
     return (
       <GoogleMap

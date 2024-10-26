@@ -134,8 +134,6 @@ function EditAnnouncementModal({ announcement }) {
     setGearBox(event.target.value);
   }
 
-  console.log(announcement);
-
   async function handleSubmitForm(event) {
     event.preventDefault();
     //1. Upload the image through the backend

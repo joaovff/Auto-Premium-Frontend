@@ -13,7 +13,6 @@ import {
   Stack,
   Card,
   CardBody,
-  CardFooter,
   Button,
   Popover,
   PopoverTrigger,
@@ -21,7 +20,7 @@ import {
   PopoverBody,
   PopoverArrow,
   IconButton,
-  Image,
+  useToast,
 } from "@chakra-ui/react";
 import { BsArrowUpRight, BsHeartFill, BsHeart } from "react-icons/bs";
 import "aos/dist/aos.css";
@@ -34,7 +33,8 @@ import MainCarousel from "../components/MainCarousel";
 function Main() {
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
   const [announcements, setAnnoucements] = useState([]);
-  const [noResults, setNoResults] = useState(false); // Estado para controlar se nenhum resultado foi encontrado
+  const [noResults, setNoResults] = useState(false);
+  const toast = useToast();
 
   const { loggedUser } = useContext(UserContext);
 
@@ -132,9 +132,43 @@ function Main() {
   }, [loggedUser, toggle]);
 
   async function handleGetAllAnnouncements() {
-    const response = await getAllAnnouncements();
-    setFilteredAnnouncements(response.data);
-    setAnnoucements(response.data);
+    let toastId;
+
+    try {
+      toastId = toast({
+        title: "Fetching data from the server...",
+        description:
+          "The API REST is hosted on a public server. It might take up to 2 minutes to receive the data.",
+        status: "loading",
+        duration: null,
+        isClosable: false,
+      });
+
+      const response = await getAllAnnouncements();
+      setFilteredAnnouncements(response.data);
+      setAnnoucements(response.data);
+    } catch (error) {
+      console.error(error);
+      toast({
+        title: "Error fetching data.",
+        description: "Please try again later.",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    } finally {
+      if (toastId) {
+        toast.close(toastId);
+      }
+
+      toast({
+        title: "The data was successfully fetched.",
+        description: "Thanks for waiting.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   }
 
   useEffect(() => {
