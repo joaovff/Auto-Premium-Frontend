@@ -105,11 +105,6 @@ This command will start only the frontend server, in case of using the backend s
 - Visualize the car's location on a map and adjust the range.
 - Contact sellers directly through the built-in SMS feature.
 
-
-# To Visit App:
-
-https://auto-premium.netlify.app/
-
 # License
 
 Commercial use of the software is only available by mutual agreement.
