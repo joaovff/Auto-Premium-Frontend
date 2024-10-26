@@ -142,6 +142,7 @@ function Main() {
         status: "loading",
         duration: null,
         isClosable: false,
+        position: "bottom-right",
       });
 
       const response = await getAllAnnouncements();
@@ -155,6 +156,7 @@ function Main() {
         status: "error",
         duration: 5000,
         isClosable: true,
+        position: "bottom-right",
       });
     } finally {
       if (toastId) {
@@ -167,6 +169,7 @@ function Main() {
         status: "success",
         duration: 5000,
         isClosable: true,
+        position: "bottom-right",
       });
     }
   }
